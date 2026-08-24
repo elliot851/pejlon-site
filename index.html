@@ -1,0 +1,555 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ads Console — kontrollrummet för Meta-annonser</title>
+<meta name="description" content="Ads Manager är byggd för att starta annonser, inte skala dem. Ads Console ger dig strukturen: alla marknader, alla siffror och skyddsräcken som fångar misstaget innan det kostar en dagsbudget.">
+<meta name="theme-color" content="#0A0D13">
+<link rel="canonical" href="https://DIN-DOMAN.com/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ads Console">
+<meta property="og:title" content="Ads Manager är byggd för att starta annonser. Inte för att skala dem.">
+<meta property="og:description" content="Strukturen och skyddsräckena du saknar när du skalar Meta-annonser. Slipp stänga av vinnare, skala förlorare och lägga en nolla för mycket.">
+<meta property="og:url" content="https://DIN-DOMAN.com/">
+<meta property="og:locale" content="sv_SE">
+<meta property="og:image" content="https://DIN-DOMAN.com/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;500;600&display=swap">
+<style>
+  :root {
+    --ground: #0A0D13;
+    --ground-2: #0E121A;
+    --panel: #151B27;
+    --panel-2: #1B2230;
+    --line: #242C3C;
+    --line-soft: #1A2230;
+    --ink: #F0F3F8;
+    --ink-2: #A7B0C0;
+    --ink-3: #6E7889;
+    --brass: #E3B25A;
+    --brass-lift: #F2CE8A;
+    --brass-deep: #6F5119;
+    --good: #56D08A;
+    --bad: #F0736B;
+
+    --display: "Familjen Grotesk", "Helvetica Neue", Arial, sans-serif;
+    --body: "Instrument Sans", "Segoe UI", system-ui, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+
+    --shell: 1180px;
+    --gut: 28px;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 17px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  .shell {
+    width: 100%;
+    max-width: var(--shell);
+    margin-inline: auto;
+    padding-inline: var(--gut);
+  }
+
+  h1, h2, h3 {
+    font-family: var(--display);
+    font-weight: 700;
+    letter-spacing: -0.022em;
+    text-wrap: balance;
+    margin: 0;
+    line-height: 1.06;
+  }
+
+  p { margin: 0; }
+  a { color: inherit; }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--brass);
+  }
+
+  .lede { color: var(--ink-2); font-size: 19px; line-height: 1.62; max-width: 60ch; }
+
+  /* ---------- topprad ---------- */
+  .masthead {
+    border-bottom: 1px solid var(--line-soft);
+    position: sticky; top: 0; z-index: 40;
+    background: color-mix(in srgb, var(--ground) 86%, transparent);
+    backdrop-filter: blur(14px);
+  }
+  .masthead .shell { display: flex; align-items: center; gap: 20px; height: 68px; }
+  .wordmark { display: flex; align-items: center; gap: 11px; font-family: var(--display); font-weight: 700; font-size: 17px; letter-spacing: -0.02em; }
+  .mark {
+    width: 30px; height: 30px; border-radius: 9px; flex: none;
+    background: linear-gradient(150deg, var(--brass-lift), var(--brass) 45%, #A67C26);
+    display: grid; place-items: center;
+  }
+  .mark svg { width: 17px; height: 17px; display: block; }
+  .by { font-family: var(--mono); font-size: 11px; color: var(--ink-3); letter-spacing: 0.05em; margin-left: auto; }
+
+  /* ---------- knappar ---------- */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+    font-family: var(--body); font-size: 15px; font-weight: 600;
+    padding: 13px 22px; border-radius: 10px; border: 1px solid transparent;
+    text-decoration: none; cursor: pointer; transition: transform .16s ease, background .16s ease, border-color .16s ease;
+    white-space: nowrap;
+  }
+  .btn-solid { background: var(--brass); color: #17110A; }
+  .btn-solid:hover { background: var(--brass-lift); transform: translateY(-1px); }
+  .btn-line { border-color: var(--line); color: var(--ink); background: transparent; }
+  .btn-line:hover { border-color: var(--ink-3); background: var(--panel); }
+  .btn:focus-visible { outline: 2px solid var(--brass-lift); outline-offset: 3px; }
+
+  /* ---------- hero ---------- */
+  .hero { padding: 92px 0 76px; position: relative; }
+  .hero::before {
+    content: ""; position: absolute; inset: -180px 0 auto 0; height: 620px; pointer-events: none;
+    background: radial-gradient(760px 300px at 22% 0%, rgba(227,178,90,.10), transparent 68%);
+  }
+  .hero .shell { position: relative; display: grid; grid-template-columns: minmax(0, 1.02fr) minmax(0, 1fr); gap: 60px; align-items: center; }
+  .hero h1 { font-size: clamp(40px, 5.4vw, 63px); }
+  .hero h1 em { font-style: normal; color: var(--brass); }
+  .hero-copy > * + * { margin-top: 22px; }
+  .hero-cta { display: flex; flex-wrap: wrap; gap: 12px; padding-top: 6px; }
+  .hero-foot { font-family: var(--mono); font-size: 12px; color: var(--ink-3); letter-spacing: .03em; }
+
+  /* ---------- konsolmock ---------- */
+  .console {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 14px;
+    box-shadow: 0 30px 70px -30px rgba(0,0,0,.85);
+    overflow: hidden; position: relative;
+  }
+  .console-bar {
+    display: flex; align-items: center; gap: 9px; padding: 11px 14px;
+    border-bottom: 1px solid var(--line); background: var(--panel-2);
+    font-family: var(--mono); font-size: 11px; color: var(--ink-3); letter-spacing: .05em;
+  }
+  .pip { width: 7px; height: 7px; border-radius: 50%; background: var(--good); flex: none; }
+  .grid-head, .grid-row {
+    display: grid; grid-template-columns: 40px minmax(0,1fr) 74px 62px 62px;
+    gap: 10px; align-items: center; padding: 11px 14px;
+  }
+  .grid-head {
+    font-family: var(--mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--ink-3); border-bottom: 1px solid var(--line);
+  }
+  .grid-row { border-bottom: 1px solid var(--line-soft); font-size: 13.5px; }
+  .grid-row:last-child { border-bottom: 0; }
+  .num { font-variant-numeric: tabular-nums; text-align: right; font-size: 13px; }
+  .name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .sw { width: 34px; height: 19px; border-radius: 999px; background: var(--good); position: relative; }
+  .sw::after { content: ""; position: absolute; top: 2.5px; left: 17px; width: 14px; height: 14px; border-radius: 50%; background: #fff; }
+  .sw.off { background: #39404F; }
+  .sw.off::after { left: 2.5px; }
+  .row-dead { background: rgba(240,115,107,.07); }
+  .row-dead .name { color: var(--ink-2); }
+  .flag {
+    font-family: var(--mono); font-size: 10.5px; color: var(--bad);
+    letter-spacing: .04em; padding: 0 14px 12px; margin-top: -4px;
+  }
+  .dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; flex: none; }
+
+  /* Ligger i flödet under raderna, inte ovanpå dem. Som absolut placerad
+     popup dolde den fyra av fem kampanjrader — och då försvann själva poängen
+     med bilden: att man ser tabellen OCH vakten som fångar misstaget. */
+  .guard {
+    margin: 4px 14px 14px;
+    background: var(--ground-2); border: 1px solid var(--brass-deep); border-radius: 11px;
+    padding: 14px 15px; box-shadow: 0 22px 44px -18px rgba(0,0,0,.9);
+  }
+  .guard-title { font-family: var(--mono); font-size: 10.5px; letter-spacing: .13em; text-transform: uppercase; color: var(--brass); }
+  .guard p { font-size: 13.5px; color: var(--ink); margin-top: 7px; line-height: 1.5; }
+  .guard .row { display: flex; gap: 8px; margin-top: 12px; }
+  .mini { font-size: 12px; font-weight: 600; padding: 7px 13px; border-radius: 7px; }
+  .mini-solid { background: var(--brass); color: #17110A; }
+  .mini-line { border: 1px solid var(--line); color: var(--ink-2); }
+
+  /* ---------- sektioner ---------- */
+  section { padding: 84px 0; }
+  .rule { border-top: 1px solid var(--line-soft); }
+  .sec-head { max-width: 62ch; }
+  .sec-head h2 { font-size: clamp(30px, 3.5vw, 41px); margin-top: 14px; }
+  .sec-head p { margin-top: 16px; }
+
+  /* läckor */
+  .leaks { display: grid; grid-template-columns: repeat(auto-fit, minmax(258px, 1fr)); gap: 1px; margin-top: 48px; background: var(--line-soft); border: 1px solid var(--line-soft); border-radius: 13px; overflow: hidden; }
+  .leak { background: var(--ground); padding: 27px 25px; }
+  .leak h3 { font-size: 19px; letter-spacing: -0.01em; }
+  .leak p { color: var(--ink-2); font-size: 14.5px; margin-top: 10px; line-height: 1.58; }
+  .leak-tag { font-family: var(--mono); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); display: block; margin-bottom: 13px; }
+
+  /* funktioner */
+  .feats { display: grid; grid-template-columns: repeat(auto-fit, minmax(292px, 1fr)); gap: 22px; margin-top: 48px; }
+  .feat { background: var(--panel); border: 1px solid var(--line); border-radius: 13px; padding: 25px 24px; }
+  .feat h3 { font-size: 17.5px; }
+  .feat p { color: var(--ink-2); font-size: 14.5px; margin-top: 9px; line-height: 1.58; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 7px; font-family: var(--mono);
+    font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--brass); background: rgba(227,178,90,.10); border: 1px solid rgba(227,178,90,.22);
+    padding: 5px 10px; border-radius: 999px; margin-bottom: 15px;
+  }
+
+  /* jämförelse */
+  .versus { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 22px; margin-top: 44px; }
+  .card-cmp { border: 1px solid var(--line); border-radius: 13px; padding: 27px 25px; background: var(--panel); }
+  .card-cmp.ours { border-color: var(--brass-deep); background: linear-gradient(170deg, rgba(227,178,90,.06), transparent 58%), var(--panel); }
+  .card-cmp h3 { font-size: 20px; }
+  .cmp-list { list-style: none; padding: 0; margin: 18px 0 0; display: flex; flex-direction: column; gap: 12px; }
+  .cmp-list li { display: flex; gap: 11px; font-size: 14.5px; color: var(--ink-2); line-height: 1.5; }
+  .cmp-list .glyph { font-family: var(--mono); flex: none; width: 14px; }
+  .ours .glyph { color: var(--brass); }
+  .theirs .glyph { color: var(--ink-3); }
+
+  .honest {
+    margin-top: 26px; border: 1px dashed var(--line); border-radius: 12px;
+    padding: 20px 22px; background: var(--ground-2);
+  }
+  .honest strong { color: var(--ink); font-weight: 600; }
+  .honest p { color: var(--ink-2); font-size: 14.5px; line-height: 1.6; }
+
+  /* roadmap */
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 26px; margin-top: 46px; }
+  .step { border-top: 2px solid var(--brass-deep); padding-top: 20px; }
+  .step .no { font-family: var(--mono); font-size: 12px; color: var(--brass); letter-spacing: .1em; }
+  .step h3 { font-size: 18px; margin-top: 11px; }
+  .step p { color: var(--ink-2); font-size: 14.5px; margin-top: 9px; line-height: 1.58; }
+
+  .soon { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 22px; margin-top: 40px; }
+  .soon-item { background: var(--panel); border: 1px solid var(--line); border-radius: 13px; padding: 24px; }
+  .soon-item h3 { font-size: 17px; }
+  .soon-item p { color: var(--ink-2); font-size: 14.5px; margin-top: 9px; line-height: 1.58; }
+
+  /* cta */
+  .cta { text-align: center; padding: 96px 0 104px; }
+  .cta h2 { font-size: clamp(31px, 4vw, 46px); }
+  .cta p { margin: 20px auto 0; }
+  .cta .hero-cta { justify-content: center; margin-top: 30px; }
+
+  footer { border-top: 1px solid var(--line-soft); padding: 30px 0 48px; }
+  footer .shell { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; font-family: var(--mono); font-size: 11.5px; color: var(--ink-3); letter-spacing: .04em; }
+  footer .right { margin-left: auto; }
+
+  /* rörelse */
+  .rise { opacity: 0; transform: translateY(14px); animation: rise .7s cubic-bezier(.2,.7,.3,1) forwards; }
+  .d1 { animation-delay: .06s; } .d2 { animation-delay: .14s; } .d3 { animation-delay: .22s; }
+  .d4 { animation-delay: .5s; } .d5 { animation-delay: .78s; }
+  @keyframes rise { to { opacity: 1; transform: none; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .rise { animation: none; opacity: 1; transform: none; }
+    .btn:hover { transform: none; }
+  }
+
+  @media (max-width: 940px) {
+    .hero .shell { grid-template-columns: 1fr; gap: 46px; }
+    .versus { grid-template-columns: 1fr; }
+    .hero { padding-top: 62px; }
+  }
+  @media (max-width: 620px) {
+    :root { --gut: 20px; }
+    body { font-size: 16px; }
+    section { padding: 62px 0; }
+    .grid-head, .grid-row { grid-template-columns: 36px minmax(0,1fr) 62px 54px; }
+    .grid-head span:nth-child(5), .grid-row > *:nth-child(5) { display: none; }
+  }
+</style>
+</head>
+<body>
+<header class="masthead">
+  <div class="shell">
+    <span class="wordmark">
+      <span class="mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#17110A" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 19V15" /><path d="M10 19V11" /><path d="M16 19V7" /><path d="M22 19V4" />
+        </svg>
+      </span>
+      Ads Console
+    </span>
+    <span class="by">WESTROS DIGITAL RETAIL</span>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="shell">
+      <div class="hero-copy">
+        <span class="eyebrow rise">Kontrollrummet för Meta-annonser</span>
+        <h1 class="rise d1">Ads Manager är byggd för att <em>starta</em> annonser. Inte för att skala dem.</h1>
+        <p class="lede rise d2">
+          Därför blir det kaos så fort du växer. Ads Console lägger strukturen ovanpå: alla marknader, alla siffror
+          och varje ändring på ett ställe — med skyddsräcken som fångar misstaget innan det kostar dig en dagsbudget.
+        </p>
+        <div class="hero-cta rise d3">
+          <a class="btn btn-solid" href="#tidig-tillgang">Få tidig tillgång</a>
+          <a class="btn btn-line" href="#lackorna">Se vad du missar idag</a>
+        </div>
+        <p class="hero-foot rise d3">Byggt av annonsörer som skalar varje dag · Svenskt · Krypterat</p>
+      </div>
+
+      <div class="console rise d2" role="img" aria-label="Skärmbild av Ads Console: en kampanjtabell där en pausad vinnare markeras i rött, och en varning om en tiodubblad budget.">
+        <div class="console-bar">
+          <span class="pip"></span>
+          <span>ADS CONSOLE · 7 DAGAR · ALLA MARKNADER</span>
+        </div>
+
+        <div class="grid-head">
+          <span>På</span><span>Kampanj</span><span class="num">Spend</span><span class="num">ROAS</span><span class="num">CPA</span>
+        </div>
+
+        <div class="grid-row">
+          <span class="sw" aria-hidden="true"></span>
+          <span class="name"><span class="dot" style="background:#4f8cff"></span> Träningsband CBO</span>
+          <span class="num">23 674</span><span class="num" style="color:var(--good)">2,88×</span><span class="num">113</span>
+        </div>
+
+        <div class="grid-row row-dead">
+          <span class="sw off" aria-hidden="true"></span>
+          <span class="name"><span class="dot" style="background:#f79009"></span> Leggings ABO 08-11</span>
+          <span class="num">0</span><span class="num" style="color:var(--bad)">—</span><span class="num">—</span>
+        </div>
+        <p class="flag">↑ Pausad för 6 dygn sedan. Gjorde 3,07× innan den stängdes av.</p>
+
+        <div class="grid-row">
+          <span class="sw" aria-hidden="true"></span>
+          <span class="name"><span class="dot" style="background:#f04438"></span> SleepPods NO — CBO</span>
+          <span class="num">18 240</span><span class="num" style="color:var(--good)">2,41×</span><span class="num">168</span>
+        </div>
+        <div class="grid-row">
+          <span class="sw" aria-hidden="true"></span>
+          <span class="name"><span class="dot" style="background:#9e77ed"></span> Softform BH — FI</span>
+          <span class="num">9 118</span><span class="num">1,42×</span><span class="num">302</span>
+        </div>
+        <div class="grid-row">
+          <span class="sw" aria-hidden="true"></span>
+          <span class="name"><span class="dot" style="background:#98a1bb"></span> Väggkrokar UK — ABO</span>
+          <span class="num">6 402</span><span class="num">1,88×</span><span class="num">204</span>
+        </div>
+
+        <div class="guard rise d5">
+          <span class="guard-title">Vänta lite</span>
+          <p>Du höjer <strong>1 500 → 15 000 kr</strong>. Det är 10× din vanliga höjning. En nolla för mycket?</p>
+          <div class="row">
+            <span class="mini mini-line">Avbryt</span>
+            <span class="mini mini-solid">Ja, jag menar 15 000</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="rule" id="lackorna">
+    <div class="shell">
+      <div class="sec-head">
+        <span class="eyebrow">Det du inte ser</span>
+        <h2>De flesta vet inte om att de redan förlorat pengar i veckan.</h2>
+        <p class="lede">
+          Inte för att de är dåliga annonsörer. Utan för att verktyget de sitter i inte är byggt för att visa det.
+        </p>
+      </div>
+
+      <div class="leaks">
+        <article class="leak">
+          <span class="leak-tag">Misstag 01</span>
+          <h3>Du stängde av en vinnare</h3>
+          <p>Ett klick i fel rad, ingen fråga, ingen logg. Sex dagar senare undrar du var omsättningen tog vägen — och hittar aldrig varför.</p>
+        </article>
+        <article class="leak">
+          <span class="leak-tag">Misstag 02</span>
+          <h3>Du skalade en förlorare</h3>
+          <p>Utan din inköpskostnad är ROAS bara ett tal. Annonsen som ser bäst ut i Ads Manager är inte alltid den som faktiskt tjänar pengar.</p>
+        </article>
+        <article class="leak">
+          <span class="leak-tag">Misstag 03</span>
+          <h3>En nolla för mycket</h3>
+          <p>1 500 blev 15 000. Meta frågar inte. Budgeten är slut vid lunch och dagen är bränd innan du ens hunnit öppna datorn.</p>
+        </article>
+        <article class="leak">
+          <span class="leak-tag">Misstag 04</span>
+          <h3>Marknaderna ligger i en hög</h3>
+          <p>Sverige, Norge, Danmark och Finland i samma röra. Du ser totalen, men inte vilken marknad som bär den och vilken som äter upp den.</p>
+        </article>
+        <article class="leak">
+          <span class="leak-tag">Misstag 05</span>
+          <h3>Vad ändrade du sist?</h3>
+          <p>Du höjde något i tisdags. Vilken? Med hur mycket? Ads Manager sparar inte din tankegång, och magkänslan är ingen historik.</p>
+        </article>
+        <article class="leak">
+          <span class="leak-tag">Misstag 06</span>
+          <h3>En bra dag ser ut som en trend</h3>
+          <p>Utan jämförelse mot dagarna innan går det inte att skilja en annons som faktiskt lyfter från en som bara hade tur i går.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="rule">
+    <div class="shell">
+      <div class="sec-head">
+        <span class="eyebrow">Så fungerar det</span>
+        <h2>Ett bord. Alla marknader. Varje ändring registrerad.</h2>
+        <p class="lede">
+          Ads Console kopplas till ditt annonskonto och lägger sig som ett kontrollrum ovanpå. Du ändrar direkt i tabellen —
+          och allt du gör läses tillbaka från Meta så du vet att det faktiskt gick igenom.
+        </p>
+      </div>
+
+      <div class="feats">
+        <article class="feat">
+          <span class="chip">Struktur</span>
+          <h3>Alla marknader, separerade</h3>
+          <p>Systemet läser vilka länder varje kampanj faktiskt riktar sig mot. Filtrera fram Norge, jämför mot Danmark, se vem som bär.</p>
+        </article>
+        <article class="feat">
+          <span class="chip">Skydd</span>
+          <h3>Skyddsräcken på budgeten</h3>
+          <p>Tak per höjning, tak per rad och ett tak för hela dygnet. En tiodubbling stoppas och frågar om du menade en nolla mindre.</p>
+        </article>
+        <article class="feat">
+          <span class="chip">Skydd</span>
+          <h3>Bekräftelse innan du stänger av</h3>
+          <p>Att pausa en kampanj kräver ett aktivt ja. Att starta något gör det inte — friktion bara där den faktiskt räddar pengar.</p>
+        </article>
+        <article class="feat">
+          <span class="chip">Sanning</span>
+          <h3>Vinst, inte bara ROAS</h3>
+          <p>Lägg in din inköpskostnad i dollar, så räknas den om till din valuta på dagens kurs. Du ser vad som blir kvar, inte vad som omsätts.</p>
+        </article>
+        <article class="feat">
+          <span class="chip">Sanning</span>
+          <h3>Jämför mot de senaste dygnen</h3>
+          <p>Varje tal visas mot snittet för dagarna innan. Så ser du direkt om en rad är stabil eller bara hade en bra dag.</p>
+        </article>
+        <article class="feat">
+          <span class="chip">Spårbarhet</span>
+          <h3>Full historik över allt du gjort</h3>
+          <p>Varje höjning, sänkning och avstängning loggas med tid, belopp och vem som gjorde den. Du slipper gissa vad du ändrade i tisdags.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="rule">
+    <div class="shell">
+      <div class="sec-head">
+        <span class="eyebrow">Ärligt om alternativen</span>
+        <h2>Du behöver struktur för att skala. Inte en hel svit du inte använder.</h2>
+      </div>
+
+      <div class="versus">
+        <div class="card-cmp theirs">
+          <h3>De stora analyssviterna</h3>
+          <ul class="cmp-list">
+            <li><span class="glyph">+</span> Gör väldigt mycket — attribution, tracking, rapporter, prognoser</li>
+            <li><span class="glyph">−</span> Du betalar för hela paketet, även de delar du aldrig öppnar</li>
+            <li><span class="glyph">−</span> Byggda för att analysera i efterhand, inte för att agera i stunden</li>
+            <li><span class="glyph">−</span> Du ändrar ändå budgeten i Ads Manager, med samma risker som förut</li>
+          </ul>
+        </div>
+
+        <div class="card-cmp ours">
+          <h3>Ads Console</h3>
+          <ul class="cmp-list">
+            <li><span class="glyph">→</span> Gör en sak: ger dig strukturen och kontrollen för att skala</li>
+            <li><span class="glyph">→</span> Du ändrar budget och status direkt här, med skyddsräcken på</li>
+            <li><span class="glyph">→</span> Marknader, vinst och historik utan att du bygger något själv</li>
+            <li><span class="glyph">→</span> En bråkdel av priset, för att vi inte säljer dig det du inte behöver</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="honest">
+        <p>
+          <strong>Och det vi inte gör:</strong> vi är inte ett attributionsverktyg. Behöver du djup UTM-spårning finns
+          det tjänster som gör just det bättre än vi någonsin kommer göra — använd en av dem. Vi håller strukturen
+          du skalar i, och vi tar betalt därefter.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="rule">
+    <div class="shell">
+      <div class="sec-head">
+        <span class="eyebrow">Nästa steg</span>
+        <h2>Att sitta och läsa igenom varje annons manuellt är ett jobb för en maskin.</h2>
+        <p class="lede">
+          Alla företag skalar efter KPI:er. Att en människa ska ögna igenom hundra rader och avgöra vilka som förtjänar
+          mer budget är exakt den sortens arbete som ska automatiseras. Det är det vi bygger härnäst.
+        </p>
+      </div>
+
+      <div class="steps">
+        <article class="step">
+          <span class="no">01</span>
+          <h3>Fyll i dina KPI:er</h3>
+          <p>Ett kort formulär: mål-ROAS, högsta CPA, hur aggressivt du vill skala och vad du aldrig vill röra. Tar två minuter, en gång.</p>
+        </article>
+        <article class="step">
+          <span class="no">02</span>
+          <h3>Få förslagen serverade</h3>
+          <p>Höj den här 20 %. Sänk den där. Stäng av den. Varje förslag kommer med skälet skrivet och siffrorna som ligger bakom.</p>
+        </article>
+        <article class="step">
+          <span class="no">03</span>
+          <h3>Godkänn — eller låt den köra</h3>
+          <p>Ett klick så genomförs det. Justera själv om du vill. Eller sätt den på autopilot inom de ramar du själv satt.</p>
+        </article>
+      </div>
+
+      <div class="soon">
+        <article class="soon-item">
+          <h3>Bulkuppladdning av annonser</h3>
+          <p>Ladda upp många annonser på en gång i stället för en i taget. Att göra det manuellt tar timmar du inte har.</p>
+        </article>
+        <article class="soon-item">
+          <h3>Metas förval avstängda direkt</h3>
+          <p>De automatiska inställningarna som de flesta vill stänga av ändå — släckta från början, utan att du klickar dig igenom varje gång.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta rule" id="tidig-tillgang">
+    <div class="shell">
+      <span class="eyebrow">Tidig tillgång</span>
+      <h2 style="margin-top:16px">Skala med struktur i stället för magkänsla.</h2>
+      <p class="lede" style="margin-inline:auto">
+        Ads Console öppnar för ett begränsat antal annonsörer först. Vill du vara en av dem — hör av dig, så sätter vi upp
+        ditt konto och kopplar in ditt annonskonto tillsammans.
+      </p>
+      <div class="hero-cta">
+        <a class="btn btn-solid" href="mailto:elliot@westrosdigitalretail.se?subject=Tidig%20tillgång%20till%20Ads%20Console">Få tidig tillgång</a>
+      </div>
+      <p class="hero-foot" style="margin-top:20px">Din data krypteras med ditt eget lösenord · Tvåstegsverifiering · Datorlås</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="shell">
+    <span>ADS CONSOLE</span>
+    <span class="right">© 2026 WESTROS DIGITAL RETAIL</span>
+  </div>
+</footer>
+</body>
+</html>
