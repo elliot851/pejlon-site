@@ -3,17 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ads Console — kontrollrummet för Meta-annonser</title>
-<meta name="description" content="Ads Manager är byggd för att starta annonser, inte skala dem. Ads Console ger dig strukturen: alla marknader, alla siffror och skyddsräcken som fångar misstaget innan det kostar en dagsbudget.">
+<title>Pejlon: kontrollrummet för Meta-annonser</title>
+<meta name="description" content="Varje annonskonto i sin egen flik tar en halvtimme att jämföra. Pejlon lägger alla kampanjer, annonsgrupper och annonser i ett bord, med dag för dag bakom varje rad, så att besluten vilar på data i stället för magkänsla.">
 <meta name="theme-color" content="#0A0D13">
-<link rel="canonical" href="https://DIN-DOMAN.com/">
+<link rel="canonical" href="https://pejlon.com/">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="Ads Console">
-<meta property="og:title" content="Ads Manager är byggd för att starta annonser. Inte för att skala dem.">
-<meta property="og:description" content="Strukturen och skyddsräckena du saknar när du skalar Meta-annonser. Slipp stänga av vinnare, skala förlorare och lägga en nolla för mycket.">
-<meta property="og:url" content="https://DIN-DOMAN.com/">
+<meta property="og:site_name" content="Pejlon">
+<meta property="og:title" content="Timmar i veckan går åt till att leta rätt på siffrorna. Och de stämmer ändå inte.">
+<meta property="og:description" content="Alla annonskonton i ett bord, kolumnerna i läsordning och dag för dag bakom varje rad. Pejlon kortar arbetet och säger till när en rad bara ser bra ut på perioden.">
+<meta property="og:url" content="https://pejlon.com/">
 <meta property="og:locale" content="sv_SE">
-<meta property="og:image" content="https://DIN-DOMAN.com/og.png">
+<meta property="og:image" content="https://pejlon.com/og.png">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/favicon.svg">
@@ -31,9 +31,9 @@
     --ink: #F0F3F8;
     --ink-2: #A7B0C0;
     --ink-3: #6E7889;
-    --brass: #E3B25A;
-    --brass-lift: #F2CE8A;
-    --brass-deep: #6F5119;
+    --brand: #4f8cff;
+    --brand-lift: #7aa9ff;
+    --brand-deep: #22407f;
     --good: #56D08A;
     --bad: #F0736B;
 
@@ -78,12 +78,11 @@
   a { color: inherit; }
 
   .eyebrow {
-    font-family: var(--mono);
-    font-size: 11.5px;
-    font-weight: 500;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--brass);
+    font-family: var(--body);
+    font-size: 12.5px;
+    font-weight: 600;
+    letter-spacing: 0;
+    color: var(--brand);
   }
 
   .lede { color: var(--ink-2); font-size: 19px; line-height: 1.62; max-width: 60ch; }
@@ -97,13 +96,10 @@
   }
   .masthead .shell { display: flex; align-items: center; gap: 20px; height: 68px; }
   .wordmark { display: flex; align-items: center; gap: 11px; font-family: var(--display); font-weight: 700; font-size: 17px; letter-spacing: -0.02em; }
-  .mark {
-    width: 30px; height: 30px; border-radius: 9px; flex: none;
-    background: linear-gradient(150deg, var(--brass-lift), var(--brass) 45%, #A67C26);
-    display: grid; place-items: center;
-  }
-  .mark svg { width: 17px; height: 17px; display: block; }
-  .by { font-family: var(--mono); font-size: 11px; color: var(--ink-3); letter-spacing: 0.05em; margin-left: auto; }
+  /* Märket är detsamma som i appen: fyra staplar som stiger, i märkesblått.
+     Ingen bricka och ingen gradient. Ett platt märke håller i alla storlekar. */
+  .mark { width: 26px; height: 26px; flex: none; display: block; color: var(--brand); }
+  .by { font-family: var(--body); font-size: 12.5px; color: var(--ink-3); margin-left: auto; }
 
   /* ---------- knappar ---------- */
   .btn {
@@ -113,24 +109,24 @@
     text-decoration: none; cursor: pointer; transition: transform .16s ease, background .16s ease, border-color .16s ease;
     white-space: nowrap;
   }
-  .btn-solid { background: var(--brass); color: #17110A; }
-  .btn-solid:hover { background: var(--brass-lift); transform: translateY(-1px); }
+  .btn-solid { background: var(--brand); color: #06101f; }
+  .btn-solid:hover { background: var(--brand-lift); transform: translateY(-1px); }
   .btn-line { border-color: var(--line); color: var(--ink); background: transparent; }
   .btn-line:hover { border-color: var(--ink-3); background: var(--panel); }
-  .btn:focus-visible { outline: 2px solid var(--brass-lift); outline-offset: 3px; }
+  .btn:focus-visible { outline: 2px solid var(--brand-lift); outline-offset: 3px; }
 
   /* ---------- hero ---------- */
   .hero { padding: 92px 0 76px; position: relative; }
   .hero::before {
     content: ""; position: absolute; inset: -180px 0 auto 0; height: 620px; pointer-events: none;
-    background: radial-gradient(760px 300px at 22% 0%, rgba(227,178,90,.10), transparent 68%);
+    background: radial-gradient(760px 300px at 22% 0%, rgba(79,140,255,.10), transparent 68%);
   }
   .hero .shell { position: relative; display: grid; grid-template-columns: minmax(0, 1.02fr) minmax(0, 1fr); gap: 60px; align-items: center; }
   .hero h1 { font-size: clamp(40px, 5.4vw, 63px); }
-  .hero h1 em { font-style: normal; color: var(--brass); }
+  .hero h1 em { font-style: normal; color: var(--brand); }
   .hero-copy > * + * { margin-top: 22px; }
   .hero-cta { display: flex; flex-wrap: wrap; gap: 12px; padding-top: 6px; }
-  .hero-foot { font-family: var(--mono); font-size: 12px; color: var(--ink-3); letter-spacing: .03em; }
+  .hero-foot { font-family: var(--body); font-size: 13px; color: var(--ink-3); }
 
   /* ---------- konsolmock ---------- */
   .console {
@@ -141,7 +137,7 @@
   .console-bar {
     display: flex; align-items: center; gap: 9px; padding: 11px 14px;
     border-bottom: 1px solid var(--line); background: var(--panel-2);
-    font-family: var(--mono); font-size: 11px; color: var(--ink-3); letter-spacing: .05em;
+    font-family: var(--body); font-size: 12px; color: var(--ink-3);
   }
   .pip { width: 7px; height: 7px; border-radius: 50%; background: var(--good); flex: none; }
   .grid-head, .grid-row {
@@ -149,7 +145,7 @@
     gap: 10px; align-items: center; padding: 11px 14px;
   }
   .grid-head {
-    font-family: var(--mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase;
+    font-family: var(--body); font-size: 11.5px; font-weight: 600;
     color: var(--ink-3); border-bottom: 1px solid var(--line);
   }
   .grid-row { border-bottom: 1px solid var(--line-soft); font-size: 13.5px; }
@@ -163,24 +159,23 @@
   .row-dead { background: rgba(240,115,107,.07); }
   .row-dead .name { color: var(--ink-2); }
   .flag {
-    font-family: var(--mono); font-size: 10.5px; color: var(--bad);
-    letter-spacing: .04em; padding: 0 14px 12px; margin-top: -4px;
+    font-family: var(--body); font-size: 12px; font-weight: 500; color: var(--bad); padding: 0 14px 12px; margin-top: -4px;
   }
   .dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; flex: none; }
 
   /* Ligger i flödet under raderna, inte ovanpå dem. Som absolut placerad
-     popup dolde den fyra av fem kampanjrader — och då försvann själva poängen
-     med bilden: att man ser tabellen OCH vakten som fångar misstaget. */
+     popup dolde den fyra av fem kampanjrader, och då försvann själva poängen
+     med bilden: att man ser tabellen OCH varningen som fångar den ojämna raden. */
   .guard {
     margin: 4px 14px 14px;
-    background: var(--ground-2); border: 1px solid var(--brass-deep); border-radius: 11px;
+    background: var(--ground-2); border: 1px solid var(--brand-deep); border-radius: 11px;
     padding: 14px 15px; box-shadow: 0 22px 44px -18px rgba(0,0,0,.9);
   }
-  .guard-title { font-family: var(--mono); font-size: 10.5px; letter-spacing: .13em; text-transform: uppercase; color: var(--brass); }
+  .guard-title { font-family: var(--body); font-size: 12px; font-weight: 600; color: var(--brand); }
   .guard p { font-size: 13.5px; color: var(--ink); margin-top: 7px; line-height: 1.5; }
   .guard .row { display: flex; gap: 8px; margin-top: 12px; }
   .mini { font-size: 12px; font-weight: 600; padding: 7px 13px; border-radius: 7px; }
-  .mini-solid { background: var(--brass); color: #17110A; }
+  .mini-solid { background: var(--brand); color: #06101f; }
   .mini-line { border: 1px solid var(--line); color: var(--ink-2); }
 
   /* ---------- sektioner ---------- */
@@ -195,29 +190,30 @@
   .leak { background: var(--ground); padding: 27px 25px; }
   .leak h3 { font-size: 19px; letter-spacing: -0.01em; }
   .leak p { color: var(--ink-2); font-size: 14.5px; margin-top: 10px; line-height: 1.58; }
-  .leak-tag { font-family: var(--mono); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); display: block; margin-bottom: 13px; }
+  .leak-tag { font-family: var(--body); font-size: 12px; font-weight: 600; color: var(--ink-3); display: block; margin-bottom: 13px; }
 
   /* funktioner */
+  .leak-tag { font-family: var(--body); font-size: 12px; font-weight: 600; color: var(--ink-3); display: block; margin-bottom: 13px; }
   .feats { display: grid; grid-template-columns: repeat(auto-fit, minmax(292px, 1fr)); gap: 22px; margin-top: 48px; }
   .feat { background: var(--panel); border: 1px solid var(--line); border-radius: 13px; padding: 25px 24px; }
   .feat h3 { font-size: 17.5px; }
   .feat p { color: var(--ink-2); font-size: 14.5px; margin-top: 9px; line-height: 1.58; }
   .chip {
-    display: inline-flex; align-items: center; gap: 7px; font-family: var(--mono);
-    font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase;
-    color: var(--brass); background: rgba(227,178,90,.10); border: 1px solid rgba(227,178,90,.22);
+    display: inline-flex; align-items: center; gap: 7px; font-family: var(--body);
+    font-size: 12px; font-weight: 600;
+    color: var(--brand); background: rgba(79,140,255,.10); border: 1px solid rgba(79,140,255,.22);
     padding: 5px 10px; border-radius: 999px; margin-bottom: 15px;
   }
 
   /* jämförelse */
   .versus { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 22px; margin-top: 44px; }
   .card-cmp { border: 1px solid var(--line); border-radius: 13px; padding: 27px 25px; background: var(--panel); }
-  .card-cmp.ours { border-color: var(--brass-deep); background: linear-gradient(170deg, rgba(227,178,90,.06), transparent 58%), var(--panel); }
+  .card-cmp.ours { border-color: var(--brand-deep); background: linear-gradient(170deg, rgba(79,140,255,.06), transparent 58%), var(--panel); }
   .card-cmp h3 { font-size: 20px; }
   .cmp-list { list-style: none; padding: 0; margin: 18px 0 0; display: flex; flex-direction: column; gap: 12px; }
   .cmp-list li { display: flex; gap: 11px; font-size: 14.5px; color: var(--ink-2); line-height: 1.5; }
   .cmp-list .glyph { font-family: var(--mono); flex: none; width: 14px; }
-  .ours .glyph { color: var(--brass); }
+  .ours .glyph { color: var(--brand); }
   .theirs .glyph { color: var(--ink-3); }
 
   .honest {
@@ -229,11 +225,11 @@
 
   /* roadmap */
   .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 26px; margin-top: 46px; }
-  .step { border-top: 2px solid var(--brass-deep); padding-top: 20px; }
-  .step .no { font-family: var(--mono); font-size: 12px; color: var(--brass); letter-spacing: .1em; }
+  .step { border-top: 2px solid var(--brand-deep); padding-top: 20px; }
+  .step .no { font-family: var(--body); font-size: 12px; font-weight: 700; color: var(--brand); }
   .step h3 { font-size: 18px; margin-top: 11px; }
   .step p { color: var(--ink-2); font-size: 14.5px; margin-top: 9px; line-height: 1.58; }
-
+  .step .no { font-family: var(--body); font-size: 12px; font-weight: 700; color: var(--brand); }
   .soon { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 22px; margin-top: 40px; }
   .soon-item { background: var(--panel); border: 1px solid var(--line); border-radius: 13px; padding: 24px; }
   .soon-item h3 { font-size: 17px; }
@@ -244,9 +240,20 @@
   .cta h2 { font-size: clamp(31px, 4vw, 46px); }
   .cta p { margin: 20px auto 0; }
   .cta .hero-cta { justify-content: center; margin-top: 30px; }
+  .contact {
+    display: inline-flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px;
+    margin-top: 30px; padding: 14px 22px; border-radius: 12px;
+    border: 1px solid var(--line); background: var(--panel);
+  }
+  .contact-label { font-size: 14px; color: var(--ink-3); }
+  .contact-mail {
+    font-family: var(--display); font-size: 19px; font-weight: 600; color: var(--brand);
+    letter-spacing: -0.01em; user-select: all; word-break: break-all;
+  }
+  @media (max-width: 520px) { .contact-mail { font-size: 16px; } }
 
   footer { border-top: 1px solid var(--line-soft); padding: 30px 0 48px; }
-  footer .shell { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; font-family: var(--mono); font-size: 11.5px; color: var(--ink-3); letter-spacing: .04em; }
+  footer .shell { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; font-family: var(--body); font-size: 13px; color: var(--ink-3); }
   footer .right { margin-left: auto; }
 
   /* rörelse */
@@ -278,14 +285,15 @@
 <header class="masthead">
   <div class="shell">
     <span class="wordmark">
-      <span class="mark" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#17110A" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M4 19V15" /><path d="M10 19V11" /><path d="M16 19V7" /><path d="M22 19V4" />
+      <svg class="mark" viewBox="0 0 28 28" fill="currentColor" aria-hidden="true">
+          <rect x="3.2" y="15.5" width="3.2" height="9.3" rx="1.6" opacity=".45"/>
+          <rect x="9.4" y="11.5" width="3.2" height="13.3" rx="1.6" opacity=".65"/>
+          <rect x="15.6" y="7.5" width="3.2" height="17.3" rx="1.6" opacity=".85"/>
+          <rect x="21.8" y="3.2" width="3.2" height="21.6" rx="1.6"/>
         </svg>
-      </span>
-      Ads Console
+      Pejlon
     </span>
-    <span class="by">WESTROS DIGITAL RETAIL</span>
+    <span class="by">Westros Digital Retail</span>
   </div>
 </header>
 
@@ -294,22 +302,23 @@
     <div class="shell">
       <div class="hero-copy">
         <span class="eyebrow rise">Kontrollrummet för Meta-annonser</span>
-        <h1 class="rise d1">Ads Manager är byggd för att <em>starta</em> annonser. Inte för att skala dem.</h1>
+        <h1 class="rise d1">Du lägger <em>timmar i veckan</em> på att leta rätt på siffrorna. Och kan ändå inte lita på dem.</h1>
         <p class="lede rise d2">
-          Därför blir det kaos så fort du växer. Ads Console lägger strukturen ovanpå: alla marknader, alla siffror
-          och varje ändring på ett ställe — med skyddsräcken som fångar misstaget innan det kostar dig en dagsbudget.
+          Pejlon lägger alla kampanjer, annonsgrupper och annonser från alla dina annonskonton i ett enda bord, med dag
+          för dag bakom varje rad. Jämförelsen som tar en halvtimme i Ads Manager är klar när sidan har laddat, och du
+          ser direkt om en ROAS på 3 är stabil eller om den var 1 i går.
         </p>
         <div class="hero-cta rise d3">
           <a class="btn btn-solid" href="#tidig-tillgang">Få tidig tillgång</a>
-          <a class="btn btn-line" href="#lackorna">Se vad du missar idag</a>
+          <a class="btn btn-line" href="#tiden">Se var timmarna går</a>
         </div>
-        <p class="hero-foot rise d3">Byggt av annonsörer som skalar varje dag · Svenskt · Krypterat</p>
+        <p class="hero-foot rise d3">Byggt i Sverige, av annonsörer som skalar varje dag.</p>
       </div>
 
-      <div class="console rise d2" role="img" aria-label="Skärmbild av Ads Console: en kampanjtabell där en pausad vinnare markeras i rött, och en varning om en tiodubblad budget.">
+      <div class="console rise d2" role="img" aria-label="Skärmbild av Pejlon: ett bord med alla kampanjer i samma vy, och en varning om en rad som ser bra ut på perioden men är ojämn dag för dag.">
         <div class="console-bar">
           <span class="pip"></span>
-          <span>ADS CONSOLE · 7 DAGAR · ALLA MARKNADER</span>
+          <span>Pejlon · 7 dagar · alla konton</span>
         </div>
 
         <div class="grid-head">
@@ -318,85 +327,86 @@
 
         <div class="grid-row">
           <span class="sw" aria-hidden="true"></span>
-          <span class="name"><span class="dot" style="background:#4f8cff"></span> Träningsband CBO</span>
+          <span class="name"><span class="dot" style="background:var(--good)"></span> Prospecting brett · CBO</span>
           <span class="num">23 674</span><span class="num" style="color:var(--good)">2,88×</span><span class="num">113</span>
         </div>
 
         <div class="grid-row row-dead">
           <span class="sw off" aria-hidden="true"></span>
-          <span class="name"><span class="dot" style="background:#f79009"></span> Leggings ABO 08-11</span>
-          <span class="num">0</span><span class="num" style="color:var(--bad)">—</span><span class="num">—</span>
+          <span class="name"><span class="dot" style="background:#39404F"></span> Retargeting 30 dagar · ABO</span>
+          <span class="num">0</span><span class="num" style="color:var(--bad)">-</span><span class="num">-</span>
         </div>
-        <p class="flag">↑ Pausad för 6 dygn sedan. Gjorde 3,07× innan den stängdes av.</p>
+        <p class="flag">↑ Pausad för 6 dygn sedan, 14.12 på fredagen. Det står i loggen, tillsammans med vem som gjorde det.</p>
 
         <div class="grid-row">
           <span class="sw" aria-hidden="true"></span>
-          <span class="name"><span class="dot" style="background:#f04438"></span> SleepPods NO — CBO</span>
+          <span class="name"><span class="dot" style="background:var(--good)"></span> Lookalike 1 % · CBO</span>
           <span class="num">18 240</span><span class="num" style="color:var(--good)">2,41×</span><span class="num">168</span>
         </div>
         <div class="grid-row">
           <span class="sw" aria-hidden="true"></span>
-          <span class="name"><span class="dot" style="background:#9e77ed"></span> Softform BH — FI</span>
-          <span class="num">9 118</span><span class="num">1,42×</span><span class="num">302</span>
+          <span class="name"><span class="dot" style="background:var(--good)"></span> Prospecting intressen · ABO</span>
+          <span class="num">9 118</span><span class="num" style="color:var(--good)">3,04×</span><span class="num">142</span>
         </div>
         <div class="grid-row">
           <span class="sw" aria-hidden="true"></span>
-          <span class="name"><span class="dot" style="background:#98a1bb"></span> Väggkrokar UK — ABO</span>
+          <span class="name"><span class="dot" style="background:var(--good)"></span> Retargeting varukorg · ABO</span>
           <span class="num">6 402</span><span class="num">1,88×</span><span class="num">204</span>
         </div>
 
         <div class="guard rise d5">
-          <span class="guard-title">Vänta lite</span>
-          <p>Du höjer <strong>1 500 → 15 000 kr</strong>. Det är 10× din vanliga höjning. En nolla för mycket?</p>
+          <span class="guard-title">Ojämn dag för dag</span>
+          <p><strong>Prospecting intressen · ABO</strong> ligger på 3,04× på sju dagar. Fyra av dygnen ligger under 1,1×. En enda dag bär hela perioden.</p>
           <div class="row">
-            <span class="mini mini-line">Avbryt</span>
-            <span class="mini mini-solid">Ja, jag menar 15 000</span>
+            <span class="mini mini-line">Visa dag för dag</span>
+            <span class="mini mini-solid">Avvakta höjning</span>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="rule" id="lackorna">
+  <section class="rule" id="tiden">
     <div class="shell">
       <div class="sec-head">
-        <span class="eyebrow">Det du inte ser</span>
-        <h2>De flesta vet inte om att de redan förlorat pengar i veckan.</h2>
+        <span class="eyebrow">Tiden</span>
+        <h2>Det tar en halvtimme att jämföra fem annonskonton. Varje gång du vill veta läget.</h2>
         <p class="lede">
-          Inte för att de är dåliga annonsörer. Utan för att verktyget de sitter i inte är byggt för att visa det.
+          Det mesta av en annonsörs dag går inte åt till att fatta beslut. Den går åt till att plocka fram underlaget:
+          byta konto, ställa om datum, bygga om kolumnvyn, exportera till ett kalkylark och lägga ihop det själv.
         </p>
       </div>
 
       <div class="leaks">
         <article class="leak">
-          <span class="leak-tag">Misstag 01</span>
-          <h3>Du stängde av en vinnare</h3>
-          <p>Ett klick i fel rad, ingen fråga, ingen logg. Sex dagar senare undrar du var omsättningen tog vägen — och hittar aldrig varför.</p>
+          <span class="leak-tag">Moment 01</span>
+          <h3>Ett konto i taget</h3>
+          <p>Varje konto ligger i sin egen flik. Du klickar dig fram och tillbaka, håller talen i huvudet och hoppas att du valde samma period överallt.</p>
         </article>
         <article class="leak">
-          <span class="leak-tag">Misstag 02</span>
-          <h3>Du skalade en förlorare</h3>
-          <p>Utan din inköpskostnad är ROAS bara ett tal. Annonsen som ser bäst ut i Ads Manager är inte alltid den som faktiskt tjänar pengar.</p>
+          <span class="leak-tag">Moment 02</span>
+          <h3>Kalkylarket byggs om varje vecka</h3>
+          <p>Exportera, klistra in, sortera, summera. En halvtimme går innan du ens har börjat titta på vad siffrorna faktiskt betyder.</p>
         </article>
         <article class="leak">
-          <span class="leak-tag">Misstag 03</span>
-          <h3>En nolla för mycket</h3>
-          <p>1 500 blev 15 000. Meta frågar inte. Budgeten är slut vid lunch och dagen är bränd innan du ens hunnit öppna datorn.</p>
+          <span class="leak-tag">Moment 03</span>
+          <h3>Kolumnvyn ställs om på nytt</h3>
+          <p>Hook rate, hold rate, outbound CTR och ATC ligger inte framme. Du letar upp dem i kolumnväljaren igen, konto för konto.</p>
         </article>
         <article class="leak">
-          <span class="leak-tag">Misstag 04</span>
-          <h3>Marknaderna ligger i en hög</h3>
-          <p>Sverige, Norge, Danmark och Finland i samma röra. Du ser totalen, men inte vilken marknad som bär den och vilken som äter upp den.</p>
+          <span class="leak-tag">Moment 04</span>
+          <h3>Annonserna laddas upp en och en</h3>
+          <p>Tjugo kreativer i fyra annonsgrupper blir åttio manuella moment: samma text, samma inställningar, samma klick, om och om igen.</p>
         </article>
         <article class="leak">
-          <span class="leak-tag">Misstag 05</span>
-          <h3>Vad ändrade du sist?</h3>
-          <p>Du höjde något i tisdags. Vilken? Med hur mycket? Ads Manager sparar inte din tankegång, och magkänslan är ingen historik.</p>
+          <span class="leak-tag">Moment 05</span>
+          <h3>Vinnaren byggs om från noll på nästa marknad</h3>
+          <p>Annonsen som fungerar i Sverige ska till Norge. Du bygger den en gång till, och likes och kommentarer den redan samlat börjar om på noll.</p>
         </article>
         <article class="leak">
-          <span class="leak-tag">Misstag 06</span>
-          <h3>En bra dag ser ut som en trend</h3>
-          <p>Utan jämförelse mot dagarna innan går det inte att skilja en annons som faktiskt lyfter från en som bara hade tur i går.</p>
+          <span class="leak-tag">Moment 06</span>
+          <h3>Dag för dag kräver ett uppslag per rad</h3>
+          <p>För att se om en rad är stabil måste du ställa om datumintervallet, rad för rad. De flesta hinner aldrig, och gissar i stället.</p>
         </article>
       </div>
     </div>
@@ -405,44 +415,207 @@
   <section class="rule">
     <div class="shell">
       <div class="sec-head">
-        <span class="eyebrow">Så fungerar det</span>
-        <h2>Ett bord. Alla marknader. Varje ändring registrerad.</h2>
+        <span class="eyebrow">Så kortas arbetet</span>
+        <h2>Ett bord i stället för en flik per konto. Bulk i stället för en annons i taget.</h2>
         <p class="lede">
-          Ads Console kopplas till ditt annonskonto och lägger sig som ett kontrollrum ovanpå. Du ändrar direkt i tabellen —
-          och allt du gör läses tillbaka från Meta så du vet att det faktiskt gick igenom.
+          Samma arbete, men momenten är borta. Underlaget står framme när sidan har laddat, och det du gör i tabellen
+          gäller alla konton samtidigt.
         </p>
       </div>
 
       <div class="feats">
         <article class="feat">
-          <span class="chip">Struktur</span>
-          <h3>Alla marknader, separerade</h3>
-          <p>Systemet läser vilka länder varje kampanj faktiskt riktar sig mot. Filtrera fram Norge, jämför mot Danmark, se vem som bär.</p>
+          <span class="chip">Ett bord</span>
+          <h3>Alla konton samtidigt</h3>
+          <p>Kampanjer, annonsgrupper och annonser från alla dina annonskonton i samma vy. Ingen kontoväxling, och ingen risk att två flikar visar olika perioder.</p>
         </article>
         <article class="feat">
-          <span class="chip">Skydd</span>
-          <h3>Skyddsräcken på budgeten</h3>
-          <p>Tak per höjning, tak per rad och ett tak för hela dygnet. En tiodubbling stoppas och frågar om du menade en nolla mindre.</p>
+          <span class="chip">Läsordning</span>
+          <h3>Kolumnerna står redan rätt</h3>
+          <p>Spend, ROAS, CPC, outbound CTR, köp, CPA, ATC, hook rate, hold rate och CPM, i den ordning en annonsör faktiskt läser dem. Inget att ställa in.</p>
         </article>
         <article class="feat">
-          <span class="chip">Skydd</span>
-          <h3>Bekräftelse innan du stänger av</h3>
-          <p>Att pausa en kampanj kräver ett aktivt ja. Att starta något gör det inte — friktion bara där den faktiskt räddar pengar.</p>
+          <span class="chip">Hangar</span>
+          <h3>Ladda upp i bulk</h3>
+          <p>Bild och video i högar i stället för en i taget. Ärv inställningarna från en annons som redan ligger ute, och skapa i flera annonsgrupper på en gång.</p>
         </article>
         <article class="feat">
-          <span class="chip">Sanning</span>
-          <h3>Vinst, inte bara ROAS</h3>
-          <p>Lägg in din inköpskostnad i dollar, så räknas den om till din valuta på dagens kurs. Du ser vad som blir kvar, inte vad som omsätts.</p>
+          <span class="chip">Kloning</span>
+          <h3>Flytta vinnaren till nästa marknad</h3>
+          <p>Klona en annons som fungerar till de andra marknaderna med den sociala bevisningen kvar. Likes och kommentarer följer med i stället för att börja om.</p>
         </article>
         <article class="feat">
-          <span class="chip">Sanning</span>
-          <h3>Jämför mot de senaste dygnen</h3>
-          <p>Varje tal visas mot snittet för dagarna innan. Så ser du direkt om en rad är stabil eller bara hade en bra dag.</p>
+          <span class="chip">Mediabibliotek</span>
+          <h3>Materialet ligger kvar</h3>
+          <p>Filmerna och bilderna du redan använt finns samlade på ett ställe. Du letar inte i mappar på skrivbordet när samma kreativ ska ut på en marknad till.</p>
         </article>
         <article class="feat">
-          <span class="chip">Spårbarhet</span>
-          <h3>Full historik över allt du gjort</h3>
-          <p>Varje höjning, sänkning och avstängning loggas med tid, belopp och vem som gjorde den. Du slipper gissa vad du ändrade i tisdags.</p>
+          <span class="chip">Dygnen</span>
+          <h3>Historiken ligger i raden</h3>
+          <p>Dag för dag finns redan bakom varje rad. Du behöver inte ställa om datumintervallet för att se hur en annons har rört sig den senaste veckan.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="rule" id="korrekt">
+    <div class="shell">
+      <div class="sec-head">
+        <span class="eyebrow">Korrektheten</span>
+        <h2>En ROAS på 3 betyder ingenting förrän du vet hur den ser ut dag för dag.</h2>
+        <p class="lede">
+          De flesta felbesluten kommer inte av dåliga siffror. De kommer av rätt siffror lästa på fel sätt: ett
+          datumintervall som råkade bli sju dagar i ena fliken och trettio i den andra, eller ett snitt där en enda
+          toppdag bär hela perioden.
+        </p>
+      </div>
+
+      <div class="feats">
+        <article class="feat">
+          <span class="chip">Stabilitet</span>
+          <h3>Dag för dag bakom varje rad</h3>
+          <p>Du ser inte bara perioden, utan dygnen som bygger den. Tre i snitt med fyra dagar under ett är något helt annat än tre varje dag.</p>
+        </article>
+        <article class="feat">
+          <span class="chip">Varning</span>
+          <h3>Systemet säger till när en rad är ojämn</h3>
+          <p>Ser en rad bra ut på perioden men skakar dag för dag så markeras den. Du hinner titta efter innan du höjer budgeten på en tillfällighet.</p>
+        </article>
+        <article class="feat">
+          <span class="chip">Regelmotor</span>
+          <h3>Förslag med skälet utskrivet</h3>
+          <p>Höj, sänk eller avvakta. Förslagen kommer från regler som går att läsa, inte från en AI som gissar, och varför står i klartext bredvid raden.</p>
+        </article>
+        <article class="feat">
+          <span class="chip">Förhandsvisning</span>
+          <h3>Se annonsen innan den skapas</h3>
+          <p>Annonsen visas som den kommer att se ut. Fel bild, fel text eller fel länk fångas innan den ligger ute, inte dagen efter.</p>
+        </article>
+        <article class="feat">
+          <span class="chip">Bekräftelse</span>
+          <h3>Ingenting går live eller släcks i förbifarten</h3>
+          <p>Nya annonser skapas alltid pausade om du inte säger annat, och att pausa något som är igång kräver ett aktivt ja.</p>
+        </article>
+        <article class="feat">
+          <span class="chip">Logg</span>
+          <h3>Varje ändring registrerad</h3>
+          <p>Vad som ändrades, när och av vem. Du slipper diskutera vad någon gjorde i tisdags, och du kan gå tillbaka och se vad som faktiskt hände.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="rule">
+    <div class="shell">
+      <div class="sec-head">
+        <span class="eyebrow">Ett beslut, tre steg</span>
+        <h2>Från fråga till beslut på minuter, med skälet utskrivet.</h2>
+        <p class="lede">
+          Samma beslut som i dag kräver en halvtimmes förarbete tas här i tre steg. Skillnaden är inte att det går
+          fortare att klicka. Skillnaden är att underlaget redan ligger framme, och att det är rätt.
+        </p>
+      </div>
+
+      <div class="steps">
+        <article class="step">
+          <span class="no">01</span>
+          <h3>Öppna bordet</h3>
+          <p>Alla konton, alla nivåer och alla kolumner i samma vy. Ingen export, inget kalkylark och ingen flikväxling.</p>
+        </article>
+        <article class="step">
+          <span class="no">02</span>
+          <h3>Läs raden dag för dag</h3>
+          <p>Sortera på det du bryr dig om och se dygnen bakom talet. Raderna som är ojämna är redan markerade åt dig.</p>
+        </article>
+        <article class="step">
+          <span class="no">03</span>
+          <h3>Följ förslaget eller låt bli</h3>
+          <p>Regelmotorn föreslår höj, sänk eller avvakta och skriver ut varför. Du bestämmer, och ändringen hamnar i loggen.</p>
+        </article>
+      </div>
+
+      <div class="soon">
+        <article class="soon-item">
+          <h3>Samma tre steg gäller nya annonser</h3>
+          <p>Ladda upp materialet i Hangar, ärv inställningarna från en annons som redan ligger ute och se förhandsvisningen innan något skapas.</p>
+        </article>
+        <article class="soon-item">
+          <h3>Och samma tre steg gäller nästa marknad</h3>
+          <p>Klona vinnaren vidare med den sociala bevisningen kvar, i stället för att bygga om annonsen från noll i ett annat konto.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="rule" id="analysen">
+    <div class="shell">
+      <div class="sec-head">
+        <span class="eyebrow">Analysen</span>
+        <h2>Systemet läser igenom varje rad åt dig och säger vad det skulle göra.</h2>
+        <p class="lede">
+          Du behöver inte gå igenom trettio rader själv för att hitta de tre som är värda att röra. Analysen går igenom
+          hela kontot, väger raden mot dina mål och lämnar ett förslag per rad: höj, sänk eller avvakta. Varje förslag
+          kommer med skälet utskrivet, i klartext.
+        </p>
+      </div>
+
+      <div class="feats">
+        <article class="feat">
+          <span class="chip">Förslag per rad</span>
+          <h3>Höj, sänk eller avvakta</h3>
+          <p>Med belopp. Inte "den här ser bra ut", utan hur mycket och varför just nu, mätt mot ROAS-målet och taket för vad en order får kosta.</p>
+        </article>
+        <article class="feat">
+          <span class="chip">Skälet utskrivet</span>
+          <h3>Du ser hur den tänkte</h3>
+          <p>Varje förslag går att läsa: vilken siffra som drev beslutet och vilket mål den mättes mot. Ingen svart låda du ska lita på i blindo, för det är dina pengar.</p>
+        </article>
+        <article class="feat">
+          <span class="chip">Bromsen</span>
+          <h3>Den säger nej också</h3>
+          <p>En rad som ser stark ut på perioden men är ojämn dag för dag får avvakta, inte höj. Det är den vanligaste anledningen till att en skalning går fel.</p>
+        </article>
+        <article class="feat">
+          <span class="chip">Du bestämmer</span>
+          <h3>Ingenting görs automatiskt</h3>
+          <p>Analysen föreslår. Du godkänner. Ingen budget ändras och ingen annons startas utan att du klickat, och allt hamnar i loggen.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="rule" id="bulk">
+    <div class="shell">
+      <div class="sec-head">
+        <span class="eyebrow">Bulkuppladdning</span>
+        <h2>Trettio annonser tar lika lång tid som en.</h2>
+        <p class="lede">
+          Att lägga upp annonser en och en i Ads Manager är samma tolv klick per annons, varje gång. I Hangar släpper du
+          in hela mappen, pekar ut en annons som redan fungerar och skickar alltihop till alla annonsgrupper du vill,
+          på en gång.
+        </p>
+      </div>
+
+      <div class="feats">
+        <article class="feat">
+          <span class="chip">Släpp in allt</span>
+          <h3>Hela mappen, inte en fil i taget</h3>
+          <p>Bild och video, från datorn, från en mapp du drar in eller från material som redan ligger i annonskontot. Filer som hör ihop blir automatiskt en annons med rätt variant per placering.</p>
+        </article>
+        <article class="feat">
+          <span class="chip">Ärv</span>
+          <h3>Kopiera från en annons som fungerar</h3>
+          <p>Sida, knapp, länk och texter hämtas från en befintlig annons. Du ändrar det du vill ändra, resten är redan rätt ifyllt.</p>
+        </article>
+        <article class="feat">
+          <span class="chip">Flera mål</span>
+          <h3>Flera annonsgrupper i samma utskick</h3>
+          <p>Peka ut annonsgrupper i flera kampanjer och länder. Samma material skapas i allihop, med namn efter ditt eget mönster.</p>
+        </article>
+        <article class="feat">
+          <span class="chip">Innan, inte efter</span>
+          <h3>Du ser annonsen först</h3>
+          <p>Förhandsvisningen visar exakt hur annonsen kommer se ut i flödet, i Stories och i Reels, innan något skapas. Och den skapas pausad om du inte uttryckligen säger annat.</p>
         </article>
       </div>
     </div>
@@ -452,26 +625,26 @@
     <div class="shell">
       <div class="sec-head">
         <span class="eyebrow">Ärligt om alternativen</span>
-        <h2>Du behöver struktur för att skala. Inte en hel svit du inte använder.</h2>
+        <h2>Du behöver kortare väg till rätt siffra. Inte en hel svit du inte använder.</h2>
       </div>
 
       <div class="versus">
         <div class="card-cmp theirs">
           <h3>De stora analyssviterna</h3>
           <ul class="cmp-list">
-            <li><span class="glyph">+</span> Gör väldigt mycket — attribution, tracking, rapporter, prognoser</li>
+            <li><span class="glyph">+</span> Gör väldigt mycket: attribution, tracking, rapporter, prognoser</li>
             <li><span class="glyph">−</span> Du betalar för hela paketet, även de delar du aldrig öppnar</li>
-            <li><span class="glyph">−</span> Byggda för att analysera i efterhand, inte för att agera i stunden</li>
-            <li><span class="glyph">−</span> Du ändrar ändå budgeten i Ads Manager, med samma risker som förut</li>
+            <li><span class="glyph">−</span> Byggda för att analysera i efterhand, inte för att korta arbetet i stunden</li>
+            <li><span class="glyph">−</span> Annonserna laddas ändå upp en och en, i Ads Manager, som förut</li>
           </ul>
         </div>
 
         <div class="card-cmp ours">
-          <h3>Ads Console</h3>
+          <h3>Pejlon</h3>
           <ul class="cmp-list">
-            <li><span class="glyph">→</span> Gör en sak: ger dig strukturen och kontrollen för att skala</li>
-            <li><span class="glyph">→</span> Du ändrar budget och status direkt här, med skyddsräcken på</li>
-            <li><span class="glyph">→</span> Marknader, vinst och historik utan att du bygger något själv</li>
+            <li><span class="glyph">→</span> Gör en sak: kortar tiden fram till svaret och håller svaret korrekt</li>
+            <li><span class="glyph">→</span> Alla konton i ett bord, med dygnen bakom varje rad framme direkt</li>
+            <li><span class="glyph">→</span> Uppladdning, kloning och ändringar sker här, inte i fem olika flikar</li>
             <li><span class="glyph">→</span> En bråkdel av priset, för att vi inte säljer dig det du inte behöver</li>
           </ul>
         </div>
@@ -480,51 +653,9 @@
       <div class="honest">
         <p>
           <strong>Och det vi inte gör:</strong> vi är inte ett attributionsverktyg. Behöver du djup UTM-spårning finns
-          det tjänster som gör just det bättre än vi någonsin kommer göra — använd en av dem. Vi håller strukturen
-          du skalar i, och vi tar betalt därefter.
+          det tjänster som gör just det bättre än vi någonsin kommer göra, och då ska du använda en av dem. Vi kortar
+          arbetet med att läsa av kontona och ändra i dem, och vi tar betalt därefter.
         </p>
-      </div>
-    </div>
-  </section>
-
-  <section class="rule">
-    <div class="shell">
-      <div class="sec-head">
-        <span class="eyebrow">Nästa steg</span>
-        <h2>Att sitta och läsa igenom varje annons manuellt är ett jobb för en maskin.</h2>
-        <p class="lede">
-          Alla företag skalar efter KPI:er. Att en människa ska ögna igenom hundra rader och avgöra vilka som förtjänar
-          mer budget är exakt den sortens arbete som ska automatiseras. Det är det vi bygger härnäst.
-        </p>
-      </div>
-
-      <div class="steps">
-        <article class="step">
-          <span class="no">01</span>
-          <h3>Fyll i dina KPI:er</h3>
-          <p>Ett kort formulär: mål-ROAS, högsta CPA, hur aggressivt du vill skala och vad du aldrig vill röra. Tar två minuter, en gång.</p>
-        </article>
-        <article class="step">
-          <span class="no">02</span>
-          <h3>Få förslagen serverade</h3>
-          <p>Höj den här 20 %. Sänk den där. Stäng av den. Varje förslag kommer med skälet skrivet och siffrorna som ligger bakom.</p>
-        </article>
-        <article class="step">
-          <span class="no">03</span>
-          <h3>Godkänn — eller låt den köra</h3>
-          <p>Ett klick så genomförs det. Justera själv om du vill. Eller sätt den på autopilot inom de ramar du själv satt.</p>
-        </article>
-      </div>
-
-      <div class="soon">
-        <article class="soon-item">
-          <h3>Bulkuppladdning av annonser</h3>
-          <p>Ladda upp många annonser på en gång i stället för en i taget. Att göra det manuellt tar timmar du inte har.</p>
-        </article>
-        <article class="soon-item">
-          <h3>Metas förval avstängda direkt</h3>
-          <p>De automatiska inställningarna som de flesta vill stänga av ändå — släckta från början, utan att du klickar dig igenom varje gång.</p>
-        </article>
       </div>
     </div>
   </section>
@@ -532,23 +663,30 @@
   <section class="cta rule" id="tidig-tillgang">
     <div class="shell">
       <span class="eyebrow">Tidig tillgång</span>
-      <h2 style="margin-top:16px">Skala med struktur i stället för magkänsla.</h2>
+      <h2 style="margin-top:16px">Ta tillbaka timmarna. Och siffror du vågar bygga besluten på.</h2>
       <p class="lede" style="margin-inline:auto">
-        Ads Console öppnar för ett begränsat antal annonsörer först. Vill du vara en av dem — hör av dig, så sätter vi upp
-        ditt konto och kopplar in ditt annonskonto tillsammans.
+        Pejlon öppnar för ett begränsat antal annonsörer först. Hör av dig, så kopplar vi in ditt annonskonto
+        tillsammans och du får se ditt eget bord med dina egna siffror i stället för en beskrivning av det.
       </p>
-      <div class="hero-cta">
-        <a class="btn btn-solid" href="mailto:elliot@westrosdigitalretail.se?subject=Tidig%20tillgång%20till%20Ads%20Console">Få tidig tillgång</a>
+      <!-- Adressen står synlig och markerbar i stället för att gömmas bakom
+           mailto:. En mailto-länk öppnar operativsystemets app-väljare hos alla
+           som inte har en mejlklient inställd, och då ser sidan trasig ut i
+           precis det ögonblick besökaren bestämt sig. Sidan kör dessutom helt
+           utan JavaScript (CSP: script-src 'none'), så en kopieringsknapp vore
+           ändå ingen väg. -->
+      <div class="contact">
+        <span class="contact-label">Skriv till</span>
+        <span class="contact-mail">elliot@westrosdigitalretail.se</span>
       </div>
-      <p class="hero-foot" style="margin-top:20px">Din data krypteras med ditt eget lösenord · Tvåstegsverifiering · Datorlås</p>
+      <p class="hero-foot" style="margin-top:20px">Ditt annonskonto ligger krypterat och kan bara läsas av dig.</p>
     </div>
   </section>
 </main>
 
 <footer>
   <div class="shell">
-    <span>ADS CONSOLE</span>
-    <span class="right">© 2026 WESTROS DIGITAL RETAIL</span>
+    <span>Pejlon</span>
+    <span class="right">Westros Digital Retail, 2026</span>
   </div>
 </footer>
 </body>

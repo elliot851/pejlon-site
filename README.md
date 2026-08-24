@@ -1,4 +1,4 @@
-# Ads Console — landningssida
+# Pejlon — landningssida
 
 Statisk säljsida. Inga byggsteg, inget ramverk: `index.html` är hela sidan.
 
@@ -17,5 +17,5 @@ Kopplad till Cloudflare Pages. Varje push till `main` rullas ut automatiskt.
 | `robots.txt` | Tillåter indexering |
 
 ## Byta domän
-Sök efter `DIN-DOMAN.com` i `index.html` och ersätt på alla ställen
+Sök efter `pejlon.com` i `index.html` och ersätt på alla ställen
 (`canonical` och Open Graph-taggarna).
