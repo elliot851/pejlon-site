@@ -1,25 +1,25 @@
 <!doctype html>
-<html lang="sv">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Pejlon: kontrollrummet för Meta-annonser</title>
-<meta name="description" content="Varje annonskonto i sin egen flik tar en halvtimme att jämföra. Pejlon lägger alla kampanjer, annonsgrupper och annonser i ett bord, med dag för dag bakom varje rad, så att besluten vilar på data i stället för magkänsla.">
+<title>Pejlon: the control room for Meta ads</title>
+<meta name="description" content="One ad account per tab takes half an hour to compare. Pejlon puts every campaign, ad set and ad in a single table, with the day by day behind each row, so decisions rest on data instead of instinct.">
 <meta name="theme-color" content="#0A0D13">
 <link rel="canonical" href="https://pejlon.com/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Pejlon">
-<meta property="og:title" content="Timmar i veckan går åt till att leta rätt på siffrorna. Och de stämmer ändå inte.">
-<meta property="og:description" content="Alla annonskonton i ett bord, kolumnerna i läsordning och dag för dag bakom varje rad. Pejlon kortar arbetet och säger till när en rad bara ser bra ut på perioden.">
+<meta property="og:title" content="Hours a week go into finding the numbers. And they still don't add up.">
+<meta property="og:description" content="Every ad account in one table, columns in reading order, and the day by day behind each row. Pejlon cuts the work and tells you when a row only looks good over the period.">
 <meta property="og:url" content="https://pejlon.com/">
-<meta property="og:locale" content="sv_SE">
+<meta property="og:locale" content="en_GB">
 <meta property="og:image" content="https://pejlon.com/og.png">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=Instrument+Sans:wght@400;500;600;700&display=swap">
 <style>
   :root {
     --ground: #0A0D13;
@@ -36,10 +36,10 @@
     --brand-deep: #22407f;
     --good: #56D08A;
     --bad: #F0736B;
+    --warn: #E8B160;
 
     --display: "Familjen Grotesk", "Helvetica Neue", Arial, sans-serif;
     --body: "Instrument Sans", "Segoe UI", system-ui, sans-serif;
-    --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
 
     --shell: 1180px;
     --gut: 28px;
@@ -55,15 +55,13 @@
     font-size: 17px;
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
-    overflow-x: hidden;
+    /* `clip` i stället för `hidden`. `hidden` gör body till en scroll-container,
+       och då hittar scroll(root) ingen rullbar rot: hela rörelsen tystnar utan
+       ett felmeddelande. `clip` klipper likadant utan att skapa containern. */
+    overflow-x: clip;
   }
 
-  .shell {
-    width: 100%;
-    max-width: var(--shell);
-    margin-inline: auto;
-    padding-inline: var(--gut);
-  }
+  .shell { width: 100%; max-width: var(--shell); margin-inline: auto; padding-inline: var(--gut); }
 
   h1, h2, h3 {
     font-family: var(--display);
@@ -77,58 +75,71 @@
   p { margin: 0; }
   a { color: inherit; }
 
-  .eyebrow {
-    font-family: var(--body);
-    font-size: 12.5px;
-    font-weight: 600;
-    letter-spacing: 0;
-    color: var(--brand);
-  }
+  .eyebrow { font-size: 12.5px; font-weight: 600; color: var(--brand); }
+  .lede { color: var(--ink-2); font-size: 19px; line-height: 1.62; max-width: 62ch; }
 
-  .lede { color: var(--ink-2); font-size: 19px; line-height: 1.62; max-width: 60ch; }
-
-  /* ---------- topprad ---------- */
+  /* ---------- masthead ---------- */
   .masthead {
     border-bottom: 1px solid var(--line-soft);
     position: sticky; top: 0; z-index: 40;
-    background: color-mix(in srgb, var(--ground) 86%, transparent);
-    backdrop-filter: blur(14px);
+    background: color-mix(in srgb, var(--ground) 88%, transparent);
+    backdrop-filter: blur(16px);
   }
-  .masthead .shell { display: flex; align-items: center; gap: 20px; height: 68px; }
-  .wordmark { display: flex; align-items: center; gap: 11px; font-family: var(--display); font-weight: 700; font-size: 17px; letter-spacing: -0.02em; }
-  /* Märket är detsamma som i appen: fyra staplar som stiger, i märkesblått.
-     Ingen bricka och ingen gradient. Ett platt märke håller i alla storlekar. */
-  .mark { width: 26px; height: 26px; flex: none; display: block; color: var(--brand); }
-  .by { font-family: var(--body); font-size: 12.5px; color: var(--ink-3); margin-left: auto; }
+  .masthead .shell { display: flex; align-items: center; gap: 28px; height: 66px; }
+  .wordmark { display: flex; align-items: center; gap: 10px; font-family: var(--display); font-weight: 700; font-size: 17px; letter-spacing: -0.02em; text-decoration: none; }
+  /* Same mark as the app: four rising bars, in brand blue. No tile, no
+     gradient. A flat mark survives every size; a gradient in a 20px box just
+     turns to mud. */
+  .mark { width: 25px; height: 25px; flex: none; display: block; color: var(--brand); }
 
-  /* ---------- knappar ---------- */
+  .nav { display: flex; align-items: center; gap: 4px; margin-left: auto; }
+  .nav a {
+    font-size: 14.5px; color: var(--ink-2); text-decoration: none;
+    padding: 7px 12px; border-radius: 8px;
+    transition: color .15s ease, background .15s ease;
+  }
+  .nav a:hover { color: var(--ink); background: var(--panel); }
+  .nav .btn { margin-left: 8px; padding: 9px 16px; font-size: 14.5px; }
+  .nav-toggle { display: none; }
+
+  /* A hairline that fills as you scroll. It is the only page furniture that
+     moves on its own, and it earns it: on a long page you want to know how
+     much is left. */
+  .progress {
+    position: absolute; left: 0; bottom: -1px; height: 2px; width: 100%;
+    background: linear-gradient(90deg, var(--brand), var(--brand-lift));
+    transform-origin: 0 50%; transform: scaleX(0);
+  }
+
+  /* ---------- buttons ---------- */
   .btn {
     display: inline-flex; align-items: center; justify-content: center; gap: 9px;
     font-family: var(--body); font-size: 15px; font-weight: 600;
     padding: 13px 22px; border-radius: 10px; border: 1px solid transparent;
-    text-decoration: none; cursor: pointer; transition: transform .16s ease, background .16s ease, border-color .16s ease;
+    text-decoration: none; cursor: pointer;
+    transition: transform .16s ease, background .16s ease, border-color .16s ease, box-shadow .16s ease;
     white-space: nowrap;
   }
   .btn-solid { background: var(--brand); color: #06101f; }
-  .btn-solid:hover { background: var(--brand-lift); transform: translateY(-1px); }
+  .btn-solid:hover { background: var(--brand-lift); transform: translateY(-1px); box-shadow: 0 10px 26px -12px rgba(79,140,255,.8); }
   .btn-line { border-color: var(--line); color: var(--ink); background: transparent; }
   .btn-line:hover { border-color: var(--ink-3); background: var(--panel); }
   .btn:focus-visible { outline: 2px solid var(--brand-lift); outline-offset: 3px; }
 
   /* ---------- hero ---------- */
-  .hero { padding: 92px 0 76px; position: relative; }
+  .hero { padding: 88px 0 74px; position: relative; }
   .hero::before {
-    content: ""; position: absolute; inset: -180px 0 auto 0; height: 620px; pointer-events: none;
-    background: radial-gradient(760px 300px at 22% 0%, rgba(79,140,255,.10), transparent 68%);
+    content: ""; position: absolute; inset: -180px 0 auto 0; height: 640px; pointer-events: none;
+    background: radial-gradient(780px 300px at 22% 0%, rgba(79,140,255,.11), transparent 68%);
   }
-  .hero .shell { position: relative; display: grid; grid-template-columns: minmax(0, 1.02fr) minmax(0, 1fr); gap: 60px; align-items: center; }
-  .hero h1 { font-size: clamp(40px, 5.4vw, 63px); }
+  .hero .shell { position: relative; display: grid; grid-template-columns: minmax(0, 1.02fr) minmax(0, 1fr); gap: 58px; align-items: center; }
+  .hero h1 { font-size: clamp(40px, 5.4vw, 62px); }
   .hero h1 em { font-style: normal; color: var(--brand); }
   .hero-copy > * + * { margin-top: 22px; }
   .hero-cta { display: flex; flex-wrap: wrap; gap: 12px; padding-top: 6px; }
-  .hero-foot { font-family: var(--body); font-size: 13px; color: var(--ink-3); }
+  .hero-foot { font-size: 13px; color: var(--ink-3); }
 
-  /* ---------- konsolmock ---------- */
+  /* ---------- product surface ---------- */
   .console {
     background: var(--panel); border: 1px solid var(--line); border-radius: 14px;
     box-shadow: 0 30px 70px -30px rgba(0,0,0,.85);
@@ -137,19 +148,20 @@
   .console-bar {
     display: flex; align-items: center; gap: 9px; padding: 11px 14px;
     border-bottom: 1px solid var(--line); background: var(--panel-2);
-    font-family: var(--body); font-size: 12px; color: var(--ink-3);
+    font-size: 12px; color: var(--ink-3);
   }
+  .console-bar .right { margin-left: auto; }
   .pip { width: 7px; height: 7px; border-radius: 50%; background: var(--good); flex: none; }
+
   .grid-head, .grid-row {
     display: grid; grid-template-columns: 40px minmax(0,1fr) 74px 62px 62px;
     gap: 10px; align-items: center; padding: 11px 14px;
   }
-  .grid-head {
-    font-family: var(--body); font-size: 11.5px; font-weight: 600;
-    color: var(--ink-3); border-bottom: 1px solid var(--line);
-  }
-  .grid-row { border-bottom: 1px solid var(--line-soft); font-size: 13.5px; }
+  .grid-head { font-size: 11.5px; font-weight: 600; color: var(--ink-3); border-bottom: 1px solid var(--line); }
+  .grid-head .sorted { color: var(--brand); }
+  .grid-row { border-bottom: 1px solid var(--line-soft); font-size: 13.5px; transition: background .15s ease; }
   .grid-row:last-child { border-bottom: 0; }
+  .console:hover .grid-row:hover { background: var(--panel-2); }
   .num { font-variant-numeric: tabular-nums; text-align: right; font-size: 13px; }
   .name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .sw { width: 34px; height: 19px; border-radius: 999px; background: var(--good); position: relative; }
@@ -158,119 +170,190 @@
   .sw.off::after { left: 2.5px; }
   .row-dead { background: rgba(240,115,107,.07); }
   .row-dead .name { color: var(--ink-2); }
-  .flag {
-    font-family: var(--body); font-size: 12px; font-weight: 500; color: var(--bad); padding: 0 14px 12px; margin-top: -4px;
-  }
+  .flag { font-size: 12px; font-weight: 500; color: var(--bad); padding: 0 14px 12px; margin-top: -4px; }
   .dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; flex: none; }
 
-  /* Ligger i flödet under raderna, inte ovanpå dem. Som absolut placerad
-     popup dolde den fyra av fem kampanjrader, och då försvann själva poängen
-     med bilden: att man ser tabellen OCH varningen som fångar den ojämna raden. */
+  /* Sits in the flow under the rows, not on top of them. As an absolutely
+     positioned popup it hid four of five rows, and that killed the whole point
+     of the picture: seeing the table AND the warning that caught the shaky row. */
   .guard {
     margin: 4px 14px 14px;
     background: var(--ground-2); border: 1px solid var(--brand-deep); border-radius: 11px;
     padding: 14px 15px; box-shadow: 0 22px 44px -18px rgba(0,0,0,.9);
   }
-  .guard-title { font-family: var(--body); font-size: 12px; font-weight: 600; color: var(--brand); }
+  .guard-title { font-size: 12px; font-weight: 600; color: var(--brand); }
   .guard p { font-size: 13.5px; color: var(--ink); margin-top: 7px; line-height: 1.5; }
   .guard .row { display: flex; gap: 8px; margin-top: 12px; }
   .mini { font-size: 12px; font-weight: 600; padding: 7px 13px; border-radius: 7px; }
   .mini-solid { background: var(--brand); color: #06101f; }
   .mini-line { border: 1px solid var(--line); color: var(--ink-2); }
 
-  /* ---------- sektioner ---------- */
-  section { padding: 84px 0; }
+  /* day by day strip */
+  .days { display: flex; align-items: flex-end; gap: 5px; height: 42px; margin-top: 12px; }
+  .day { flex: 1; border-radius: 3px 3px 0 0; background: var(--brand-deep); position: relative; }
+  .day.hit { background: var(--brand); }
+  .day.miss { background: #3A2530; }
+  .daylabels { display: flex; gap: 5px; margin-top: 6px; font-size: 10.5px; color: var(--ink-3); }
+  .daylabels span { flex: 1; text-align: center; font-variant-numeric: tabular-nums; }
+
+  /* upload surface */
+  .file { display: flex; align-items: center; gap: 11px; padding: 10px 14px; border-bottom: 1px solid var(--line-soft); font-size: 13.5px; }
+  .file:last-child { border-bottom: 0; }
+  .thumb { width: 34px; height: 34px; border-radius: 7px; flex: none; border: 1px solid var(--line); }
+  .badge { font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 999px; margin-left: auto; flex: none; }
+  .badge-good { background: rgba(86,208,138,.14); color: var(--good); }
+  .badge-wait { background: rgba(79,140,255,.14); color: var(--brand); }
+  .fmeta { color: var(--ink-3); font-size: 11.5px; }
+
+  /* suggestion surface */
+  .sugg { padding: 15px 16px; border-bottom: 1px solid var(--line-soft); }
+  .sugg:last-child { border-bottom: 0; }
+  .sugg-top { display: flex; align-items: center; gap: 10px; }
+  .verdict { font-size: 11.5px; font-weight: 700; padding: 4px 9px; border-radius: 6px; flex: none; }
+  .v-up { background: rgba(86,208,138,.15); color: var(--good); }
+  .v-hold { background: rgba(232,177,96,.15); color: var(--warn); }
+  .v-down { background: rgba(240,115,107,.15); color: var(--bad); }
+  .sugg-why { color: var(--ink-2); font-size: 13px; margin-top: 8px; line-height: 1.5; }
+
+  /* ---------- sections ---------- */
+  section { padding: 88px 0; }
   .rule { border-top: 1px solid var(--line-soft); }
   .sec-head { max-width: 62ch; }
   .sec-head h2 { font-size: clamp(30px, 3.5vw, 41px); margin-top: 14px; }
   .sec-head p { margin-top: 16px; }
 
-  /* läckor */
+  .split { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1.05fr); gap: 56px; align-items: center; margin-top: 48px; }
+  .split.flip > *:first-child { order: 2; }
+
   .leaks { display: grid; grid-template-columns: repeat(auto-fit, minmax(258px, 1fr)); gap: 1px; margin-top: 48px; background: var(--line-soft); border: 1px solid var(--line-soft); border-radius: 13px; overflow: hidden; }
-  .leak { background: var(--ground); padding: 27px 25px; }
+  .leak { background: var(--ground); padding: 27px 25px; transition: background .2s ease; }
+  .leak:hover { background: var(--ground-2); }
   .leak h3 { font-size: 19px; letter-spacing: -0.01em; }
   .leak p { color: var(--ink-2); font-size: 14.5px; margin-top: 10px; line-height: 1.58; }
-  .leak-tag { font-family: var(--body); font-size: 12px; font-weight: 600; color: var(--ink-3); display: block; margin-bottom: 13px; }
+  .leak-tag { font-size: 12px; font-weight: 600; color: var(--ink-3); display: block; margin-bottom: 13px; }
 
-  /* funktioner */
-  .leak-tag { font-family: var(--body); font-size: 12px; font-weight: 600; color: var(--ink-3); display: block; margin-bottom: 13px; }
   .feats { display: grid; grid-template-columns: repeat(auto-fit, minmax(292px, 1fr)); gap: 22px; margin-top: 48px; }
-  .feat { background: var(--panel); border: 1px solid var(--line); border-radius: 13px; padding: 25px 24px; }
+  .feat {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 13px; padding: 25px 24px;
+    transition: border-color .2s ease, transform .2s ease;
+  }
+  .feat:hover { border-color: var(--brand-deep); transform: translateY(-2px); }
   .feat h3 { font-size: 17.5px; }
   .feat p { color: var(--ink-2); font-size: 14.5px; margin-top: 9px; line-height: 1.58; }
   .chip {
-    display: inline-flex; align-items: center; gap: 7px; font-family: var(--body);
+    display: inline-flex; align-items: center; gap: 7px;
     font-size: 12px; font-weight: 600;
     color: var(--brand); background: rgba(79,140,255,.10); border: 1px solid rgba(79,140,255,.22);
     padding: 5px 10px; border-radius: 999px; margin-bottom: 15px;
   }
 
-  /* jämförelse */
-  .versus { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 22px; margin-top: 44px; }
-  .card-cmp { border: 1px solid var(--line); border-radius: 13px; padding: 27px 25px; background: var(--panel); }
-  .card-cmp.ours { border-color: var(--brand-deep); background: linear-gradient(170deg, rgba(79,140,255,.06), transparent 58%), var(--panel); }
-  .card-cmp h3 { font-size: 20px; }
-  .cmp-list { list-style: none; padding: 0; margin: 18px 0 0; display: flex; flex-direction: column; gap: 12px; }
-  .cmp-list li { display: flex; gap: 11px; font-size: 14.5px; color: var(--ink-2); line-height: 1.5; }
-  .cmp-list .glyph { font-family: var(--mono); flex: none; width: 14px; }
-  .ours .glyph { color: var(--brand); }
-  .theirs .glyph { color: var(--ink-3); }
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 26px; margin-top: 46px; }
+  .step { border-top: 2px solid var(--brand-deep); padding-top: 20px; transition: border-color .2s ease; }
+  .step:hover { border-top-color: var(--brand); }
+  .step .no { font-size: 12px; font-weight: 700; color: var(--brand); }
+  .step h3 { font-size: 18px; margin-top: 11px; }
+  .step p { color: var(--ink-2); font-size: 14.5px; margin-top: 9px; line-height: 1.58; }
 
-  .honest {
-    margin-top: 26px; border: 1px dashed var(--line); border-radius: 12px;
-    padding: 20px 22px; background: var(--ground-2);
-  }
+  .honest { margin-top: 30px; border: 1px dashed var(--line); border-radius: 12px; padding: 20px 22px; background: var(--ground-2); }
   .honest strong { color: var(--ink); font-weight: 600; }
   .honest p { color: var(--ink-2); font-size: 14.5px; line-height: 1.6; }
 
-  /* roadmap */
-  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 26px; margin-top: 46px; }
-  .step { border-top: 2px solid var(--brand-deep); padding-top: 20px; }
-  .step .no { font-family: var(--body); font-size: 12px; font-weight: 700; color: var(--brand); }
-  .step h3 { font-size: 18px; margin-top: 11px; }
-  .step p { color: var(--ink-2); font-size: 14.5px; margin-top: 9px; line-height: 1.58; }
-  .step .no { font-family: var(--body); font-size: 12px; font-weight: 700; color: var(--brand); }
-  .soon { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 22px; margin-top: 40px; }
-  .soon-item { background: var(--panel); border: 1px solid var(--line); border-radius: 13px; padding: 24px; }
-  .soon-item h3 { font-size: 17px; }
-  .soon-item p { color: var(--ink-2); font-size: 14.5px; margin-top: 9px; line-height: 1.58; }
-
-  /* cta */
+  /* ---------- cta ---------- */
   .cta { text-align: center; padding: 96px 0 104px; }
   .cta h2 { font-size: clamp(31px, 4vw, 46px); }
   .cta p { margin: 20px auto 0; }
-  .cta .hero-cta { justify-content: center; margin-top: 30px; }
   .contact {
     display: inline-flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px;
     margin-top: 30px; padding: 14px 22px; border-radius: 12px;
     border: 1px solid var(--line); background: var(--panel);
   }
   .contact-label { font-size: 14px; color: var(--ink-3); }
-  .contact-mail {
-    font-family: var(--display); font-size: 19px; font-weight: 600; color: var(--brand);
-    letter-spacing: -0.01em; user-select: all; word-break: break-all;
-  }
-  @media (max-width: 520px) { .contact-mail { font-size: 16px; } }
+  /* Written out and selectable rather than hidden behind mailto:. A mailto
+     link opens the operating system's app picker for everyone without a mail
+     client set, and the page looks broken at the exact moment the visitor
+     decided to get in touch. */
+  .contact-mail { font-family: var(--display); font-size: 19px; font-weight: 600; color: var(--brand); letter-spacing: -0.01em; user-select: all; word-break: break-all; }
 
-  footer { border-top: 1px solid var(--line-soft); padding: 30px 0 48px; }
-  footer .shell { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; font-family: var(--body); font-size: 13px; color: var(--ink-3); }
+  footer { border-top: 1px solid var(--line-soft); padding: 32px 0 52px; }
+  footer .shell { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; font-size: 13.5px; color: var(--ink-3); }
   footer .right { margin-left: auto; }
+  footer a { text-decoration: none; }
+  footer a:hover { color: var(--ink-2); }
 
-  /* rörelse */
-  .rise { opacity: 0; transform: translateY(14px); animation: rise .7s cubic-bezier(.2,.7,.3,1) forwards; }
+  /* ---------- motion -------------------------------------------------------
+     Two kinds, and both are CSS only. The page ships with script-src 'none' and
+     keeps it: a sales page has no business running JavaScript in a visitor's
+     browser, and an IntersectionObserver would have cost exactly that.
+
+     Scroll-driven animations are progressive. Where the browser supports them
+     the content arrives as you reach it; where it does not, everything is
+     simply visible from the start. Nothing is ever hidden behind a feature that
+     might not be there. */
+  /* Vilotillståndet är SYNLIGT. Animationen drar bara tillbaka elementet i
+     början (`backwards`), i stället för att elementet ligger dolt och väntar
+     på att en animation ska rädda det. */
+  .rise { animation: rise .7s cubic-bezier(.2,.7,.3,1) backwards; }
+
+  /* Hero-texten rör ALDRIG opaciteten. Den viktigaste raden på sidan får inte
+     kunna bli osynlig för att en animation frös, blockerades eller aldrig
+     startade. Den glider in, den tonar inte in. */
+  .rise-solid { animation: riseSolid .7s cubic-bezier(.2,.7,.3,1) backwards; }
+  @keyframes riseSolid { from { transform: translateY(14px); } to { transform: none; } }
   .d1 { animation-delay: .06s; } .d2 { animation-delay: .14s; } .d3 { animation-delay: .22s; }
   .d4 { animation-delay: .5s; } .d5 { animation-delay: .78s; }
-  @keyframes rise { to { opacity: 1; transform: none; } }
+  @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
 
-  @media (prefers-reduced-motion: reduce) {
-    .rise { animation: none; opacity: 1; transform: none; }
-    .btn:hover { transform: none; }
+  @supports (animation-timeline: view()) {
+    .reveal {
+      animation: reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 8% cover 26%;
+    }
+    @keyframes reveal {
+      from { opacity: 0; transform: translateY(26px); }
+      to { opacity: 1; transform: none; }
+    }
+
+    /* Cards in a row arrive one after another rather than all at once, so the
+       eye has time to register the order. */
+    .stagger > * {
+      animation: reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 4% cover 22%;
+    }
+    .stagger > *:nth-child(2) { animation-range: entry 2% cover 24%; }
+    .stagger > *:nth-child(3) { animation-range: entry 0% cover 26%; }
+    .stagger > *:nth-child(4) { animation-range: entry -2% cover 28%; }
+
+    /* The bars in the day by day strip grow from the baseline as the section
+       comes into view. It is the one animation that carries meaning: the shape
+       IS the argument. */
+    .days .day {
+      transform-origin: bottom;
+      animation: growbar linear both;
+      animation-timeline: view();
+      animation-range: entry 10% cover 34%;
+    }
+    @keyframes growbar { from { transform: scaleY(.06); } to { transform: scaleY(1); } }
+
+    .progress { animation: fill linear both; animation-timeline: scroll(root); }
+    @keyframes fill { to { transform: scaleX(1); } }
   }
 
+  @media (prefers-reduced-motion: reduce) {
+    .rise, .rise-solid, .reveal, .stagger > *, .days .day, .progress { animation: none !important; opacity: 1; transform: none; }
+    .btn:hover, .feat:hover { transform: none; }
+  }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 1000px) {
+    .nav a:not(.btn) { display: none; }
+  }
   @media (max-width: 940px) {
     .hero .shell { grid-template-columns: 1fr; gap: 46px; }
-    .versus { grid-template-columns: 1fr; }
-    .hero { padding-top: 62px; }
+    .split, .split.flip { grid-template-columns: 1fr; gap: 38px; }
+    .split.flip > *:first-child { order: 0; }
+    .hero { padding-top: 60px; }
   }
   @media (max-width: 620px) {
     :root { --gut: 20px; }
@@ -278,407 +361,536 @@
     section { padding: 62px 0; }
     .grid-head, .grid-row { grid-template-columns: 36px minmax(0,1fr) 62px 54px; }
     .grid-head span:nth-child(5), .grid-row > *:nth-child(5) { display: none; }
+    .contact-mail { font-size: 16px; }
   }
 </style>
 </head>
 <body>
 <header class="masthead">
   <div class="shell">
-    <span class="wordmark">
+    <a class="wordmark" href="#top">
       <svg class="mark" viewBox="0 0 28 28" fill="currentColor" aria-hidden="true">
-          <rect x="3.2" y="15.5" width="3.2" height="9.3" rx="1.6" opacity=".45"/>
-          <rect x="9.4" y="11.5" width="3.2" height="13.3" rx="1.6" opacity=".65"/>
-          <rect x="15.6" y="7.5" width="3.2" height="17.3" rx="1.6" opacity=".85"/>
-          <rect x="21.8" y="3.2" width="3.2" height="21.6" rx="1.6"/>
-        </svg>
+        <rect x="3.2" y="15.5" width="3.2" height="9.3" rx="1.6" opacity=".45"/>
+        <rect x="9.4" y="11.5" width="3.2" height="13.3" rx="1.6" opacity=".65"/>
+        <rect x="15.6" y="7.5" width="3.2" height="17.3" rx="1.6" opacity=".85"/>
+        <rect x="21.8" y="3.2" width="3.2" height="21.6" rx="1.6"/>
+      </svg>
       Pejlon
-    </span>
-    <span class="by">Westros Digital Retail</span>
+    </a>
+    <nav class="nav">
+      <a href="#table">The table</a>
+      <a href="#daybyday">Day by day</a>
+      <a href="#analysis">Analysis</a>
+      <a href="#upload">Bulk upload</a>
+      <a href="#control">Control</a>
+      <a class="btn btn-solid" href="#access">Get early access</a>
+    </nav>
   </div>
+  <span class="progress" aria-hidden="true"></span>
 </header>
 
-<main>
+<main id="top">
   <section class="hero">
     <div class="shell">
       <div class="hero-copy">
-        <span class="eyebrow rise">Kontrollrummet för Meta-annonser</span>
-        <h1 class="rise d1">Du lägger <em>timmar i veckan</em> på att leta rätt på siffrorna. Och kan ändå inte lita på dem.</h1>
-        <p class="lede rise d2">
-          Pejlon lägger alla kampanjer, annonsgrupper och annonser från alla dina annonskonton i ett enda bord, med dag
-          för dag bakom varje rad. Jämförelsen som tar en halvtimme i Ads Manager är klar när sidan har laddat, och du
-          ser direkt om en ROAS på 3 är stabil eller om den var 1 i går.
+        <span class="eyebrow rise-solid">The control room for Meta ads</span>
+        <h1 class="rise-solid d1">You spend <em>hours a week</em> finding the numbers. And you still can't trust them.</h1>
+        <p class="lede rise-solid d2">
+          Pejlon puts every campaign, ad set and ad from all your ad accounts in one table, with the day by day behind
+          each row. The comparison that takes half an hour in Ads Manager is done by the time the page has loaded, and
+          you can see at a glance whether a 3× ROAS is steady or whether it was 1× yesterday.
         </p>
-        <div class="hero-cta rise d3">
-          <a class="btn btn-solid" href="#tidig-tillgang">Få tidig tillgång</a>
-          <a class="btn btn-line" href="#tiden">Se var timmarna går</a>
+        <div class="hero-cta rise-solid d3">
+          <a class="btn btn-solid" href="#access">Get early access</a>
+          <a class="btn btn-line" href="#cost">See where the hours go</a>
         </div>
-        <p class="hero-foot rise d3">Byggt i Sverige, av annonsörer som skalar varje dag.</p>
+        <p class="hero-foot rise-solid d3">Built by advertisers who scale every day.</p>
       </div>
 
-      <div class="console rise d2" role="img" aria-label="Skärmbild av Pejlon: ett bord med alla kampanjer i samma vy, och en varning om en rad som ser bra ut på perioden men är ojämn dag för dag.">
+      <div class="console rise-solid d2" role="img" aria-label="Pejlon showing every campaign in one table, with a warning about a row that looks good over the period but is uneven day by day.">
         <div class="console-bar">
           <span class="pip"></span>
-          <span>Pejlon · 7 dagar · alla konton</span>
+          <span>Pejlon</span>
+          <span class="right">Last 7 days · all accounts</span>
         </div>
 
         <div class="grid-head">
-          <span>På</span><span>Kampanj</span><span class="num">Spend</span><span class="num">ROAS</span><span class="num">CPA</span>
+          <span>On</span><span>Campaign</span><span class="num sorted">Spend ↓</span><span class="num">ROAS</span><span class="num">CPA</span>
         </div>
 
         <div class="grid-row">
           <span class="sw" aria-hidden="true"></span>
-          <span class="name"><span class="dot" style="background:var(--good)"></span> Prospecting brett · CBO</span>
-          <span class="num">23 674</span><span class="num" style="color:var(--good)">2,88×</span><span class="num">113</span>
+          <span class="name"><span class="dot" style="background:var(--good)"></span> Prospecting broad · CBO</span>
+          <span class="num">23,674</span><span class="num" style="color:var(--good)">2.88×</span><span class="num">113</span>
         </div>
 
         <div class="grid-row row-dead">
           <span class="sw off" aria-hidden="true"></span>
-          <span class="name"><span class="dot" style="background:#39404F"></span> Retargeting 30 dagar · ABO</span>
+          <span class="name"><span class="dot" style="background:#39404F"></span> Retargeting 30d · ABO</span>
           <span class="num">0</span><span class="num" style="color:var(--bad)">-</span><span class="num">-</span>
         </div>
-        <p class="flag">↑ Pausad för 6 dygn sedan, 14.12 på fredagen. Det står i loggen, tillsammans med vem som gjorde det.</p>
+        <p class="flag">↑ Paused 6 days ago, 14:12 on the Friday. It's in the log, along with who did it.</p>
 
         <div class="grid-row">
           <span class="sw" aria-hidden="true"></span>
-          <span class="name"><span class="dot" style="background:var(--good)"></span> Lookalike 1 % · CBO</span>
-          <span class="num">18 240</span><span class="num" style="color:var(--good)">2,41×</span><span class="num">168</span>
+          <span class="name"><span class="dot" style="background:var(--good)"></span> Lookalike 1% · CBO</span>
+          <span class="num">18,240</span><span class="num" style="color:var(--good)">2.41×</span><span class="num">168</span>
         </div>
         <div class="grid-row">
           <span class="sw" aria-hidden="true"></span>
-          <span class="name"><span class="dot" style="background:var(--good)"></span> Prospecting intressen · ABO</span>
-          <span class="num">9 118</span><span class="num" style="color:var(--good)">3,04×</span><span class="num">142</span>
+          <span class="name"><span class="dot" style="background:var(--good)"></span> Prospecting interests · ABO</span>
+          <span class="num">9,118</span><span class="num" style="color:var(--good)">3.04×</span><span class="num">142</span>
         </div>
         <div class="grid-row">
           <span class="sw" aria-hidden="true"></span>
-          <span class="name"><span class="dot" style="background:var(--good)"></span> Retargeting varukorg · ABO</span>
-          <span class="num">6 402</span><span class="num">1,88×</span><span class="num">204</span>
+          <span class="name"><span class="dot" style="background:var(--good)"></span> Retargeting cart · ABO</span>
+          <span class="num">6,402</span><span class="num">1.88×</span><span class="num">204</span>
         </div>
 
-        <div class="guard rise d5">
-          <span class="guard-title">Ojämn dag för dag</span>
-          <p><strong>Prospecting intressen · ABO</strong> ligger på 3,04× på sju dagar. Fyra av dygnen ligger under 1,1×. En enda dag bär hela perioden.</p>
+        <div class="guard rise-solid d5">
+          <span class="guard-title">Uneven day by day</span>
+          <p><strong>Prospecting interests · ABO</strong> sits at 3.04× over seven days. Four of those days are below 1.1×. A single day is carrying the whole period.</p>
           <div class="row">
-            <span class="mini mini-line">Visa dag för dag</span>
-            <span class="mini mini-solid">Avvakta höjning</span>
+            <span class="mini mini-line">Show day by day</span>
+            <span class="mini mini-solid">Hold the increase</span>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="rule" id="tiden">
+  <!-- ---------- the cost ---------- -->
+  <section class="rule" id="cost">
     <div class="shell">
-      <div class="sec-head">
-        <span class="eyebrow">Tiden</span>
-        <h2>Det tar en halvtimme att jämföra fem annonskonton. Varje gång du vill veta läget.</h2>
+      <div class="sec-head reveal">
+        <span class="eyebrow">The cost</span>
+        <h2>Half an hour to compare five ad accounts. Every time you want to know where you stand.</h2>
         <p class="lede">
-          Det mesta av en annonsörs dag går inte åt till att fatta beslut. Den går åt till att plocka fram underlaget:
-          byta konto, ställa om datum, bygga om kolumnvyn, exportera till ett kalkylark och lägga ihop det själv.
+          None of the work below produces anything. It is the tax you pay to find out what already happened, and you pay
+          it again tomorrow. Here is where it goes.
         </p>
       </div>
 
-      <div class="leaks">
+      <div class="leaks stagger">
         <article class="leak">
-          <span class="leak-tag">Moment 01</span>
-          <h3>Ett konto i taget</h3>
-          <p>Varje konto ligger i sin egen flik. Du klickar dig fram och tillbaka, håller talen i huvudet och hoppas att du valde samma period överallt.</p>
+          <span class="leak-tag">Account switching</span>
+          <h3>Every account in its own tab</h3>
+          <p>You click back and forth, hold the figures in your head, and hope you picked the same date range everywhere. One tab on last 7 days and one on last 14 is a decision made on the wrong number.</p>
         </article>
         <article class="leak">
-          <span class="leak-tag">Moment 02</span>
-          <h3>Kalkylarket byggs om varje vecka</h3>
-          <p>Exportera, klistra in, sortera, summera. En halvtimme går innan du ens har börjat titta på vad siffrorna faktiskt betyder.</p>
+          <span class="leak-tag">The spreadsheet</span>
+          <h3>Export, paste, rebuild</h3>
+          <p>The columns you actually read are not the columns you get. So it goes into a sheet, and by the afternoon the sheet is already stale.</p>
         </article>
         <article class="leak">
-          <span class="leak-tag">Moment 03</span>
-          <h3>Kolumnvyn ställs om på nytt</h3>
-          <p>Hook rate, hold rate, outbound CTR och ATC ligger inte framme. Du letar upp dem i kolumnväljaren igen, konto för konto.</p>
+          <span class="leak-tag">The column view</span>
+          <h3>Set up again, every time</h3>
+          <p>Ads Manager forgets what you care about. Hook rate and hold rate are three menus deep, and they are the two you check first.</p>
         </article>
         <article class="leak">
-          <span class="leak-tag">Moment 04</span>
-          <h3>Annonserna laddas upp en och en</h3>
-          <p>Tjugo kreativer i fyra annonsgrupper blir åttio manuella moment: samma text, samma inställningar, samma klick, om och om igen.</p>
+          <span class="leak-tag">Upload</span>
+          <h3>One ad at a time</h3>
+          <p>Same twelve clicks per ad. Thirty ads is thirty times twelve clicks, and each one is a chance to pick the wrong page or paste the wrong link.</p>
         </article>
         <article class="leak">
-          <span class="leak-tag">Moment 05</span>
-          <h3>Vinnaren byggs om från noll på nästa marknad</h3>
-          <p>Annonsen som fungerar i Sverige ska till Norge. Du bygger den en gång till, och likes och kommentarer den redan samlat börjar om på noll.</p>
+          <span class="leak-tag">The winner</span>
+          <h3>Rebuilt from scratch elsewhere</h3>
+          <p>A creative that works in one account gets recreated in the next, and starts again from zero likes and zero comments. The social proof you earned does not come with it.</p>
         </article>
         <article class="leak">
-          <span class="leak-tag">Moment 06</span>
-          <h3>Dag för dag kräver ett uppslag per rad</h3>
-          <p>För att se om en rad är stabil måste du ställa om datumintervallet, rad för rad. De flesta hinner aldrig, och gissar i stället.</p>
+          <span class="leak-tag">Day by day</span>
+          <h3>Checked row by row, by hand</h3>
+          <p>To find out whether a number is steady you open each row and read the days one at a time. Which means in practice nobody does it.</p>
         </article>
       </div>
     </div>
   </section>
 
-  <section class="rule">
+  <!-- ---------- the table ---------- -->
+  <section class="rule" id="table">
     <div class="shell">
-      <div class="sec-head">
-        <span class="eyebrow">Så kortas arbetet</span>
-        <h2>Ett bord i stället för en flik per konto. Bulk i stället för en annons i taget.</h2>
+      <div class="sec-head reveal">
+        <span class="eyebrow">One table</span>
+        <h2>Every account, every level, every column. In one place.</h2>
         <p class="lede">
-          Samma arbete, men momenten är borta. Underlaget står framme när sidan har laddat, och det du gör i tabellen
-          gäller alla konton samtidigt.
+          Campaigns, ad sets and ads side by side, in the columns an advertiser actually reads, in the order they read
+          them. Sort on anything. Filter on anything. What you do in the table applies everywhere at once.
         </p>
       </div>
 
-      <div class="feats">
-        <article class="feat">
-          <span class="chip">Ett bord</span>
-          <h3>Alla konton samtidigt</h3>
-          <p>Kampanjer, annonsgrupper och annonser från alla dina annonskonton i samma vy. Ingen kontoväxling, och ingen risk att två flikar visar olika perioder.</p>
-        </article>
-        <article class="feat">
-          <span class="chip">Läsordning</span>
-          <h3>Kolumnerna står redan rätt</h3>
-          <p>Spend, ROAS, CPC, outbound CTR, köp, CPA, ATC, hook rate, hold rate och CPM, i den ordning en annonsör faktiskt läser dem. Inget att ställa in.</p>
-        </article>
-        <article class="feat">
-          <span class="chip">Hangar</span>
-          <h3>Ladda upp i bulk</h3>
-          <p>Bild och video i högar i stället för en i taget. Ärv inställningarna från en annons som redan ligger ute, och skapa i flera annonsgrupper på en gång.</p>
-        </article>
-        <article class="feat">
-          <span class="chip">Kloning</span>
-          <h3>Flytta vinnaren till nästa marknad</h3>
-          <p>Klona en annons som fungerar till de andra marknaderna med den sociala bevisningen kvar. Likes och kommentarer följer med i stället för att börja om.</p>
-        </article>
-        <article class="feat">
-          <span class="chip">Mediabibliotek</span>
-          <h3>Materialet ligger kvar</h3>
-          <p>Filmerna och bilderna du redan använt finns samlade på ett ställe. Du letar inte i mappar på skrivbordet när samma kreativ ska ut på en marknad till.</p>
-        </article>
-        <article class="feat">
-          <span class="chip">Dygnen</span>
-          <h3>Historiken ligger i raden</h3>
-          <p>Dag för dag finns redan bakom varje rad. Du behöver inte ställa om datumintervallet för att se hur en annons har rört sig den senaste veckan.</p>
-        </article>
+      <div class="split reveal">
+        <div>
+          <div class="feats" style="margin-top:0; grid-template-columns:1fr">
+            <article class="feat">
+              <span class="chip">Reading order</span>
+              <h3>The columns are already right</h3>
+              <p>Spend, ROAS, CPC, outbound CTR, purchases, CPA, ATC, hook rate, hold rate, CPM. Nothing to configure, nothing three menus deep.</p>
+            </article>
+            <article class="feat">
+              <span class="chip">Sort and filter</span>
+              <h3>Find the three rows that matter</h3>
+              <p>Sort on any column, filter by status, name or market, and switch between campaign, ad set and ad level without losing your place.</p>
+            </article>
+            <article class="feat">
+              <span class="chip">In place</span>
+              <h3>Change it where you see it</h3>
+              <p>Flip a campaign on or off with the switch, click a budget to change it. Turning something off always asks first, so nothing goes dark by accident.</p>
+            </article>
+          </div>
+        </div>
+
+        <div class="console">
+          <div class="console-bar">
+            <span class="pip"></span>
+            <span>Ad set level</span>
+            <span class="right">Sorted by ROAS</span>
+          </div>
+          <div class="grid-head">
+            <span>On</span><span>Ad set</span><span class="num">Spend</span><span class="num sorted">ROAS ↓</span><span class="num">Hook</span>
+          </div>
+          <div class="grid-row">
+            <span class="sw" aria-hidden="true"></span>
+            <span class="name">Interests · 25–44</span>
+            <span class="num">9,118</span><span class="num" style="color:var(--good)">3.04×</span><span class="num">31%</span>
+          </div>
+          <div class="grid-row">
+            <span class="sw" aria-hidden="true"></span>
+            <span class="name">Broad · no cap</span>
+            <span class="num">23,674</span><span class="num" style="color:var(--good)">2.88×</span><span class="num">28%</span>
+          </div>
+          <div class="grid-row">
+            <span class="sw" aria-hidden="true"></span>
+            <span class="name">Lookalike 1% · purchases</span>
+            <span class="num">18,240</span><span class="num" style="color:var(--good)">2.41×</span><span class="num">26%</span>
+          </div>
+          <div class="grid-row">
+            <span class="sw" aria-hidden="true"></span>
+            <span class="name">Cart abandon · 7d</span>
+            <span class="num">6,402</span><span class="num">1.88×</span><span class="num">19%</span>
+          </div>
+          <div class="grid-row">
+            <span class="sw off" aria-hidden="true"></span>
+            <span class="name">Interests · test</span>
+            <span class="num">1,204</span><span class="num" style="color:var(--bad)">0.71×</span><span class="num">11%</span>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="rule" id="korrekt">
+  <!-- ---------- day by day ---------- -->
+  <section class="rule" id="daybyday">
     <div class="shell">
-      <div class="sec-head">
-        <span class="eyebrow">Korrektheten</span>
-        <h2>En ROAS på 3 betyder ingenting förrän du vet hur den ser ut dag för dag.</h2>
+      <div class="sec-head reveal">
+        <span class="eyebrow">Day by day</span>
+        <h2>A 3× ROAS means nothing until you know what the days look like.</h2>
         <p class="lede">
-          De flesta felbesluten kommer inte av dåliga siffror. De kommer av rätt siffror lästa på fel sätt: ett
-          datumintervall som råkade bli sju dagar i ena fliken och trettio i den andra, eller ett snitt där en enda
-          toppdag bär hela perioden.
+          A seven day average hides everything that matters. One strong day can carry a week, and scaling on that number
+          is how a good account turns bad in three days. Pejlon keeps the days behind every row and says so when they
+          don't hold together.
         </p>
       </div>
 
-      <div class="feats">
-        <article class="feat">
-          <span class="chip">Stabilitet</span>
-          <h3>Dag för dag bakom varje rad</h3>
-          <p>Du ser inte bara perioden, utan dygnen som bygger den. Tre i snitt med fyra dagar under ett är något helt annat än tre varje dag.</p>
-        </article>
-        <article class="feat">
-          <span class="chip">Varning</span>
-          <h3>Systemet säger till när en rad är ojämn</h3>
-          <p>Ser en rad bra ut på perioden men skakar dag för dag så markeras den. Du hinner titta efter innan du höjer budgeten på en tillfällighet.</p>
-        </article>
-        <article class="feat">
-          <span class="chip">Regelmotor</span>
-          <h3>Förslag med skälet utskrivet</h3>
-          <p>Höj, sänk eller avvakta. Förslagen kommer från regler som går att läsa, inte från en AI som gissar, och varför står i klartext bredvid raden.</p>
-        </article>
-        <article class="feat">
-          <span class="chip">Förhandsvisning</span>
-          <h3>Se annonsen innan den skapas</h3>
-          <p>Annonsen visas som den kommer att se ut. Fel bild, fel text eller fel länk fångas innan den ligger ute, inte dagen efter.</p>
-        </article>
-        <article class="feat">
-          <span class="chip">Bekräftelse</span>
-          <h3>Ingenting går live eller släcks i förbifarten</h3>
-          <p>Nya annonser skapas alltid pausade om du inte säger annat, och att pausa något som är igång kräver ett aktivt ja.</p>
-        </article>
-        <article class="feat">
-          <span class="chip">Logg</span>
-          <h3>Varje ändring registrerad</h3>
-          <p>Vad som ändrades, när och av vem. Du slipper diskutera vad någon gjorde i tisdags, och du kan gå tillbaka och se vad som faktiskt hände.</p>
-        </article>
+      <div class="split flip reveal">
+        <div class="console">
+          <div class="console-bar">
+            <span class="pip"></span>
+            <span>Prospecting interests · ABO</span>
+            <span class="right">7 days</span>
+          </div>
+          <div style="padding:16px 16px 4px">
+            <div style="display:flex;align-items:baseline;gap:10px">
+              <span style="font-family:var(--display);font-size:30px;font-weight:700;letter-spacing:-.02em">3.04×</span>
+              <span style="font-size:13px;color:var(--ink-3)">average ROAS over the period</span>
+            </div>
+            <div class="days" aria-hidden="true">
+              <span class="day hit" style="height:96%"></span>
+              <span class="day miss" style="height:22%"></span>
+              <span class="day miss" style="height:26%"></span>
+              <span class="day hit" style="height:58%"></span>
+              <span class="day miss" style="height:19%"></span>
+              <span class="day miss" style="height:24%"></span>
+              <span class="day hit" style="height:52%"></span>
+            </div>
+            <div class="daylabels" aria-hidden="true">
+              <span>8.1×</span><span>0.9×</span><span>1.0×</span><span>2.6×</span><span>0.8×</span><span>1.1×</span><span>2.4×</span>
+            </div>
+          </div>
+          <div class="guard">
+            <span class="guard-title">Uneven day by day</span>
+            <p>Three of seven days reached the target. One day at 8.1× is carrying the average. Raising the budget here bets the increase on a day that has not repeated.</p>
+            <div class="row">
+              <span class="mini mini-solid">Hold the increase</span>
+              <span class="mini mini-line">Compare to last week</span>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="feats" style="margin-top:0; grid-template-columns:1fr">
+            <article class="feat">
+              <span class="chip">Behind every row</span>
+              <h3>Yesterday, and the day before</h3>
+              <p>Today against yesterday against the day before, on the metrics you actually decide on: ROAS, CPC, CTR, purchases, CPA. No export, no second tab.</p>
+            </article>
+            <article class="feat">
+              <span class="chip">The brake</span>
+              <h3>It says no as well as yes</h3>
+              <p>When a row looks strong over the period but is uneven across the days, the suggestion is hold, not raise. It is the single most common way a scale up goes wrong.</p>
+            </article>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="rule">
+  <!-- ---------- analysis ---------- -->
+  <section class="rule" id="analysis">
     <div class="shell">
-      <div class="sec-head">
-        <span class="eyebrow">Ett beslut, tre steg</span>
-        <h2>Från fråga till beslut på minuter, med skälet utskrivet.</h2>
+      <div class="sec-head reveal">
+        <span class="eyebrow">The analysis</span>
+        <h2>It reads every row for you and tells you what it would do.</h2>
         <p class="lede">
-          Samma beslut som i dag kräver en halvtimmes förarbete tas här i tre steg. Skillnaden är inte att det går
-          fortare att klicka. Skillnaden är att underlaget redan ligger framme, och att det är rätt.
+          You should not have to go through thirty rows to find the three worth touching. The analysis works through the
+          whole account, weighs each row against your targets, and leaves one suggestion per row: raise, cut or hold.
+          Every suggestion comes with the reason written out.
         </p>
       </div>
 
-      <div class="steps">
+      <div class="split reveal">
+        <div class="console">
+          <div class="console-bar">
+            <span class="pip"></span>
+            <span>Suggestions</span>
+            <span class="right">Target 2.5× · max CPA 190</span>
+          </div>
+
+          <div class="sugg">
+            <div class="sugg-top">
+              <span class="verdict v-up">RAISE</span>
+              <span class="name" style="flex:1">Broad · no cap</span>
+              <span class="num" style="color:var(--good)">+20%</span>
+            </div>
+            <p class="sugg-why">2.88× against a 2.5× target across 41 purchases, and steady on six of seven days. Room to go from 1,200 to 1,440 per day.</p>
+          </div>
+
+          <div class="sugg">
+            <div class="sugg-top">
+              <span class="verdict v-hold">HOLD</span>
+              <span class="name" style="flex:1">Interests · 25–44</span>
+              <span class="num" style="color:var(--warn)">wait</span>
+            </div>
+            <p class="sugg-why">3.04× looks strong over the period, but day by day it is uneven: 8.1 → 0.9 → 1.0 → 2.6 → 0.8 → 1.1 → 2.4. Only three of seven days reached the target.</p>
+          </div>
+
+          <div class="sugg">
+            <div class="sugg-top">
+              <span class="verdict v-down">CUT</span>
+              <span class="name" style="flex:1">Interests · test</span>
+              <span class="num" style="color:var(--bad)">-35%</span>
+            </div>
+            <p class="sugg-why">0.71× is below break even and CPA is 284 against a ceiling of 190. The worse of the two signals sets the size of the cut.</p>
+          </div>
+        </div>
+
+        <div>
+          <div class="feats" style="margin-top:0; grid-template-columns:1fr">
+            <article class="feat">
+              <span class="chip">With an amount</span>
+              <h3>Not "this looks good"</h3>
+              <p>How much, and why now, measured against your ROAS target and the ceiling on what an order is allowed to cost.</p>
+            </article>
+            <article class="feat">
+              <span class="chip">Reason written out</span>
+              <h3>You can see how it reasoned</h3>
+              <p>Which figure drove the decision and which target it was measured against. Not a black box you are asked to trust blindly, because it is your money.</p>
+            </article>
+            <article class="feat">
+              <span class="chip">You decide</span>
+              <h3>Nothing happens on its own</h3>
+              <p>The analysis suggests. You approve. No budget changes and no ad starts without a click, and everything lands in the log.</p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- bulk upload ---------- -->
+  <section class="rule" id="upload">
+    <div class="shell">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Bulk upload</span>
+        <h2>Thirty ads take as long as one.</h2>
+        <p class="lede">
+          Uploading ads one at a time in Ads Manager is the same twelve clicks each, every time. Here you drop in the
+          whole folder, point at an ad that already works, and send the lot to every ad set you want at once.
+        </p>
+      </div>
+
+      <div class="split flip reveal">
+        <div class="console">
+          <div class="console-bar">
+            <span class="pip"></span>
+            <span>Material</span>
+            <span class="right">4 files · 2 ads will be created</span>
+          </div>
+
+          <div class="file">
+            <span class="thumb" style="background:linear-gradient(150deg,#2b4b7d,#16233a)"></span>
+            <span><span class="name">creative-a_4x5.jpg</span><br><span class="fmeta">Image · Feed (4:5) · 1.2 MB</span></span>
+            <span class="badge badge-good">Ready</span>
+          </div>
+          <div class="file">
+            <span class="thumb" style="background:linear-gradient(150deg,#2b4b7d,#16233a)"></span>
+            <span><span class="name">creative-a_9x16.jpg</span><br><span class="fmeta">Image · Stories &amp; Reels (9:16) · 1.4 MB</span></span>
+            <span class="badge badge-good">Ready</span>
+          </div>
+          <div class="file">
+            <span class="thumb" style="background:linear-gradient(150deg,#3a2f52,#1a1730)"></span>
+            <span><span class="name">creative-b.mp4</span><br><span class="fmeta">Video · 0:24 · 53.3 MB</span></span>
+            <span class="badge badge-good">Ready</span>
+          </div>
+          <div class="file">
+            <span class="thumb" style="background:linear-gradient(150deg,#1f3c33,#132420)"></span>
+            <span><span class="name">creative-c.jpg</span><br><span class="fmeta">Image · uploading</span></span>
+            <span class="badge badge-wait">72%</span>
+          </div>
+
+          <div class="guard" style="border-color:var(--line)">
+            <span class="guard-title" style="color:var(--ink-2)">Ready to send</span>
+            <p>Files that share a base name become one ad with the right variant per placement. Ads are created <strong>paused</strong> unless you say otherwise.</p>
+            <div class="row">
+              <span class="mini mini-line">Preview the ad</span>
+              <span class="mini mini-solid">Send 2 ads as paused</span>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="feats" style="margin-top:0; grid-template-columns:1fr">
+            <article class="feat">
+              <span class="chip">Drop it all in</span>
+              <h3>A whole folder, not a file at a time</h3>
+              <p>Images and video, from your computer, from a folder you drag in, from Google Drive, or from material already sitting in the ad account.</p>
+            </article>
+            <article class="feat">
+              <span class="chip">Inherit</span>
+              <h3>Copy from an ad that works</h3>
+              <p>Page, button, link and copy come from an existing ad. You change what you want to change; the rest is already right.</p>
+            </article>
+            <article class="feat">
+              <span class="chip">Before, not after</span>
+              <h3>You see the ad first</h3>
+              <p>The preview shows exactly how the ad will look in feed, in Stories and in Reels, rendered by Meta, before anything is created.</p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- control ---------- -->
+  <section class="rule" id="control">
+    <div class="shell">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Control</span>
+        <h2>Nothing spends money without you saying so.</h2>
+        <p class="lede">
+          A tool that sits on your ad account has to be careful by default. Every choice here leans the same way: the
+          quiet option is the safe one, and the expensive one takes a deliberate yes.
+        </p>
+      </div>
+
+      <div class="feats stagger">
+        <article class="feat">
+          <span class="chip">Paused by default</span>
+          <h3>New ads don't start themselves</h3>
+          <p>Ads are created paused unless you explicitly choose otherwise, and the button says which it is going to be before you press it.</p>
+        </article>
+        <article class="feat">
+          <span class="chip">Confirm</span>
+          <h3>Turning things off asks first</h3>
+          <p>Pausing a campaign, an ad set or an ad takes a confirmation, so nothing goes dark from a stray click in a long table.</p>
+        </article>
+        <article class="feat">
+          <span class="chip">Meta's defaults off</span>
+          <h3>Advantage+ enhancements stay off</h3>
+          <p>Meta switches its own creative changes on unless told not to. Pejlon says no on your behalf, per feature, unless you tick it.</p>
+        </article>
+        <article class="feat">
+          <span class="chip">Move the winner</span>
+          <h3>Clone with the proof intact</h3>
+          <p>Copy an ad that works to other accounts and keep the likes and comments, instead of starting again from zero social proof.</p>
+        </article>
+        <article class="feat">
+          <span class="chip">Media library</span>
+          <h3>Reuse what you already uploaded</h3>
+          <p>Everything already in the ad account is one click away, so the same creative does not get uploaded five times under five different IDs.</p>
+        </article>
+        <article class="feat">
+          <span class="chip">The log</span>
+          <h3>Every change recorded</h3>
+          <p>What changed, when, and who did it. When a number moves next week you can find out what happened instead of guessing.</p>
+        </article>
+      </div>
+
+      <div class="honest reveal">
+        <p>
+          <strong>And what it isn't:</strong> Pejlon is not an attribution tool. The figures are Meta's own. If you want
+          to model what Meta gets wrong, there are tools that do that better than we ever will, and you should use one.
+          We shorten the work between the numbers and the decision.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- how it works ---------- -->
+  <section class="rule" id="how">
+    <div class="shell">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Getting started</span>
+        <h2>Connected in a few minutes, and nothing to install.</h2>
+        <p class="lede">
+          You sign in with Meta the same way you sign in anywhere else. Pejlon reads your accounts and writes only what
+          you tell it to write.
+        </p>
+      </div>
+
+      <div class="steps stagger">
         <article class="step">
           <span class="no">01</span>
-          <h3>Öppna bordet</h3>
-          <p>Alla konton, alla nivåer och alla kolumner i samma vy. Ingen export, inget kalkylark och ingen flikväxling.</p>
+          <h3>Connect Meta</h3>
+          <p>One sign in with the account that owns the ad accounts. No token to copy, nothing to paste. Pick the ad account and the table fills in.</p>
         </article>
         <article class="step">
           <span class="no">02</span>
-          <h3>Läs raden dag för dag</h3>
-          <p>Sortera på det du bryr dig om och se dygnen bakom talet. Raderna som är ojämna är redan markerade åt dig.</p>
+          <h3>Set your targets</h3>
+          <p>Target ROAS, break even, and the most an order is allowed to cost. That is what the analysis measures every row against.</p>
         </article>
         <article class="step">
           <span class="no">03</span>
-          <h3>Följ förslaget eller låt bli</h3>
-          <p>Regelmotorn föreslår höj, sänk eller avvakta och skriver ut varför. Du bestämmer, och ändringen hamnar i loggen.</p>
-        </article>
-      </div>
-
-      <div class="soon">
-        <article class="soon-item">
-          <h3>Samma tre steg gäller nya annonser</h3>
-          <p>Ladda upp materialet i Hangar, ärv inställningarna från en annons som redan ligger ute och se förhandsvisningen innan något skapas.</p>
-        </article>
-        <article class="soon-item">
-          <h3>Och samma tre steg gäller nästa marknad</h3>
-          <p>Klona vinnaren vidare med den sociala bevisningen kvar, i stället för att bygga om annonsen från noll i ett annat konto.</p>
+          <h3>Work in one place</h3>
+          <p>Read the table, open the days behind a row, follow the suggestion or don't. Upload the next batch of creative from the same screen.</p>
         </article>
       </div>
     </div>
   </section>
 
-  <section class="rule" id="analysen">
-    <div class="shell">
-      <div class="sec-head">
-        <span class="eyebrow">Analysen</span>
-        <h2>Systemet läser igenom varje rad åt dig och säger vad det skulle göra.</h2>
-        <p class="lede">
-          Du behöver inte gå igenom trettio rader själv för att hitta de tre som är värda att röra. Analysen går igenom
-          hela kontot, väger raden mot dina mål och lämnar ett förslag per rad: höj, sänk eller avvakta. Varje förslag
-          kommer med skälet utskrivet, i klartext.
-        </p>
-      </div>
-
-      <div class="feats">
-        <article class="feat">
-          <span class="chip">Förslag per rad</span>
-          <h3>Höj, sänk eller avvakta</h3>
-          <p>Med belopp. Inte "den här ser bra ut", utan hur mycket och varför just nu, mätt mot ROAS-målet och taket för vad en order får kosta.</p>
-        </article>
-        <article class="feat">
-          <span class="chip">Skälet utskrivet</span>
-          <h3>Du ser hur den tänkte</h3>
-          <p>Varje förslag går att läsa: vilken siffra som drev beslutet och vilket mål den mättes mot. Ingen svart låda du ska lita på i blindo, för det är dina pengar.</p>
-        </article>
-        <article class="feat">
-          <span class="chip">Bromsen</span>
-          <h3>Den säger nej också</h3>
-          <p>En rad som ser stark ut på perioden men är ojämn dag för dag får avvakta, inte höj. Det är den vanligaste anledningen till att en skalning går fel.</p>
-        </article>
-        <article class="feat">
-          <span class="chip">Du bestämmer</span>
-          <h3>Ingenting görs automatiskt</h3>
-          <p>Analysen föreslår. Du godkänner. Ingen budget ändras och ingen annons startas utan att du klickat, och allt hamnar i loggen.</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section class="rule" id="bulk">
-    <div class="shell">
-      <div class="sec-head">
-        <span class="eyebrow">Bulkuppladdning</span>
-        <h2>Trettio annonser tar lika lång tid som en.</h2>
-        <p class="lede">
-          Att lägga upp annonser en och en i Ads Manager är samma tolv klick per annons, varje gång. I Hangar släpper du
-          in hela mappen, pekar ut en annons som redan fungerar och skickar alltihop till alla annonsgrupper du vill,
-          på en gång.
-        </p>
-      </div>
-
-      <div class="feats">
-        <article class="feat">
-          <span class="chip">Släpp in allt</span>
-          <h3>Hela mappen, inte en fil i taget</h3>
-          <p>Bild och video, från datorn, från en mapp du drar in eller från material som redan ligger i annonskontot. Filer som hör ihop blir automatiskt en annons med rätt variant per placering.</p>
-        </article>
-        <article class="feat">
-          <span class="chip">Ärv</span>
-          <h3>Kopiera från en annons som fungerar</h3>
-          <p>Sida, knapp, länk och texter hämtas från en befintlig annons. Du ändrar det du vill ändra, resten är redan rätt ifyllt.</p>
-        </article>
-        <article class="feat">
-          <span class="chip">Flera mål</span>
-          <h3>Flera annonsgrupper i samma utskick</h3>
-          <p>Peka ut annonsgrupper i flera kampanjer och länder. Samma material skapas i allihop, med namn efter ditt eget mönster.</p>
-        </article>
-        <article class="feat">
-          <span class="chip">Innan, inte efter</span>
-          <h3>Du ser annonsen först</h3>
-          <p>Förhandsvisningen visar exakt hur annonsen kommer se ut i flödet, i Stories och i Reels, innan något skapas. Och den skapas pausad om du inte uttryckligen säger annat.</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section class="rule">
-    <div class="shell">
-      <div class="sec-head">
-        <span class="eyebrow">Ärligt om alternativen</span>
-        <h2>Du behöver kortare väg till rätt siffra. Inte en hel svit du inte använder.</h2>
-      </div>
-
-      <div class="versus">
-        <div class="card-cmp theirs">
-          <h3>De stora analyssviterna</h3>
-          <ul class="cmp-list">
-            <li><span class="glyph">+</span> Gör väldigt mycket: attribution, tracking, rapporter, prognoser</li>
-            <li><span class="glyph">−</span> Du betalar för hela paketet, även de delar du aldrig öppnar</li>
-            <li><span class="glyph">−</span> Byggda för att analysera i efterhand, inte för att korta arbetet i stunden</li>
-            <li><span class="glyph">−</span> Annonserna laddas ändå upp en och en, i Ads Manager, som förut</li>
-          </ul>
-        </div>
-
-        <div class="card-cmp ours">
-          <h3>Pejlon</h3>
-          <ul class="cmp-list">
-            <li><span class="glyph">→</span> Gör en sak: kortar tiden fram till svaret och håller svaret korrekt</li>
-            <li><span class="glyph">→</span> Alla konton i ett bord, med dygnen bakom varje rad framme direkt</li>
-            <li><span class="glyph">→</span> Uppladdning, kloning och ändringar sker här, inte i fem olika flikar</li>
-            <li><span class="glyph">→</span> En bråkdel av priset, för att vi inte säljer dig det du inte behöver</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="honest">
-        <p>
-          <strong>Och det vi inte gör:</strong> vi är inte ett attributionsverktyg. Behöver du djup UTM-spårning finns
-          det tjänster som gör just det bättre än vi någonsin kommer göra, och då ska du använda en av dem. Vi kortar
-          arbetet med att läsa av kontona och ändra i dem, och vi tar betalt därefter.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <section class="cta rule" id="tidig-tillgang">
-    <div class="shell">
-      <span class="eyebrow">Tidig tillgång</span>
-      <h2 style="margin-top:16px">Ta tillbaka timmarna. Och siffror du vågar bygga besluten på.</h2>
+  <!-- ---------- cta ---------- -->
+  <section class="cta rule" id="access">
+    <div class="shell reveal">
+      <span class="eyebrow">Early access</span>
+      <h2 style="margin-top:16px">Take the hours back. And get numbers you'd bet on.</h2>
       <p class="lede" style="margin-inline:auto">
-        Pejlon öppnar för ett begränsat antal annonsörer först. Hör av dig, så kopplar vi in ditt annonskonto
-        tillsammans och du får se ditt eget bord med dina egna siffror i stället för en beskrivning av det.
+        Pejlon is opening to a limited number of advertisers first. Get in touch and we'll connect your ad account
+        together, so you see your own table with your own numbers rather than a description of one.
       </p>
-      <!-- Adressen står synlig och markerbar i stället för att gömmas bakom
-           mailto:. En mailto-länk öppnar operativsystemets app-väljare hos alla
-           som inte har en mejlklient inställd, och då ser sidan trasig ut i
-           precis det ögonblick besökaren bestämt sig. Sidan kör dessutom helt
-           utan JavaScript (CSP: script-src 'none'), så en kopieringsknapp vore
-           ändå ingen väg. -->
       <div class="contact">
-        <span class="contact-label">Skriv till</span>
+        <span class="contact-label">Write to</span>
         <span class="contact-mail">elliot@westrosdigitalretail.se</span>
       </div>
-      <p class="hero-foot" style="margin-top:20px">Ditt annonskonto ligger krypterat och kan bara läsas av dig.</p>
+      <p class="hero-foot" style="margin-top:20px">Your ad account is stored encrypted and readable only by you.</p>
     </div>
   </section>
 </main>
@@ -686,6 +898,7 @@
 <footer>
   <div class="shell">
     <span>Pejlon</span>
+    <span><a href="/privacy">Privacy</a></span>
     <span class="right">Westros Digital Retail, 2026</span>
   </div>
 </footer>
