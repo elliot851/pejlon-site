@@ -44,7 +44,7 @@
 <link rel="apple-touch-icon" href="/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=Instrument+Sans:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap">
 <style>
   :root {
     --ground: #0A0D13;
@@ -65,6 +65,11 @@
 
     --display: "Familjen Grotesk", "Helvetica Neue", Arial, sans-serif;
     --body: "Instrument Sans", "Segoe UI", system-ui, sans-serif;
+    /* Editorial-kursiven. Samma gjuteri som brödtexten, så den sitter ihop med
+       resten i stället för att se pålagd ut. Används SPARSAMT: ett betonat ord
+       i en rubrik, en siffra, en avslutande rad. Kontrasten mellan en grotesk
+       och en serif-kursiv är det som får en sida att läsas som satt av någon. */
+    --accent: "Instrument Serif", "Iowan Old Style", Georgia, serif;
 
     --shell: 1180px;
     --gut: 28px;
@@ -159,7 +164,19 @@
   }
   .hero .shell { position: relative; display: grid; grid-template-columns: minmax(0, 1.02fr) minmax(0, 1fr); gap: 58px; align-items: center; }
   .hero h1 { font-size: clamp(40px, 5.4vw, 62px); }
-  .hero h1 em { font-style: normal; color: var(--brand); }
+  /* Det betonade ordet byter TYPSNITT, inte bara färg. En grotesk som bryts av
+     en serif-kursiv mitt i en mening är ett sättningsbeslut — färgbyte ensamt
+     är en standardinställning. */
+  .hero h1 em {
+    font-family: var(--accent); font-style: italic; font-weight: 400;
+    color: var(--brand-lift); letter-spacing: -0.005em;
+    /* Serifen har mindre x-höjd än grotesken; utan kompensation ser den liten ut. */
+    font-size: 1.06em;
+  }
+  h2 em, h3 em {
+    font-family: var(--accent); font-style: italic; font-weight: 400;
+    color: var(--brand-lift); font-size: 1.05em; letter-spacing: -0.005em;
+  }
   .hero-copy > * + * { margin-top: 22px; }
   .hero-cta { display: flex; flex-wrap: wrap; gap: 12px; padding-top: 6px; }
   .hero-foot { font-size: 13px; color: var(--ink-3); }
@@ -316,7 +333,19 @@
   .price-annual { display: none; }
   #bill-annual:checked ~ .price-wrap .price-monthly { display: none; }
   #bill-annual:checked ~ .price-wrap .price-annual { display: block; }
-  .price-card { border: 1px solid var(--brand-deep); border-radius: 16px; padding: 32px 30px; background: linear-gradient(175deg, rgba(79,140,255,.07), transparent 55%), var(--panel); text-align: left; }
+  .price-card {
+    border: 1px solid var(--brand-deep); border-radius: 16px; padding: 32px 30px;
+    background: linear-gradient(175deg, rgba(79,140,255,.07), transparent 55%), var(--panel);
+    text-align: left;
+    /* Korten lyfter en aning när man är på väg att välja. Kort transition, lång
+       kurva: det ska kännas som ett material, inte som en effekt. */
+    transition: transform .28s cubic-bezier(.2,.7,.3,1), border-color .28s ease, box-shadow .28s ease;
+  }
+  .price-card:hover { transform: translateY(-4px); border-color: var(--brand); box-shadow: 0 26px 60px -34px rgba(79,140,255,.7); }
+  /* Prissiffran räknas inte upp — den byter plats när man växlar månad/år, och
+     då ska den glida in i stället för att hoppa. */
+  .price-monthly, .price-annual { animation: priceIn .34s cubic-bezier(.2,.7,.3,1) backwards; }
+  @keyframes priceIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
   .price-name { font-family: var(--display); font-weight: 700; font-size: 20px; letter-spacing: -.02em; }
   .price-amount { display: flex; align-items: baseline; gap: 8px; margin-top: 14px; }
   .price-amount .kr { font-family: var(--display); font-weight: 700; font-size: 46px; letter-spacing: -.03em; }
@@ -385,9 +414,13 @@
       animation-timeline: view();
       animation-range: entry 8% cover 26%;
     }
+    /* Innehållet kommer in med en aning skala och oskärpa, inte bara en
+       förskjutning. Skillnaden är att ögat läser det som DJUP — något som
+       flyttar sig mot dig — i stället för som ett block som halkar uppåt.
+       Värdena är avsiktligt små; syns rörelsen tydligt är den för stor. */
     @keyframes reveal {
-      from { opacity: 0; transform: translateY(26px); }
-      to { opacity: 1; transform: none; }
+      from { opacity: 0; transform: translateY(24px) scale(.988); filter: blur(6px); }
+      to { opacity: 1; transform: none; filter: blur(0); }
     }
 
     /* Cards in a row arrive one after another rather than all at once, so the
@@ -541,7 +574,7 @@
     <div class="shell">
       <div class="sec-head reveal">
         <span class="eyebrow">The cost</span>
-        <h2>Half an hour to compare five ad accounts. Every time you want to know where you stand.</h2>
+        <h2>Half an hour to compare five ad accounts. <em>Every time</em> you want to know where you stand.</h2>
         <p class="lede">
           None of the work below produces anything. It is the tax you pay to find out what already happened, and you pay
           it again tomorrow. Here is where it goes.
@@ -660,7 +693,7 @@
     <div class="shell">
       <div class="sec-head reveal">
         <span class="eyebrow">Day by day</span>
-        <h2>A 3× ROAS means nothing until you know what the days look like.</h2>
+        <h2>A 3× ROAS means <em>nothing</em> until you know what the days look like.</h2>
         <p class="lede">
           A seven day average hides everything that matters. One strong day can carry a week, and scaling on that number
           is how a good account turns bad in three days. Pejlon keeps the days behind every row and says so when they
@@ -726,7 +759,7 @@
     <div class="shell">
       <div class="sec-head reveal">
         <span class="eyebrow">The analysis</span>
-        <h2>It reads every row for you and tells you what it would do.</h2>
+        <h2>It reads every row for you and tells you <em>what it would do</em>.</h2>
         <p class="lede">
           You should not have to go through thirty rows to find the three worth touching. The analysis works through the
           whole account, weighs each row against your targets, and leaves one suggestion per row: raise, cut or hold.
@@ -872,7 +905,7 @@
     <div class="shell">
       <div class="sec-head reveal">
         <span class="eyebrow">Control</span>
-        <h2>Nothing spends money without you saying so.</h2>
+        <h2>Nothing spends money <em>without you saying so</em>.</h2>
         <p class="lede">
           A tool that sits on your ad account has to be careful by default. Every choice here leans the same way: the
           quiet option is the safe one, and the expensive one takes a deliberate yes.
@@ -958,74 +991,74 @@
   <section class="rule" id="pricing">
     <div class="shell">
       <div class="sec-head reveal" style="text-align:center; margin-inline:auto">
-        <span class="eyebrow">Pris</span>
-        <h2>Två planer. Inga dolda tillägg.</h2>
+        <span class="eyebrow">Pricing</span>
+        <h2>Two plans. <em>No hidden extras.</em></h2>
         <p class="lede" style="margin-inline:auto">
-          Börja med kontrollrummet. Uppgradera när du vill att Pejlon skalar åt dig och räknar hem varje krona.
-          Betala per månad, eller per år och få två månader gratis. Säg upp när du vill.
+          Start with the control room. Move up when you want Pejlon to scale for you and account for every euro.
+          Pay monthly, or yearly and get two months free. Cancel whenever you like.
         </p>
       </div>
 
-      <!-- Ren-CSS-växling: radioknapparna styr vilket pris som visas -->
+      <!-- Pure-CSS switch: the radios decide which price is shown -->
       <input type="radio" name="billing" id="bill-monthly" checked>
       <input type="radio" name="billing" id="bill-annual">
       <div class="price-wrap reveal">
         <div class="price-toggle">
-          <label for="bill-monthly">Månadsvis</label>
-          <label for="bill-annual">Årsvis<span class="price-save">2 mån gratis</span></label>
+          <label for="bill-monthly">Monthly</label>
+          <label for="bill-annual">Yearly<span class="price-save">2 months free</span></label>
         </div>
 
         <div class="price-grid">
           <div class="price-card">
             <div class="price-head"><span class="price-name">Pejlon</span></div>
-            <p class="price-tagline">Kontrollrummet. Du ser allt och bestämmer själv.</p>
+            <p class="price-tagline">The control room. You see everything and decide for yourself.</p>
 
             <div class="price-monthly">
-              <div class="price-amount"><span class="kr">995 kr</span><span class="per">/ månad</span></div>
-              <div class="price-sub">Per annonskonto. Moms tillkommer.</div>
+              <div class="price-amount"><span class="kr">€97</span><span class="per">/ month</span></div>
+              <div class="price-sub">Per ad account. VAT not included.</div>
             </div>
             <div class="price-annual">
-              <div class="price-amount"><span class="kr">9 950 kr</span><span class="per">/ år</span></div>
-              <div class="price-sub">Motsvarar 829 kr/månad. Två månader gratis. Moms tillkommer.</div>
+              <div class="price-amount"><span class="kr">€970</span><span class="per">/ year</span></div>
+              <div class="price-sub">Works out at €81 a month. Two months free. VAT not included.</div>
             </div>
 
             <ul class="price-list">
-              <li><span class="tick">✓</span> Alla dina annonskonton i ett bord</li>
-              <li><span class="tick">✓</span> Dag för dag bakom varje rad, med varning för ojämna vinnare</li>
-              <li><span class="tick">✓</span> Skalningsförslag med skälet utskrivet</li>
-              <li><span class="tick">✓</span> Bulkuppladdning av annonser och kloning av vinnare</li>
-              <li><span class="tick">✓</span> Morgonrapport och budgettakt</li>
-              <li><span class="tick">✓</span> Ditt annonskonto krypterat, läsbart bara av dig</li>
+              <li><span class="tick">✓</span> <span>Every ad account in one table</span></li>
+              <li><span class="tick">✓</span> <span>The day by day behind each row, with a flag for uneven winners</span></li>
+              <li><span class="tick">✓</span> <span>Scaling suggestions with the reasoning written out</span></li>
+              <li><span class="tick">✓</span> <span>Bulk upload of creative and cloning of winners</span></li>
+              <li><span class="tick">✓</span> <span>Morning report and budget pacing</span></li>
+              <li><span class="tick">✓</span> <span>Your ad account encrypted, readable only by you</span></li>
             </ul>
 
-            <a class="btn price-cta" href="#access">Kom igång</a>
-            <p class="price-foot">Vi kopplar in ditt annonskonto tillsammans. Ingen bindningstid.</p>
+            <a class="btn price-cta" href="#access">Get started</a>
+            <p class="price-foot">We connect your ad account together. No lock-in.</p>
           </div>
 
           <div class="price-card is-pro">
-            <div class="price-head"><span class="price-name">Pejlon Pro</span><span class="price-tag">Skalar åt dig</span></div>
-            <p class="price-tagline">Allt i Pejlon — plus att den skalar efter dina KPI:er och räknar hem vinsten.</p>
+            <div class="price-head"><span class="price-name">Pejlon Pro</span><span class="price-tag">Scales for you</span></div>
+            <p class="price-tagline">Everything in Pejlon — plus it scales to your KPIs and counts the profit home.</p>
 
             <div class="price-monthly">
-              <div class="price-amount"><span class="kr">1 295 kr</span><span class="per">/ månad</span></div>
-              <div class="price-sub">Per annonskonto. Moms tillkommer.</div>
+              <div class="price-amount"><span class="kr">€127</span><span class="per">/ month</span></div>
+              <div class="price-sub">Per ad account. VAT not included.</div>
             </div>
             <div class="price-annual">
-              <div class="price-amount"><span class="kr">12 950 kr</span><span class="per">/ år</span></div>
-              <div class="price-sub">Motsvarar 1 079 kr/månad. Två månader gratis. Moms tillkommer.</div>
+              <div class="price-amount"><span class="kr">€1,270</span><span class="per">/ year</span></div>
+              <div class="price-sub">Works out at €106 a month. Two months free. VAT not included.</div>
             </div>
 
             <ul class="price-list">
-              <li><span class="tick-pro">✓</span> <span>Allt i Pejlon</span></li>
-              <li class="is-new"><span class="tick-pro">✓</span> <span>Automatisk skalning efter dina KPI:er — höjer vinnare, drar ner förlorare, dygnet runt</span></li>
-              <li class="is-new"><span class="tick-pro">✓</span> <span>Varje ändring loggad med skälet, och alltid inom dina skyddsräcken</span></li>
-              <li class="is-new"><span class="tick-pro">✓</span> <span>Vinstspårning: koppla dina butiker och se verklig nettovinst per dag</span></li>
-              <li class="is-new"><span class="tick-pro">✓</span> <span>Landad produktkostnad per land — inte en schablon</span></li>
-              <li class="is-new"><span class="tick-pro">✓</span> <span>Dagsrapport i mobilen när dygnet stänger</span></li>
+              <li><span class="tick-pro">✓</span> <span>Everything in Pejlon</span></li>
+              <li class="is-new"><span class="tick-pro">✓</span> <span>Automatic scaling against your KPIs — raises winners, pulls back losers, around the clock</span></li>
+              <li class="is-new"><span class="tick-pro">✓</span> <span>Every change logged with the reason, always inside your guardrails</span></li>
+              <li class="is-new"><span class="tick-pro">✓</span> <span>Profit tracking: connect your stores and see real net profit per day</span></li>
+              <li class="is-new"><span class="tick-pro">✓</span> <span>Landed product cost per country — not a flat estimate</span></li>
+              <li class="is-new"><span class="tick-pro">✓</span> <span>The day's result on your phone when the day closes</span></li>
             </ul>
 
-            <a class="btn btn-solid price-cta" href="#access">Kom igång med Pro</a>
-            <p class="price-foot">Du sätter reglerna. Pejlon kör dem — du kan stoppa när du vill.</p>
+            <a class="btn btn-solid price-cta" href="#access">Get started with Pro</a>
+            <p class="price-foot">You set the rules. Pejlon runs them — and you can stop it any time.</p>
           </div>
         </div>
       </div>
@@ -1036,7 +1069,7 @@
   <section class="cta rule" id="access">
     <div class="shell reveal">
       <span class="eyebrow">Early access</span>
-      <h2 style="margin-top:16px">Take the hours back. And get numbers you'd bet on.</h2>
+      <h2 style="margin-top:16px">Take the hours back. And get numbers <em>you'd bet on</em>.</h2>
       <p class="lede" style="margin-inline:auto">
         Pejlon is opening to a limited number of advertisers first. Get in touch and we'll connect your ad account
         together, so you see your own table with your own numbers rather than a description of one.
@@ -1056,21 +1089,20 @@
 <section class="rule" id="licence">
   <div class="shell reveal">
     <div class="licence">
-      <span class="eyebrow">Licens och äganderätt</span>
-      <h3>Pejlon är en licensierad produkt.</h3>
+      <span class="eyebrow">Licence and ownership</span>
+      <h3>Pejlon is a <em>licensed</em> product.</h3>
       <p>
-        Pejlon™ är ett registrerat varumärke som tillhör Westros Digital Retail. Programvaran, gränssnittet,
-        metoden bakom skalningsmotorn och vinstberäkningen, samt allt material på den här sidan är
-        upphovsrättsskyddat och proprietärt. Ingen del av det är öppen källkod.
+        Pejlon™ is a trademark of Westros Digital Retail. The software, the interface, the method behind the
+        scaling engine and the profit calculation, and every piece of material on this page are copyrighted and
+        proprietary. None of it is open source.
       </p>
       <p>
-        Ett abonnemang ger dig en personlig, tidsbegränsad <strong>nyttjanderätt</strong> till Pejlon under
-        avtalstiden. Det överlåter ingen äganderätt, ingen källkod och ingen rätt att kopiera, dekompilera,
-        vidarelicensiera eller bygga vidare på systemet. Villkoren i sin helhet finns under
-        <a href="/terms">Terms</a>.
+        A subscription grants you a personal, time-limited <strong>right of use</strong> for the term of the
+        agreement. It transfers no ownership, no source code, and no right to copy, decompile, sublicense or build
+        derivative work from the system. The full terms are set out under <a href="/terms">Terms</a>.
       </p>
       <p class="licence-foot">
-        Frågor om licensiering, återförsäljning eller partnerskap:
+        Licensing, reselling and partnership enquiries:
         <span class="contact-mail">elliot@westrosdigitalretail.se</span>
       </p>
     </div>
