@@ -460,6 +460,85 @@
   .flow-step .d { font-size: 12.5px; color: var(--ink-2); margin-top: 6px; line-height: 1.4; }
   .flow-arrow { align-self: center; color: var(--ink-3); font-size: 15px; flex: none; }
 
+  /* ---------- se den skala (ren CSS-loop) ----------
+     Hela förloppet är en åttasekunders keyframe. Ingen JavaScript — sidan kör
+     script-src 'none' och ska fortsätta göra det. */
+  .live {
+    max-width: 660px; margin: 40px auto 0; border: 1px solid var(--line); border-radius: 15px;
+    background: var(--panel); overflow: hidden; box-shadow: 0 30px 70px -34px rgba(0,0,0,.85);
+  }
+  .live-bar {
+    display: flex; align-items: center; gap: 9px; padding: 11px 16px; font-size: 12px; color: var(--ink-3);
+    border-bottom: 1px solid var(--line); background: var(--panel-2);
+  }
+  .live-clock { margin-left: auto; font-variant-numeric: tabular-nums; }
+  .live-pip { width: 7px; height: 7px; border-radius: 50%; background: var(--good); animation: livePulse 2.4s ease-in-out infinite; }
+  @keyframes livePulse { 0%,100% { opacity: 1; box-shadow: 0 0 0 0 rgba(86,208,138,.5); } 50% { opacity: .55; box-shadow: 0 0 0 5px rgba(86,208,138,0); } }
+
+  .live-head, .live-row {
+    display: grid; grid-template-columns: minmax(0,1fr) 78px 92px; gap: 10px; align-items: center;
+    padding: 12px 16px; position: relative;
+  }
+  .live-head { font-size: 11.5px; font-weight: 600; color: var(--ink-3); border-bottom: 1px solid var(--line); }
+  .live-row { border-bottom: 1px solid var(--line-soft); font-size: 14px; }
+  .live-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .live-num { text-align: right; font-variant-numeric: tabular-nums; }
+  .live-quiet { color: var(--ink-3); }
+
+  /* Raden som beslutet gäller: bakgrunden tänds grön när höjningen sker. */
+  .live-hero { color: var(--ink); animation: liveRow 8s ease-in-out infinite; }
+  @keyframes liveRow {
+    0%, 34% { background: transparent; }
+    42%, 76% { background: rgba(86,208,138,.13); }
+    88%, 100% { background: transparent; }
+  }
+  .live-roas { color: var(--good); font-weight: 600; }
+
+  /* Budgeten byter tal genom att två spann korsfadar — ett tal kan inte
+     animeras, men två kan byta plats. */
+  .live-budget { position: relative; }
+  .live-before, .live-after { display: block; }
+  .live-after { position: absolute; inset: 0; color: var(--good); font-weight: 700; }
+  .live-before { animation: liveOut 8s ease-in-out infinite; }
+  .live-after { animation: liveIn 8s ease-in-out infinite; }
+  @keyframes liveOut { 0%, 38% { opacity: 1; transform: none; } 46%, 78% { opacity: 0; transform: translateY(-7px); } 88%, 100% { opacity: 1; transform: none; } }
+  @keyframes liveIn { 0%, 38% { opacity: 0; transform: translateY(7px); } 46%, 78% { opacity: 1; transform: none; } 88%, 100% { opacity: 0; transform: translateY(7px); } }
+
+  .live-badge {
+    position: absolute; right: 16px; top: 50%; margin-top: -30px;
+    font-size: 11px; font-weight: 700; letter-spacing: .03em;
+    background: var(--good); color: #06231a; border-radius: 999px; padding: 3px 9px;
+    animation: liveBadge 8s ease-in-out infinite;
+  }
+  @keyframes liveBadge {
+    0%, 40% { opacity: 0; transform: translateY(6px) scale(.9); }
+    48%, 76% { opacity: 1; transform: none; }
+    86%, 100% { opacity: 0; transform: translateY(-4px) scale(.96); }
+  }
+
+  .live-note { display: flex; gap: 11px; padding: 14px 16px; background: var(--ground-2); border-top: 1px solid var(--line); animation: liveNote 8s ease-in-out infinite; }
+  @keyframes liveNote {
+    0%, 30% { opacity: .22; }
+    40%, 78% { opacity: 1; }
+    90%, 100% { opacity: .22; }
+  }
+  .live-note-tag { flex: none; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--brand); padding-top: 2px; }
+  .live-note-body { font-size: 13.5px; line-height: 1.55; color: var(--ink-2); }
+  .live-note-body strong { color: var(--good); }
+  .live-foot { max-width: 620px; margin: 18px auto 0; text-align: center; font-size: 13px; line-height: 1.6; color: var(--ink-3); }
+
+  /* Respektera systemets rörelseinställning: visa slutläget, rör ingenting. */
+  @media (prefers-reduced-motion: reduce) {
+    .live-hero, .live-before, .live-after, .live-badge, .live-note, .live-pip { animation: none; }
+    .live-before { display: none; }
+    .live-after { position: static; }
+    .live-hero { background: rgba(86,208,138,.13); }
+  }
+  @media (max-width: 520px) {
+    .live-head, .live-row { grid-template-columns: minmax(0,1fr) 62px 76px; gap: 8px; padding: 11px 13px; font-size: 13px; }
+    .live-badge { right: 13px; margin-top: -28px; }
+  }
+
   /* ---------- vad det ersätter ---------- */
   .stack { max-width: 760px; margin: 40px auto 0; border: 1px solid var(--line); border-radius: 15px; overflow: hidden; background: var(--panel); }
   .stack-row { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 17px 22px; border-bottom: 1px solid var(--line-soft); }
@@ -485,6 +564,56 @@
     .stack-row { flex-direction: column; align-items: flex-start; gap: 6px; }
     .stack-price { font-size: 20px; }
   }
+
+  /* ---------- besparingskalkylator ----------
+     Radioknapparna ligger utanför .calc och styr vilken panel som visas via
+     syskonväljare. Ingen JavaScript, samma teknik som månad/år-växlaren. */
+  #sp-1, #sp-2, #sp-3 { position: absolute; opacity: 0; pointer-events: none; }
+  .calc { max-width: 820px; margin: 36px auto 0; }
+  .calc-toggle {
+    display: flex; justify-content: center; gap: 0; margin: 0 auto 24px; width: fit-content;
+    border: 1px solid var(--line); border-radius: 999px; padding: 4px;
+  }
+  .calc-toggle label {
+    font-size: 14px; font-weight: 600; color: var(--ink-3); padding: 8px 18px; border-radius: 999px; cursor: pointer;
+    transition: color .15s ease, background .15s ease; white-space: nowrap;
+  }
+  .calc-toggle label span { font-weight: 500; font-size: 12px; opacity: .75; margin-left: 2px; }
+  #sp-1:checked ~ .calc label[for="sp-1"],
+  #sp-2:checked ~ .calc label[for="sp-2"],
+  #sp-3:checked ~ .calc label[for="sp-3"] { color: #06101f; background: var(--brand); }
+
+  .calc-panel { display: none; gap: 16px; grid-template-columns: 1fr; }
+  #sp-1:checked ~ .calc .calc-1,
+  #sp-2:checked ~ .calc .calc-2,
+  #sp-3:checked ~ .calc .calc-3 { display: grid; animation: calcIn .32s cubic-bezier(.2,.7,.3,1) backwards; }
+  @keyframes calcIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  @media (min-width: 780px) { .calc-panel { grid-template-columns: 1fr 1fr; } }
+
+  .calc-side { border: 1px solid var(--line); border-radius: 14px; background: var(--panel); padding: 20px 20px 16px; }
+  .calc-side.is-ours { border-color: var(--brand-deep); background: linear-gradient(175deg, rgba(79,140,255,.08), transparent 60%), var(--panel); }
+  .calc-label { font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-3); margin-bottom: 14px; }
+  .calc-side.is-ours .calc-label { color: var(--brand); }
+  .calc-line { display: flex; justify-content: space-between; gap: 14px; font-size: 14.5px; color: var(--ink-2); padding: 7px 0; }
+  .calc-line span:last-child { font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .calc-muted { color: var(--ink-3); }
+  .calc-total {
+    display: flex; justify-content: space-between; gap: 14px; margin-top: 10px; padding-top: 12px;
+    border-top: 1px solid var(--line); font-family: var(--display); font-weight: 700; font-size: 19px;
+  }
+  .calc-total span:last-child { font-variant-numeric: tabular-nums; }
+  .calc-side.is-ours .calc-total span:last-child { color: var(--brand-lift); }
+
+  /* Slutsatsen spänner över båda spalterna — det är raden man ska minnas. */
+  .calc-save {
+    grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: baseline; justify-content: center; gap: 10px;
+    border: 1px solid var(--good); border-radius: 14px; padding: 16px 20px; text-align: center;
+    background: color-mix(in srgb, var(--good) 11%, var(--panel));
+  }
+  .calc-save span { font-size: 14px; color: var(--ink-2); }
+  .calc-save strong { font-family: var(--display); font-weight: 700; font-size: 27px; color: var(--good); letter-spacing: -.02em; }
+  .calc-year { font-size: 13px !important; color: var(--ink-3) !important; }
+  .calc-foot { max-width: 680px; margin: 20px auto 0; text-align: center; font-size: 13px; line-height: 1.6; color: var(--ink-3); }
 
   /* ---------- early access ---------- */
   .seats {
@@ -701,6 +830,74 @@
           </div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- ---------- se den skala ----------
+       Ren CSS. Sidan kör script-src 'none' och behåller det — hela förloppet är
+       en keyframe-loop, inte ett skript. Åtta sekunder: raden läses, beslutet
+       skrivs ut, budgeten höjs, och allt nollställs. -->
+  <section class="rule" id="live">
+    <div class="shell">
+      <div class="sec-head reveal" style="text-align:center; margin-inline:auto">
+        <span class="eyebrow">Watch it work</span>
+        <h2>It finds the winner and raises it. <em>While you sleep.</em></h2>
+        <p class="lede" style="margin-inline:auto">
+          This is what Pejlon does on its own, every hour, on every row you let it touch. Nothing here is a mockup of
+          a feature we plan to build — it is the decision the engine already makes.
+        </p>
+      </div>
+
+      <div class="live reveal" role="img" aria-label="Pejlon checks a campaign, finds it has held above the target ROAS for three days, and raises its budget from 450 to 540 euro, inside the daily ceiling.">
+        <div class="live-bar">
+          <span class="live-pip"></span>
+          <span>Pejlon · autopilot</span>
+          <span class="live-clock">04:12</span>
+        </div>
+
+        <div class="live-head">
+          <span>Campaign</span>
+          <span class="live-num">ROAS</span>
+          <span class="live-num">Budget</span>
+        </div>
+
+        <div class="live-row live-quiet">
+          <span class="live-name">Retargeting 30d · ABO</span>
+          <span class="live-num">1.42×</span>
+          <span class="live-num">€120</span>
+        </div>
+
+        <!-- Raden som händelsen gäller -->
+        <div class="live-row live-hero">
+          <span class="live-name">Prospecting broad · CBO</span>
+          <span class="live-num live-roas">3.14×</span>
+          <span class="live-num live-budget">
+            <span class="live-before">€450</span>
+            <span class="live-after">€540</span>
+          </span>
+          <span class="live-badge">+20%</span>
+        </div>
+
+        <div class="live-row live-quiet">
+          <span class="live-name">Lookalike 1% · CBO</span>
+          <span class="live-num">2.61×</span>
+          <span class="live-num">€300</span>
+        </div>
+
+        <!-- Beslutet, skrivet med skälet -->
+        <div class="live-note">
+          <span class="live-note-tag">Decision</span>
+          <span class="live-note-body">
+            Held <strong>3.1×</strong> for three days on 41 purchases — above your 2.5× target every day.
+            Raising the budget 20%, inside your €800 ceiling.
+          </span>
+        </div>
+      </div>
+
+      <p class="live-foot reveal">
+        You decide what it may touch and how far it may go. Every change is written down with the reason, and every
+        one of them can be undone.
+      </p>
     </div>
   </section>
 
@@ -1439,6 +1636,91 @@
         Figures are typical monthly list prices per category and typical retainer levels, not a quote for any named
         product or agency. Pejlon does not write your strategy or your creative — it does the daily watching and
         adjusting, which is the part that costs you either hours or a retainer, every single month.
+      </p>
+    </div>
+  </section>
+
+  <!-- ---------- besparingskalkylator ----------
+       Ren CSS: radioknappar väljer spendnivå, och rätt panel visas via :checked.
+       Siffrorna är förräknade i HTML — inget skript räknar något i webbläsaren. -->
+  <section class="rule" id="savings">
+    <div class="shell">
+      <div class="sec-head reveal" style="text-align:center; margin-inline:auto">
+        <span class="eyebrow">What it saves you</span>
+        <h2>Pick your monthly ad spend. <em>See the difference.</em></h2>
+        <p class="lede" style="margin-inline:auto">
+          The tools cost the same whatever you spend. The person watching them does not — the more you run, the more
+          of their day it takes. Here is what the two columns look like next to each other.
+        </p>
+      </div>
+
+      <input type="radio" name="spend" id="sp-1" checked>
+      <input type="radio" name="spend" id="sp-2">
+      <input type="radio" name="spend" id="sp-3">
+
+      <div class="calc reveal">
+        <div class="calc-toggle">
+          <label for="sp-1">€5k<span>/mo</span></label>
+          <label for="sp-2">€20k<span>/mo</span></label>
+          <label for="sp-3">€75k<span>/mo</span></label>
+        </div>
+
+        <!-- €5k -->
+        <div class="calc-panel calc-1">
+          <div class="calc-side">
+            <div class="calc-label">The usual way</div>
+            <div class="calc-line"><span>Four separate tools</span><span>€240</span></div>
+            <div class="calc-line"><span>Freelance media buyer, part time</span><span>€1,500</span></div>
+            <div class="calc-total"><span>Every month</span><span>€1,740</span></div>
+          </div>
+          <div class="calc-side is-ours">
+            <div class="calc-label">With Pejlon Pro</div>
+            <div class="calc-line"><span>Everything, one subscription</span><span>€127</span></div>
+            <div class="calc-line calc-muted"><span>Your own time, back</span><span>—</span></div>
+            <div class="calc-total"><span>Every month</span><span>€127</span></div>
+          </div>
+          <div class="calc-save"><span>You keep</span><strong>€1,613 / month</strong><span class="calc-year">€19,356 a year</span></div>
+        </div>
+
+        <!-- €20k -->
+        <div class="calc-panel calc-2">
+          <div class="calc-side">
+            <div class="calc-label">The usual way</div>
+            <div class="calc-line"><span>Four separate tools</span><span>€290</span></div>
+            <div class="calc-line"><span>Media buyer or agency retainer</span><span>€2,200</span></div>
+            <div class="calc-total"><span>Every month</span><span>€2,490</span></div>
+          </div>
+          <div class="calc-side is-ours">
+            <div class="calc-label">With Pejlon Pro</div>
+            <div class="calc-line"><span>Everything, one subscription</span><span>€127</span></div>
+            <div class="calc-line calc-muted"><span>Your own time, back</span><span>—</span></div>
+            <div class="calc-total"><span>Every month</span><span>€127</span></div>
+          </div>
+          <div class="calc-save"><span>You keep</span><strong>€2,363 / month</strong><span class="calc-year">€28,356 a year</span></div>
+        </div>
+
+        <!-- €75k -->
+        <div class="calc-panel calc-3">
+          <div class="calc-side">
+            <div class="calc-label">The usual way</div>
+            <div class="calc-line"><span>Four separate tools, higher tiers</span><span>€420</span></div>
+            <div class="calc-line"><span>Agency retainer</span><span>€3,000</span></div>
+            <div class="calc-total"><span>Every month</span><span>€3,420</span></div>
+          </div>
+          <div class="calc-side is-ours">
+            <div class="calc-label">With Pejlon Pro</div>
+            <div class="calc-line"><span>Everything, one subscription</span><span>€127</span></div>
+            <div class="calc-line calc-muted"><span>Your own time, back</span><span>—</span></div>
+            <div class="calc-total"><span>Every month</span><span>€127</span></div>
+          </div>
+          <div class="calc-save"><span>You keep</span><strong>€3,293 / month</strong><span class="calc-year">€39,516 a year</span></div>
+        </div>
+      </div>
+
+      <p class="calc-foot reveal">
+        Tool prices are typical list prices per category; retainer levels are typical for that spend. Pejlon does not
+        replace strategy or creative — it replaces the daily watching and adjusting, which is the part billed by the
+        month whether it needed doing that day or not.
       </p>
     </div>
   </section>
