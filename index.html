@@ -355,6 +355,23 @@
   .price-list li { display: flex; gap: 10px; font-size: 14.5px; color: var(--ink-2); line-height: 1.45; }
   .price-list .tick { color: var(--brand); flex: none; font-weight: 700; }
   .price-cta { margin-top: 26px; display: block; text-align: center; }
+  /* Sekundärknappen ska LÄSAS som en knapp, inte som en länk. Enbart en hårfin
+     kant försvinner mot det mörka kortet — den behöver en egen yta. Fortfarande
+     tydligt underordnad Pro-kortets solida blå. */
+  .price-card .btn-line {
+    /* Mätt: enbart panel-2 gav 1.08 i kontrast mot kortet — ytan fanns inte för
+       ögat. En blåton plus en tydlig kant gör den till en knapp, men den håller
+       sig under Pro-kortets solida blå i hierarkin. */
+    background: #1F2C46;
+    border-color: #3F6ECC;
+    color: var(--ink);
+  }
+  .price-card .btn-line:hover {
+    background: #2A3E63;
+    border-color: var(--brand);
+    color: #fff;
+    transform: translateY(-1px);
+  }
   .price-foot { font-size: 12.5px; color: var(--ink-3); margin-top: 14px; text-align: center; }
 
   .cta { text-align: center; padding: 96px 0 104px; }
@@ -1031,7 +1048,7 @@
               <li><span class="tick">✓</span> <span>Your ad account encrypted, readable only by you</span></li>
             </ul>
 
-            <a class="btn price-cta" href="#access">Get started</a>
+            <a class="btn btn-line price-cta" href="#access">Get started</a>
             <p class="price-foot">We connect your ad account together. No lock-in.</p>
           </div>
 
