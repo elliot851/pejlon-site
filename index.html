@@ -628,6 +628,42 @@
   .seats-bar { width: 128px; height: 5px; border-radius: 999px; background: var(--line); overflow: hidden; flex: none; }
   .seats-fill { height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--brand), var(--brand-lift)); }
 
+  /* ---------- tillägg ---------- */
+  .addons { max-width: 940px; margin: 40px auto 0; }
+  .addons-head { text-align: center; margin-bottom: 24px; }
+  .addons-head h3 { font-family: var(--display); font-weight: 700; font-size: clamp(21px, 2.6vw, 27px); letter-spacing: -.02em; }
+  .addons-head p { max-width: 56ch; margin: 12px auto 0; font-size: 15px; line-height: 1.6; color: var(--ink-2); }
+  .addons-head strong { color: var(--ink); }
+
+  .addon-grid { display: grid; gap: 14px; grid-template-columns: 1fr; }
+  @media (min-width: 820px) { .addon-grid { grid-template-columns: repeat(3, 1fr); } }
+  .addon {
+    min-width: 0; border: 1px solid var(--line); border-radius: 14px; background: var(--panel); padding: 20px 19px;
+    transition: transform .26s cubic-bezier(.2,.7,.3,1), border-color .26s ease;
+  }
+  .addon:hover { transform: translateY(-3px); border-color: var(--brand-deep); }
+  .addon-top { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+  .addon-name { font-family: var(--display); font-weight: 700; font-size: 18px; letter-spacing: -.01em; }
+  .addon-price { font-family: var(--display); font-weight: 700; font-size: 19px; color: var(--brand-lift); white-space: nowrap; }
+  .addon-price span { font-family: var(--body); font-weight: 500; font-size: 12px; color: var(--ink-3); margin-left: 2px; }
+  .addon-desc { font-size: 14px; line-height: 1.55; color: var(--ink-2); margin-top: 11px; }
+
+  /* Trappan gör räkningen åt läsaren i stället för att låta hen göra den. */
+  .addons-ladder { margin-top: 22px; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; background: var(--panel); }
+  .ladder-row {
+    display: flex; align-items: center; justify-content: space-between; gap: 14px;
+    padding: 13px 20px; font-size: 15px; color: var(--ink-2); border-bottom: 1px solid var(--line-soft);
+  }
+  .ladder-row span:last-child { font-family: var(--display); font-weight: 700; font-size: 18px; color: var(--ink); white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .ladder-row em { font-style: normal; font-family: var(--body); font-weight: 500; font-size: 12px; color: var(--ink-3); margin-left: 2px; }
+  .ladder-row.is-tip { color: var(--ink-3); }
+  .ladder-row.is-best {
+    background: color-mix(in srgb, var(--brand) 13%, var(--panel));
+    border-top: 1px solid var(--brand-deep); border-bottom: 0; color: var(--ink);
+  }
+  .ladder-row.is-best span:last-child { color: var(--brand-lift); font-size: 21px; }
+  .ladder-note { padding: 13px 20px; font-size: 13px; line-height: 1.6; color: var(--ink-3); border-top: 1px solid var(--line-soft); }
+
   /* ---------- licens ---------- */
   .licence { max-width: 720px; margin-inline: auto; text-align: center; }
   .licence h3 { font-family: var(--display); font-weight: 700; font-size: clamp(24px, 3vw, 32px); letter-spacing: -.02em; margin: 14px 0 0; }
@@ -1628,7 +1664,7 @@
             <div class="stack-name">Pejlon Pro — all of it, in one place</div>
             <div class="stack-note">And they finally share the same numbers</div>
           </div>
-          <div class="stack-price">€127<span>/mo</span></div>
+          <div class="stack-price">€167<span>/mo</span></div>
         </div>
       </div>
 
@@ -1675,11 +1711,11 @@
           </div>
           <div class="calc-side is-ours">
             <div class="calc-label">With Pejlon Pro</div>
-            <div class="calc-line"><span>Everything, one subscription</span><span>€127</span></div>
+            <div class="calc-line"><span>Everything, one subscription</span><span>€167</span></div>
             <div class="calc-line calc-muted"><span>Your own time, back</span><span>—</span></div>
-            <div class="calc-total"><span>Every month</span><span>€127</span></div>
+            <div class="calc-total"><span>Every month</span><span>€167</span></div>
           </div>
-          <div class="calc-save"><span>You keep</span><strong>€1,613 / month</strong><span class="calc-year">€19,356 a year</span></div>
+          <div class="calc-save"><span>You keep</span><strong>€1,573 / month</strong><span class="calc-year">€18,876 a year</span></div>
         </div>
 
         <!-- €20k -->
@@ -1692,11 +1728,11 @@
           </div>
           <div class="calc-side is-ours">
             <div class="calc-label">With Pejlon Pro</div>
-            <div class="calc-line"><span>Everything, one subscription</span><span>€127</span></div>
+            <div class="calc-line"><span>Everything, one subscription</span><span>€167</span></div>
             <div class="calc-line calc-muted"><span>Your own time, back</span><span>—</span></div>
-            <div class="calc-total"><span>Every month</span><span>€127</span></div>
+            <div class="calc-total"><span>Every month</span><span>€167</span></div>
           </div>
-          <div class="calc-save"><span>You keep</span><strong>€2,363 / month</strong><span class="calc-year">€28,356 a year</span></div>
+          <div class="calc-save"><span>You keep</span><strong>€2,323 / month</strong><span class="calc-year">€27,876 a year</span></div>
         </div>
 
         <!-- €75k -->
@@ -1709,11 +1745,11 @@
           </div>
           <div class="calc-side is-ours">
             <div class="calc-label">With Pejlon Pro</div>
-            <div class="calc-line"><span>Everything, one subscription</span><span>€127</span></div>
+            <div class="calc-line"><span>Everything, one subscription</span><span>€167</span></div>
             <div class="calc-line calc-muted"><span>Your own time, back</span><span>—</span></div>
-            <div class="calc-total"><span>Every month</span><span>€127</span></div>
+            <div class="calc-total"><span>Every month</span><span>€167</span></div>
           </div>
-          <div class="calc-save"><span>You keep</span><strong>€3,293 / month</strong><span class="calc-year">€39,516 a year</span></div>
+          <div class="calc-save"><span>You keep</span><strong>€3,253 / month</strong><span class="calc-year">€39,036 a year</span></div>
         </div>
       </div>
 
@@ -1764,7 +1800,6 @@
               <li><span class="tick">✓</span> <span>Every ad account in one table</span></li>
               <li><span class="tick">✓</span> <span>The day by day behind each row, with a flag for uneven winners</span></li>
               <li><span class="tick">✓</span> <span>Scaling suggestions with the reasoning written out</span></li>
-              <li><span class="tick">✓</span> <span>Bulk upload of creative and cloning of winners</span></li>
               <li><span class="tick">✓</span> <span>Morning report and budget pacing</span></li>
               <li><span class="tick">✓</span> <span>Your ad account encrypted, readable only by you</span></li>
             </ul>
@@ -1778,16 +1813,16 @@
             <p class="price-tagline">Everything in Pejlon — plus it scales to your KPIs and counts the profit home.</p>
 
             <div class="price-monthly">
-              <div class="price-amount"><span class="kr">€127</span><span class="per">/ month</span></div>
+              <div class="price-amount"><span class="kr">€167</span><span class="per">/ month</span></div>
               <div class="price-sub">Per ad account. VAT not included.</div>
             </div>
             <div class="price-annual">
-              <div class="price-amount"><span class="kr">€1,270</span><span class="per">/ year</span></div>
-              <div class="price-sub">Works out at €106 a month. Two months free. VAT not included.</div>
+              <div class="price-amount"><span class="kr">€1,670</span><span class="per">/ year</span></div>
+              <div class="price-sub">Works out at €139 a month. Two months free. VAT not included.</div>
             </div>
 
             <ul class="price-list">
-              <li><span class="tick-pro">✓</span> <span>Everything in Pejlon</span></li>
+              <li><span class="tick-pro">✓</span> <span>Everything in Pejlon — plus all three add-ons below, included</span></li>
               <li class="is-new"><span class="tick-pro">✓</span> <span>Automatic scaling against your KPIs — raises winners, pulls back losers, around the clock</span></li>
               <li class="is-new"><span class="tick-pro">✓</span> <span>Every change logged with the reason, always inside your guardrails</span></li>
               <li class="is-new"><span class="tick-pro">✓</span> <span>Profit tracking: connect your stores and see real net profit per day</span></li>
@@ -1800,6 +1835,69 @@
           </div>
         </div>
       </div>
+      <!-- ---------- tillägg ----------
+           Varje tillägg kostar lika mycket och kan väljas fritt. Trappan är
+           räknad så att ETT tillägg är billigare än Pro, men TVÅ är dyrare —
+           då är Pro det uppenbara valet, utan att någon behöver övertalas. -->
+      <div class="addons reveal">
+        <div class="addons-head">
+          <h3>Add only what you need</h3>
+          <p>
+            Each add-on is <strong>€47 a month</strong> on top of Pejlon, and you can turn one on or off whenever you
+            like. Two or more, and Pejlon Pro costs less than the parts.
+          </p>
+        </div>
+
+        <div class="addon-grid">
+          <div class="addon">
+            <div class="addon-top">
+              <span class="addon-name">Hangar</span>
+              <span class="addon-price">€47<span>/mo</span></span>
+            </div>
+            <p class="addon-desc">
+              Bulk upload. Drop a folder of creative and it builds every ad in one pass — grouped by aspect ratio,
+              named by your own pattern, launched paused for review. Clone a winner into as many ad sets as you like.
+            </p>
+          </div>
+
+          <div class="addon">
+            <div class="addon-top">
+              <span class="addon-name">Profit</span>
+              <span class="addon-price">€47<span>/mo</span></span>
+            </div>
+            <p class="addon-desc">
+              Connect your stores and see real net profit per day — revenue minus landed product cost, fees and ad
+              spend. Landed cost per country, not one blended estimate.
+            </p>
+          </div>
+
+          <div class="addon">
+            <div class="addon-top">
+              <span class="addon-name">Autopilot</span>
+              <span class="addon-price">€47<span>/mo</span></span>
+            </div>
+            <p class="addon-desc">
+              Pejlon scales for you against your KPIs, around the clock. It raises what clears the bar, pulls back what
+              doesn't, writes down why — and never moves outside your guardrails.
+            </p>
+          </div>
+        </div>
+
+        <div class="addons-ladder">
+          <div class="ladder-row"><span>Pejlon on its own</span><span>€97<em>/mo</em></span></div>
+          <div class="ladder-row"><span>Pejlon + one add-on</span><span>€144<em>/mo</em></span></div>
+          <div class="ladder-row is-tip"><span>Pejlon + two add-ons</span><span>€191<em>/mo</em></span></div>
+          <div class="ladder-row is-best">
+            <span>Pejlon Pro — all three included</span>
+            <span>€167<em>/mo</em></span>
+          </div>
+          <p class="ladder-note">
+            From two add-ons up, Pro is cheaper than buying the parts. All three separately would be €238 — Pro is
+            €167, so you keep €71 a month.
+          </p>
+        </div>
+      </div>
+
     </div>
   </section>
 
