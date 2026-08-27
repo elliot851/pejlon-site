@@ -393,7 +393,12 @@
      Var och en visar EN sak som Pejlon gör, med sifferbilden bredvid. Text
      ensam säljer inte ett verktyg — man måste se bordet. */
   .caps { display: grid; gap: 18px; margin-top: 44px; grid-template-columns: 1fr; }
-  @media (min-width: 900px) { .caps { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 900px) {
+    .caps { grid-template-columns: 1fr 1fr; }
+    /* Udda antal kort lämnar annars ett tomt hål i sista raden. Det sista
+       kortet får spänna över båda spalterna i stället. */
+    .caps > .cap:last-child:nth-child(odd) { grid-column: 1 / -1; }
+  }
   .cap {
     border: 1px solid var(--line); border-radius: 16px; background: var(--panel);
     padding: 26px 24px 24px; display: flex; flex-direction: column; gap: 16px;
@@ -1103,7 +1108,26 @@
           </div>
         </article>
 
-        <!-- 2. Skalning -->
+        <!-- 2. Skala själv, härifrån -->
+        <article class="cap">
+          <div>
+            <span class="cap-tag">Scale from the table</span>
+            <h3>Raise the winner <em>where you spotted it</em>.</h3>
+            <p>
+              You do not go back to Ads Manager to act on what you just read. Change a budget in the row itself,
+              tick ten ad sets and raise them all at once, pause what is bleeding — it lands in Meta in seconds.
+              Every change has an undo window, and the log keeps who did it and why.
+            </p>
+          </div>
+          <div class="pl" aria-hidden="true">
+            <div class="pl-row"><span>Lookalike 2% · ABO</span><span class="v">€180 → <strong style="color:var(--good)">€216</strong></span></div>
+            <div class="pl-row"><span>Interests · ABO</span><span class="v">€240 → <strong style="color:var(--good)">€288</strong></span></div>
+            <div class="pl-row minus"><span>Retargeting 30d · paused</span><span class="v">€120 → €0</span></div>
+            <div class="pl-row sub"><span>3 rows changed · +20%</span><span class="v" style="color:var(--brand)">undo 0:14</span></div>
+          </div>
+        </article>
+
+        <!-- 3. Skalning -->
         <article class="cap">
           <div>
             <span class="cap-tag">Scaling on autopilot</span>
@@ -1125,7 +1149,7 @@
           </div>
         </article>
 
-        <!-- 3. Vinst -->
+        <!-- 4. Vinst -->
         <article class="cap">
           <div>
             <span class="cap-tag">Profit, not revenue</span>
@@ -1146,7 +1170,7 @@
           </div>
         </article>
 
-        <!-- 4. Break-even per marknad -->
+        <!-- 5. Break-even per marknad -->
         <article class="cap">
           <div>
             <span class="cap-tag">Break-even per market</span>
@@ -1168,7 +1192,7 @@
           </table>
         </article>
 
-        <!-- 5. Bulkuppladdning -->
+        <!-- 6. Bulkuppladdning -->
         <article class="cap">
           <div>
             <span class="cap-tag">Bulk upload</span>
@@ -1188,7 +1212,7 @@
           </div>
         </article>
 
-        <!-- 6. Kloning -->
+        <!-- 7. Kloning -->
         <article class="cap">
           <div>
             <span class="cap-tag">Clone winners</span>
@@ -1208,7 +1232,7 @@
           </div>
         </article>
 
-        <!-- 7. Team -->
+        <!-- 8. Team -->
         <article class="cap">
           <div>
             <span class="cap-tag">Your team</span>
@@ -1227,7 +1251,7 @@
           </div>
         </article>
 
-        <!-- 8. Kontroll -->
+        <!-- 9. Kontroll -->
         <article class="cap">
           <div>
             <span class="cap-tag">Guardrails</span>
