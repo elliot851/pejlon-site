@@ -179,6 +179,15 @@
   }
   .hero-copy > * + * { margin-top: 22px; }
   .hero-cta { display: flex; flex-wrap: wrap; gap: 12px; padding-top: 6px; }
+  .hero-points { list-style: none; padding: 0; margin: 4px 0 0; display: flex; flex-direction: column; gap: 9px; }
+  .hero-points li { display: flex; gap: 10px; font-size: 15px; color: var(--ink-2); line-height: 1.5; }
+  /* Bocken ritas som en pseudo-element så listan inte bär ett tecken som kan
+     falla bort i ett typsnitt som saknar det. */
+  .hero-points li::before {
+    content: ""; flex: none; width: 7px; height: 7px; margin-top: 8px; border-radius: 50%;
+    background: var(--brand);
+  }
+  .hero-points strong { color: var(--ink); font-weight: 600; }
   .hero-foot { font-size: 13px; color: var(--ink-3); }
 
   /* ---------- product surface ---------- */
@@ -463,6 +472,11 @@
   .stack-row.is-sum { background: var(--panel-2); border-top: 1px solid var(--line); }
   .stack-row.is-sum .stack-price { color: var(--ink); font-size: 21px; }
   /* Vårt pris avslutar listan och är det enda som får färg. */
+  /* Retainern är den stora siffran på sidan. Den får en varm ton så den läses
+     som en kostnad, inte som ännu en produktrad. */
+  .stack-row.is-person { background: color-mix(in srgb, var(--warn) 9%, var(--panel-2)); border-top: 1px solid var(--line); }
+  .stack-row.is-person .stack-price { color: var(--warn); font-size: 23px; }
+  .stack-row.is-person .stack-note { max-width: 46ch; }
   .stack-row.is-ours { background: color-mix(in srgb, var(--brand) 12%, var(--panel)); border-top: 1px solid var(--brand-deep); }
   .stack-row.is-ours .stack-name { color: var(--ink); }
   .stack-row.is-ours .stack-price { color: var(--brand-lift); font-size: 26px; }
@@ -628,6 +642,13 @@
           <a class="btn btn-solid" href="#access">Get early access</a>
           <a class="btn btn-line" href="#cost">See where the hours go</a>
         </div>
+        <!-- Tre rader som svarar på "vad ÄR det här" innan man hunnit scrolla.
+             Den som fått sidan rekommenderad ska förstå på fem sekunder. -->
+        <ul class="hero-points rise-solid d3">
+          <li><strong>Every ad account in one table</strong> — with the day by day behind each row</li>
+          <li><strong>It tells you what to scale, and scales it</strong> — on your KPIs, inside your limits</li>
+          <li><strong>Net profit, not revenue</strong> — your real landed cost, per country, per day</li>
+        </ul>
         <p class="hero-foot rise-solid d3">Built by advertisers who scale every day.</p>
       </div>
 
@@ -1352,11 +1373,11 @@
     <div class="shell">
       <div class="sec-head reveal" style="text-align:center; margin-inline:auto">
         <span class="eyebrow">What it replaces</span>
-        <h2>Bought separately, this is <em>four subscriptions</em>.</h2>
+        <h2>Bought separately, this is four subscriptions <em>and a salary</em>.</h2>
         <p class="lede" style="margin-inline:auto">
-          Profit tracking is one tool. Automated scaling is another. Bulk creative upload is a third, and the
-          reporting on top is a fourth. Each is billed on its own, every month, and none of them talk to each
-          other. Typical prices for each category:
+          Profit tracking is one tool. Automated scaling is another. Bulk upload is a third, reporting is a fourth — and
+          then someone has to sit and watch it all day. Each is billed on its own, and none of them talk to each
+          other. Typical monthly prices:
         </p>
       </div>
 
@@ -1394,6 +1415,17 @@
           <div class="stack-name">Four tools, four invoices</div>
           <div class="stack-price">€176–306<span>/mo</span></div>
         </div>
+
+        <div class="stack-row is-person">
+          <div>
+            <div class="stack-name">And someone to watch it every day</div>
+            <div class="stack-note">
+              A media buyer or an agency retainer. The daily part of that job — checking every row, catching the one
+              that slipped overnight, moving budget before the day is lost — is the part Pejlon does on its own.
+            </div>
+          </div>
+          <div class="stack-price">€1,500–3,000<span>/mo</span></div>
+        </div>
         <div class="stack-row is-ours">
           <div>
             <div class="stack-name">Pejlon Pro — all of it, in one place</div>
@@ -1404,9 +1436,9 @@
       </div>
 
       <p class="stack-foot reveal">
-        Figures are typical monthly list prices for each category of tool, not a quote for any particular product.
-        The point is not that we undercut anyone — it is that one tool that knows your costs, your ads and your
-        orders at the same time can do what four separate ones cannot.
+        Figures are typical monthly list prices per category and typical retainer levels, not a quote for any named
+        product or agency. Pejlon does not write your strategy or your creative — it does the daily watching and
+        adjusting, which is the part that costs you either hours or a retainer, every single month.
       </p>
     </div>
   </section>
