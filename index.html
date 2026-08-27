@@ -451,6 +451,27 @@
   .flow-step .d { font-size: 12.5px; color: var(--ink-2); margin-top: 6px; line-height: 1.4; }
   .flow-arrow { align-self: center; color: var(--ink-3); font-size: 15px; flex: none; }
 
+  /* ---------- vad det ersätter ---------- */
+  .stack { max-width: 760px; margin: 40px auto 0; border: 1px solid var(--line); border-radius: 15px; overflow: hidden; background: var(--panel); }
+  .stack-row { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 17px 22px; border-bottom: 1px solid var(--line-soft); }
+  .stack-row:last-child { border-bottom: 0; }
+  .stack-name { font-size: 15.5px; font-weight: 600; color: var(--ink); }
+  .stack-note { font-size: 13px; color: var(--ink-3); margin-top: 3px; line-height: 1.45; }
+  .stack-price { font-family: var(--display); font-weight: 700; font-size: 19px; color: var(--ink-2); white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .stack-price span { font-family: var(--body); font-weight: 500; font-size: 13px; color: var(--ink-3); margin-left: 3px; }
+  /* Summan är det man faktiskt betalar i dag: markerad, men inte skrikig. */
+  .stack-row.is-sum { background: var(--panel-2); border-top: 1px solid var(--line); }
+  .stack-row.is-sum .stack-price { color: var(--ink); font-size: 21px; }
+  /* Vårt pris avslutar listan och är det enda som får färg. */
+  .stack-row.is-ours { background: color-mix(in srgb, var(--brand) 12%, var(--panel)); border-top: 1px solid var(--brand-deep); }
+  .stack-row.is-ours .stack-name { color: var(--ink); }
+  .stack-row.is-ours .stack-price { color: var(--brand-lift); font-size: 26px; }
+  .stack-foot { max-width: 680px; margin: 20px auto 0; text-align: center; font-size: 13px; line-height: 1.6; color: var(--ink-3); }
+  @media (max-width: 520px) {
+    .stack-row { flex-direction: column; align-items: flex-start; gap: 6px; }
+    .stack-price { font-size: 20px; }
+  }
+
   /* ---------- early access ---------- */
   .seats {
     display: inline-flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-content: center;
@@ -1321,6 +1342,72 @@
         </article>
 
       </div>
+    </div>
+  </section>
+
+  <!-- ---------- vad det ersätter ----------
+       Siffrorna är TYPISKA marknadsintervall för varje kategori av verktyg, inte
+       påståenden om någon namngiven produkt. Inga varumärken nämns. -->
+  <section class="rule" id="stack">
+    <div class="shell">
+      <div class="sec-head reveal" style="text-align:center; margin-inline:auto">
+        <span class="eyebrow">What it replaces</span>
+        <h2>Bought separately, this is <em>four subscriptions</em>.</h2>
+        <p class="lede" style="margin-inline:auto">
+          Profit tracking is one tool. Automated scaling is another. Bulk creative upload is a third, and the
+          reporting on top is a fourth. Each is billed on its own, every month, and none of them talk to each
+          other. Typical prices for each category:
+        </p>
+      </div>
+
+      <div class="stack reveal">
+        <div class="stack-row">
+          <div>
+            <div class="stack-name">Profit tracking</div>
+            <div class="stack-note">Orders priced against product cost, net profit per day</div>
+          </div>
+          <div class="stack-price">€29–49<span>/mo</span></div>
+        </div>
+        <div class="stack-row">
+          <div>
+            <div class="stack-name">Automated scaling</div>
+            <div class="stack-note">Rules that raise and pull back budgets on their own</div>
+          </div>
+          <div class="stack-price">€99–159<span>/mo</span></div>
+        </div>
+        <div class="stack-row">
+          <div>
+            <div class="stack-name">Bulk creative upload</div>
+            <div class="stack-note">Building thirty ads without twelve clicks each</div>
+          </div>
+          <div class="stack-price">€29–59<span>/mo</span></div>
+        </div>
+        <div class="stack-row">
+          <div>
+            <div class="stack-name">Reporting and alerts</div>
+            <div class="stack-note">The daily summary and the flags on shaky rows</div>
+          </div>
+          <div class="stack-price">€19–39<span>/mo</span></div>
+        </div>
+
+        <div class="stack-row is-sum">
+          <div class="stack-name">Four tools, four invoices</div>
+          <div class="stack-price">€176–306<span>/mo</span></div>
+        </div>
+        <div class="stack-row is-ours">
+          <div>
+            <div class="stack-name">Pejlon Pro — all of it, in one place</div>
+            <div class="stack-note">And they finally share the same numbers</div>
+          </div>
+          <div class="stack-price">€127<span>/mo</span></div>
+        </div>
+      </div>
+
+      <p class="stack-foot reveal">
+        Figures are typical monthly list prices for each category of tool, not a quote for any particular product.
+        The point is not that we undercut anyone — it is that one tool that knows your costs, your ads and your
+        orders at the same time can do what four separate ones cannot.
+      </p>
     </div>
   </section>
 
