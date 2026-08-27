@@ -389,6 +389,67 @@
      decided to get in touch. */
   .contact-mail { font-family: var(--display); font-size: 19px; font-weight: 600; color: var(--brand); letter-spacing: -0.01em; user-select: all; word-break: break-all; }
 
+  /* ---------- capabilities: fyra riktiga vyer ----------
+     Var och en visar EN sak som Pejlon gör, med sifferbilden bredvid. Text
+     ensam säljer inte ett verktyg — man måste se bordet. */
+  .caps { display: grid; gap: 18px; margin-top: 44px; grid-template-columns: 1fr; }
+  @media (min-width: 900px) { .caps { grid-template-columns: 1fr 1fr; } }
+  .cap {
+    border: 1px solid var(--line); border-radius: 16px; background: var(--panel);
+    padding: 26px 24px 24px; display: flex; flex-direction: column; gap: 16px;
+    transition: transform .28s cubic-bezier(.2,.7,.3,1), border-color .28s ease;
+  }
+  .cap:hover { transform: translateY(-3px); border-color: var(--brand-deep); }
+  .cap-tag { font-size: 11px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--brand); }
+  .cap h3 { font-size: 21px; margin-top: 8px; }
+  .cap p { font-size: 14.5px; color: var(--ink-2); line-height: 1.55; margin-top: 8px; }
+
+  /* Miniräkenskap: resultatraden som vattenfall. */
+  .pl { border: 1px solid var(--line); border-radius: 11px; background: var(--ground-2); overflow: hidden; margin-top: auto; }
+  .pl-row { display: flex; justify-content: space-between; gap: 12px; padding: 8px 13px; font-size: 13px; border-bottom: 1px solid var(--line-soft); }
+  .pl-row:last-child { border-bottom: 0; }
+  .pl-row .v { font-variant-numeric: tabular-nums; }
+  .pl-row.minus .v { color: var(--bad); }
+  .pl-row.sub { border-top: 1px solid var(--line); font-weight: 600; }
+  .pl-row.total { background: rgba(86,208,138,.09); font-weight: 700; font-size: 14.5px; }
+  .pl-row.total .v { color: var(--good); }
+
+  /* Landstabell för break-even. */
+  .mk { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: auto; }
+  .mk th { text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: .04em; color: var(--ink-3); font-weight: 600; padding: 6px 8px; border-bottom: 1px solid var(--line); }
+  .mk td { padding: 7px 8px; border-bottom: 1px solid var(--line-soft); font-variant-numeric: tabular-nums; }
+  .mk tr:last-child td { border-bottom: 0; }
+  .mk .be { color: var(--bad); font-weight: 600; }
+  .mk .up { color: var(--good); font-weight: 600; }
+  .mk .best td { background: rgba(86,208,138,.08); }
+
+  /* AI-beslutet: en rad som förklarar sig. */
+  .ai { border: 1px solid var(--brand-deep); border-radius: 11px; background: var(--ground-2); padding: 14px 15px; margin-top: auto; }
+  .ai-head { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; color: var(--brand); }
+  .ai-body { font-size: 13.5px; color: var(--ink); margin-top: 9px; line-height: 1.5; }
+  .ai-meta { font-size: 12px; color: var(--ink-3); margin-top: 10px; }
+  .ai-act { display: flex; gap: 7px; margin-top: 12px; flex-wrap: wrap; }
+
+  /* Importflödet: tre steg med en pil emellan. */
+  .flow { display: flex; align-items: stretch; gap: 8px; margin-top: auto; }
+  .flow-step { flex: 1; border: 1px solid var(--line); border-radius: 10px; background: var(--ground-2); padding: 12px 11px; }
+  .flow-step .t { font-size: 11px; font-weight: 700; color: var(--ink-3); text-transform: uppercase; letter-spacing: .04em; }
+  .flow-step .d { font-size: 12.5px; color: var(--ink-2); margin-top: 6px; line-height: 1.4; }
+  .flow-arrow { align-self: center; color: var(--ink-3); font-size: 15px; flex: none; }
+
+  /* ---------- early access ---------- */
+  .seats {
+    display: inline-flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-content: center;
+    border: 1px solid var(--brand-deep); border-radius: 999px;
+    background: color-mix(in srgb, var(--brand) 10%, var(--panel));
+    padding: 9px 18px; margin-bottom: 22px;
+  }
+  .seats-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--good); flex: none; box-shadow: 0 0 0 4px rgba(86,208,138,.16); }
+  .seats-text { font-size: 14px; color: var(--ink); font-weight: 500; }
+  .seats-count { font-family: var(--display); font-weight: 700; color: var(--brand-lift); }
+  .seats-bar { width: 128px; height: 5px; border-radius: 999px; background: var(--line); overflow: hidden; flex: none; }
+  .seats-fill { height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--brand), var(--brand-lift)); }
+
   /* ---------- licens ---------- */
   .licence { max-width: 720px; margin-inline: auto; text-align: center; }
   .licence h3 { font-family: var(--display); font-weight: 700; font-size: clamp(24px, 3vw, 32px); letter-spacing: -.02em; margin: 14px 0 0; }
@@ -509,6 +570,7 @@
       <a href="#analysis">Analysis</a>
       <a href="#upload">Bulk upload</a>
       <a href="#control">Control</a>
+      <a href="#capabilities">What you get</a>
       <a href="#pricing">Pricing</a>
       <a class="btn btn-solid" href="#access">Get early access</a>
     </nav>
@@ -1004,6 +1066,190 @@
     </div>
   </section>
 
+  <!-- ---------- capabilities ----------
+       Hela produkten, vy för vy, INNAN någon behöver skriva upp sig. Alla
+       siffror här är påhittade demovärden — inga riktiga konton, produkter
+       eller marginaler från våra egna butiker syns på sidan. -->
+  <section class="rule" id="capabilities">
+    <div class="shell">
+      <div class="sec-head reveal" style="text-align:center; margin-inline:auto">
+        <span class="eyebrow">The whole product</span>
+        <h2>Everything you get, <em>before you sign up</em>.</h2>
+        <p class="lede" style="margin-inline:auto">
+          No demo call needed to find out what it looks like. Here is every part of Pejlon, the way it appears
+          once your Meta account is connected — the table, the scaling, the profit, the uploads, the team.
+        </p>
+      </div>
+
+      <div class="caps stagger">
+
+        <!-- 1. Översikten -->
+        <article class="cap">
+          <div>
+            <span class="cap-tag">The overview</span>
+            <h3>Every account, campaign, ad set and ad in <em>one</em> table.</h3>
+            <p>
+              Connect Meta once and everything lands here. Open a campaign to see its ad sets, open an ad set to
+              see its ads — without losing the row you were reading. Pause, raise a budget or clone a winner
+              straight from the table, and it takes effect in Meta in real time.
+            </p>
+          </div>
+          <div class="pl" aria-hidden="true">
+            <div class="pl-row" style="color:var(--ink-3);font-size:11.5px;text-transform:uppercase;letter-spacing:.04em"><span>Campaign</span><span class="v">Spend · ROAS</span></div>
+            <div class="pl-row"><span><span class="sw" style="display:inline-block;vertical-align:-4px;margin-right:8px"></span>Prospecting broad · CBO</span><span class="v">€4,120 · <span style="color:var(--good)">3.08×</span></span></div>
+            <div class="pl-row" style="padding-left:34px"><span>↳ Ad set · Lookalike 2%</span><span class="v">€1,840 · <span style="color:var(--good)">3.41×</span></span></div>
+            <div class="pl-row" style="padding-left:34px"><span>↳ Ad set · Interests</span><span class="v">€2,280 · 2.84×</span></div>
+            <div class="pl-row"><span><span class="sw off" style="display:inline-block;vertical-align:-4px;margin-right:8px"></span>Retargeting 30d · ABO</span><span class="v" style="color:var(--ink-3)">paused</span></div>
+          </div>
+        </article>
+
+        <!-- 2. Skalning -->
+        <article class="cap">
+          <div>
+            <span class="cap-tag">Scaling on autopilot</span>
+            <h3>It reads every row and acts on <em>your</em> rules.</h3>
+            <p>
+              Set your KPIs once — target ROAS, break-even, the most an order may cost. Pejlon checks every row
+              around the clock, raises what clears the bar, pulls back what doesn't, and writes down why. Nothing
+              moves outside the guardrails you set, and every change can be undone.
+            </p>
+          </div>
+          <div class="ai" aria-hidden="true">
+            <div class="ai-head"><span class="dot" style="background:var(--brand)"></span> Decision · 04:12</div>
+            <div class="ai-body">
+              <strong>Prospecting broad · CBO</strong> held 3.1× ROAS across three days on 41 purchases —
+              above your 2.5× target every day. Raising the budget 20%.
+            </div>
+            <div class="ai-meta">€450 → €540 · inside your €800 daily ceiling · logged</div>
+            <div class="ai-act"><span class="mini mini-solid">Applied</span><span class="mini mini-line">Undo</span></div>
+          </div>
+        </article>
+
+        <!-- 3. Vinst -->
+        <article class="cap">
+          <div>
+            <span class="cap-tag">Profit, not revenue</span>
+            <h3>See what the day <em>actually earned</em>.</h3>
+            <p>
+              Connect your stores and every order is priced against its real landed cost. Revenue, product cost,
+              transaction fees and ad spend on one line — and the figure at the bottom is what you keep. Green when
+              it is profit, red when it is not.
+            </p>
+          </div>
+          <div class="pl" aria-hidden="true">
+            <div class="pl-row"><span>Revenue</span><span class="v">€24,180</span></div>
+            <div class="pl-row minus"><span>Product cost</span><span class="v">−€6,930</span></div>
+            <div class="pl-row minus"><span>Transaction fees</span><span class="v">−€742</span></div>
+            <div class="pl-row sub"><span>Gross profit</span><span class="v">€16,508</span></div>
+            <div class="pl-row minus"><span>Ad spend</span><span class="v">−€9,265</span></div>
+            <div class="pl-row total"><span>Net profit</span><span class="v">€7,243</span></div>
+          </div>
+        </article>
+
+        <!-- 4. Break-even per marknad -->
+        <article class="cap">
+          <div>
+            <span class="cap-tag">Break-even per market</span>
+            <h3>The ROAS you need is <em>different</em> in every country.</h3>
+            <p>
+              Shipping, payment fees and currency conversion all move the line. Pejlon works out break-even and
+              the level to scale at for each market from your own costs — so you act on the right number instead
+              of one blended average that is wrong everywhere.
+            </p>
+          </div>
+          <table class="mk" aria-hidden="true">
+            <thead><tr><th>Market</th><th>Margin</th><th>Break-even</th><th>Scale at</th></tr></thead>
+            <tbody>
+              <tr><td>Sweden</td><td>64%</td><td class="be">1.56×</td><td class="up">2.18×</td></tr>
+              <tr><td>Germany</td><td>61%</td><td class="be">1.64×</td><td class="up">2.29×</td></tr>
+              <tr><td>Netherlands</td><td>66%</td><td class="be">1.52×</td><td class="up">2.12×</td></tr>
+              <tr class="best"><td>United Kingdom</td><td>71%</td><td class="be">1.41×</td><td class="up">1.97×</td></tr>
+            </tbody>
+          </table>
+        </article>
+
+        <!-- 5. Bulkuppladdning -->
+        <article class="cap">
+          <div>
+            <span class="cap-tag">Bulk upload</span>
+            <h3>Thirty creatives take as long as <em>one</em>.</h3>
+            <p>
+              Drop the whole folder in. Pejlon groups by aspect ratio, applies your headline and copy across the
+              batch, and builds the ads in one pass. You watch them appear as they are created, and anything that
+              fails tells you which file and why instead of failing silently.
+            </p>
+          </div>
+          <div class="pl" aria-hidden="true">
+            <div class="pl-row"><span>hook_a_9x16.mp4</span><span class="v" style="color:var(--good)">created</span></div>
+            <div class="pl-row"><span>hook_b_9x16.mp4</span><span class="v" style="color:var(--good)">created</span></div>
+            <div class="pl-row"><span>ugc_02_4x5.mp4</span><span class="v" style="color:var(--good)">created</span></div>
+            <div class="pl-row"><span>static_pack_1x1.jpg</span><span class="v" style="color:var(--brand)">uploading</span></div>
+            <div class="pl-row sub"><span>28 of 30 done</span><span class="v">2 queued</span></div>
+          </div>
+        </article>
+
+        <!-- 6. Kloning -->
+        <article class="cap">
+          <div>
+            <span class="cap-tag">Clone winners</span>
+            <h3>Take the ad that works and <em>put it everywhere</em>.</h3>
+            <p>
+              Pick a winner, choose the ad sets to copy it into, and Pejlon rebuilds it in each one — same
+              creative, same copy, new placement. Launch it paused so you can check it before a single euro is
+              spent, or live if you already know.
+            </p>
+          </div>
+          <div class="flow" aria-hidden="true">
+            <div class="flow-step"><div class="t">01 Pick</div><div class="d">The ad that is carrying the account</div></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step"><div class="t">02 Choose</div><div class="d">Which ad sets it should run in</div></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step"><div class="t">03 Launch</div><div class="d">Paused for review, or live now</div></div>
+          </div>
+        </article>
+
+        <!-- 7. Team -->
+        <article class="cap">
+          <div>
+            <span class="cap-tag">Your team</span>
+            <h3>Let the media buyer in — <em>not</em> into everything.</h3>
+            <p>
+              Invite the people who work on the account and decide what each of them may do. A buyer can change
+              budgets without ever seeing your margins. Every action is signed with a name and a time, so the log
+              answers who did it rather than the group chat.
+            </p>
+          </div>
+          <div class="pl" aria-hidden="true">
+            <div class="pl-row"><span>You · Owner</span><span class="v" style="color:var(--ink-3)">everything</span></div>
+            <div class="pl-row"><span>Media buyer</span><span class="v" style="color:var(--ink-3)">budgets, no costs</span></div>
+            <div class="pl-row"><span>Analyst</span><span class="v" style="color:var(--ink-3)">read only</span></div>
+            <div class="pl-row sub"><span>Budget raised 20%</span><span class="v" style="color:var(--ink-3)">by Maja · 14:12</span></div>
+          </div>
+        </article>
+
+        <!-- 8. Kontroll -->
+        <article class="cap">
+          <div>
+            <span class="cap-tag">Guardrails</span>
+            <h3>Nothing spends money <em>without you saying so</em>.</h3>
+            <p>
+              Set a floor and a ceiling per row, a cap on how much may be raised in a day, and a limit on how big
+              a single jump can be. Pejlon refuses anything past them and tells you which rule stopped it. Every
+              change is reversible, and the log keeps the receipt.
+            </p>
+          </div>
+          <div class="pl" aria-hidden="true">
+            <div class="pl-row"><span>Daily ceiling per row</span><span class="v">€800</span></div>
+            <div class="pl-row"><span>Largest single raise</span><span class="v">30%</span></div>
+            <div class="pl-row"><span>Raised across the day</span><span class="v">€1,240 of €2,000</span></div>
+            <div class="pl-row minus"><span>Blocked · 120% jump</span><span class="v">refused</span></div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
   <!-- ---------- pricing ---------- -->
   <section class="rule" id="pricing">
     <div class="shell">
@@ -1088,9 +1334,17 @@
       <span class="eyebrow">Early access</span>
       <h2 style="margin-top:16px">Take the hours back. And get numbers <em>you'd bet on</em>.</h2>
       <p class="lede" style="margin-inline:auto">
-        Pejlon is opening to a limited number of advertisers first. Get in touch and we'll connect your ad account
-        together, so you see your own table with your own numbers rather than a description of one.
+        The first intake is twelve advertisers. We connect each ad account personally and stay close while you
+        settle in, and twelve is as many as we can do that properly for. Get in touch and you see your own table
+        with your own numbers rather than a description of one.
       </p>
+      <!-- Siffran står i HTML och ändras för hand när någon går med. Hellre ett
+           tal som stämmer än en räknare som räknar ned av sig själv. -->
+      <div class="seats" style="margin-top:26px">
+        <span class="seats-dot"></span>
+        <span class="seats-text"><span class="seats-count">7</span> of 12 seats left in the first intake</span>
+        <span class="seats-bar"><span class="seats-fill" style="width:41.7%"></span></span>
+      </div>
       <div class="contact">
         <span class="contact-label">Write to</span>
         <span class="contact-mail">elliot@westrosdigitalretail.se</span>
