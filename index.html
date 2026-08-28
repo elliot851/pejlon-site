@@ -188,6 +188,10 @@
     background: var(--brand);
   }
   .hero-points strong { color: var(--ink); font-weight: 600; }
+  /* Håll den feta inledningen samlad: bryts den mitt itu ("and scales / it")
+     ser raden ut som ett fel snarare än som en punkt. */
+  .hero-points li { text-wrap: pretty; }
+  .hero-points li > span { min-width: 0; }
   .hero-foot { font-size: 13px; color: var(--ink-3); }
 
   /* ---------- product surface ---------- */
@@ -864,13 +868,12 @@
       Pejlon<sup style="font-size:.5em;font-weight:600;vertical-align:super;letter-spacing:0">®</sup>
     </a>
     <nav class="nav">
-      <a href="#table">The table</a>
-      <a href="#daybyday">Day by day</a>
-      <a href="#analysis">Analysis</a>
-      <a href="#upload">Bulk upload</a>
-      <a href="#control">Control</a>
-      <a href="#everything">Everything</a>
-      <a href="#capabilities">What you get</a>
+      <!-- Fyra val. Åtta länkar där flera pekade mot samma avsnitt läses inte
+           som en meny utan som en innehållsförteckning, och då klickar man på
+           ingen av dem. -->
+      <a href="#everything">What it does</a>
+      <a href="#live">See it work</a>
+      <a href="#savings">What it saves</a>
       <a href="#pricing">Pricing</a>
       <a class="btn btn-solid" href="#access">Get early access</a>
     </nav>
@@ -897,9 +900,9 @@
         <!-- Tre rader som svarar på "vad ÄR det här" innan man hunnit scrolla.
              Den som fått sidan rekommenderad ska förstå på fem sekunder. -->
         <ul class="hero-points rise-solid d3">
-          <li><strong>Every ad account in one table</strong> — with the day by day behind each row</li>
-          <li><strong>It tells you what to scale, and scales it</strong> — on your KPIs, inside your limits</li>
-          <li><strong>Net profit, not revenue</strong> — your real landed cost, per country, per day</li>
+          <li><strong>Every ad account in one table</strong> — day by day behind each row</li>
+          <li><strong>It scales for you</strong> — on your KPIs, inside your limits</li>
+          <li><strong>Net profit, not revenue</strong> — landed cost, per country, per day</li>
         </ul>
         <p class="hero-foot rise-solid d3">Built by advertisers who scale every day.</p>
       </div>
