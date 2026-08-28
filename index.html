@@ -205,7 +205,9 @@
   .pip { width: 7px; height: 7px; border-radius: 50%; background: var(--good); flex: none; }
 
   .grid-head, .grid-row {
-    display: grid; grid-template-columns: 40px minmax(0,1fr) 74px 62px 62px;
+    /* Sista två kolumnerna bär "Break-even" och "+€2,180" — de behöver mer
+       plats än de gamla 62 px, annars bryts rubrikerna. */
+    display: grid; grid-template-columns: 40px minmax(0,1fr) 58px 78px 84px;
     gap: 10px; align-items: center; padding: 11px 14px;
   }
   .grid-head { font-size: 11.5px; font-weight: 600; color: var(--ink-3); border-bottom: 1px solid var(--line); }
@@ -844,52 +846,67 @@
         <p class="hero-foot rise-solid d3">Built by advertisers who scale every day.</p>
       </div>
 
-      <div class="console rise-solid d2" role="img" aria-label="Pejlon showing every campaign in one table, with a warning about a row that looks good over the period but is uneven day by day.">
+      <div class="console rise-solid d2" role="img" aria-label="Pejlon showing each campaign with its break-even ROAS and the net profit it actually made, and the autopilot raising the budget on the one that cleared the target three days running.">
         <div class="console-bar">
           <span class="pip"></span>
           <span>Pejlon</span>
-          <span class="right">Last 7 days · all accounts</span>
+          <span class="right">Yesterday · all accounts</span>
         </div>
 
+        <!-- Kolumnerna är poängen: break-even och NETTOVINST står inte i Ads
+             Manager, för Meta vet inte vad varan kostar dig. -->
         <div class="grid-head">
-          <span>On</span><span>Campaign</span><span class="num sorted">Spend —</span><span class="num">ROAS</span><span class="num">CPA</span>
+          <span>On</span>
+          <span>Campaign</span>
+          <span class="num">ROAS</span>
+          <span class="num">Break-even</span>
+          <span class="num sorted">Net profit</span>
         </div>
 
         <div class="grid-row">
-          <span class="sw" aria-hidden="true"></span>
+          <span class="sw"></span>
           <span class="name"><span class="dot" style="background:var(--good)"></span> Prospecting broad · CBO</span>
-          <span class="num">23,674</span><span class="num" style="color:var(--good)">2.88×</span><span class="num">113</span>
+          <span class="num" style="color:var(--good)">3.14×</span>
+          <span class="num" style="color:var(--ink-3)">1.41×</span>
+          <span class="num" style="color:var(--good); font-weight:700">+€2,180</span>
         </div>
 
+        <div class="grid-row">
+          <span class="sw"></span>
+          <span class="name"><span class="dot" style="background:var(--good)"></span> Lookalike 2% · ABO</span>
+          <span class="num">2.68×</span>
+          <span class="num" style="color:var(--ink-3)">1.52×</span>
+          <span class="num" style="color:var(--good); font-weight:700">+€1,046</span>
+        </div>
+
+        <!-- Raden som ser lönsam ut i Meta men går back när varukostnaden räknas in. -->
         <div class="grid-row row-dead">
-          <span class="sw off" aria-hidden="true"></span>
-          <span class="name"><span class="dot" style="background:#39404F"></span> Retargeting 30d · ABO</span>
-          <span class="num">0</span><span class="num" style="color:var(--bad)">-</span><span class="num">-</span>
+          <span class="sw"></span>
+          <span class="name"><span class="dot" style="background:var(--warn)"></span> Retargeting cart · ABO</span>
+          <span class="num">1.62×</span>
+          <span class="num" style="color:var(--ink-3)">1.74×</span>
+          <span class="num" style="color:var(--bad); font-weight:700">−€312</span>
         </div>
-        <p class="flag">— Paused 6 days ago, 14:12 on the Friday. It's in the log, along with who did it.</p>
+        <div class="flag">Above 1× in Ads Manager, below break-even here. Your landed cost is what makes the difference.</div>
 
         <div class="grid-row">
-          <span class="sw" aria-hidden="true"></span>
-          <span class="name"><span class="dot" style="background:var(--good)"></span> Lookalike 1% · CBO</span>
-          <span class="num">18,240</span><span class="num" style="color:var(--good)">2.41×</span><span class="num">168</span>
-        </div>
-        <div class="grid-row">
-          <span class="sw" aria-hidden="true"></span>
-          <span class="name"><span class="dot" style="background:var(--good)"></span> Prospecting interests · ABO</span>
-          <span class="num">9,118</span><span class="num" style="color:var(--good)">3.04×</span><span class="num">142</span>
-        </div>
-        <div class="grid-row">
-          <span class="sw" aria-hidden="true"></span>
-          <span class="name"><span class="dot" style="background:var(--good)"></span> Retargeting cart · ABO</span>
-          <span class="num">6,402</span><span class="num">1.88×</span><span class="num">204</span>
+          <span class="sw off"></span>
+          <span class="name" style="color:var(--ink-3)">Broad interests · ABO</span>
+          <span class="num" style="color:var(--ink-3)">—</span>
+          <span class="num" style="color:var(--ink-3)">1.48×</span>
+          <span class="num" style="color:var(--ink-3)">paused</span>
         </div>
 
-        <div class="guard rise-solid d5">
-          <span class="guard-title">Uneven day by day</span>
-          <p><strong>Prospecting interests · ABO</strong> sits at 3.04× over seven days. Four of those days are below 1.1×. A single day is carrying the whole period.</p>
+        <!-- Autopiloten agerar, med skälet utskrivet. -->
+        <div class="guard">
+          <div class="guard-title">Autopilot · 04:12</div>
+          <p>
+            <strong>Prospecting broad</strong> held 3.1× for three days on 41 purchases — above your 2.5× target every
+            day. Raising the budget 20%, to €540. Inside your €800 ceiling.
+          </p>
           <div class="row">
-            <span class="mini mini-line">Show day by day</span>
-            <span class="mini mini-solid">Hold the increase</span>
+            <span class="mini mini-solid">Applied</span>
+            <span class="mini mini-line">Undo</span>
           </div>
         </div>
       </div>
