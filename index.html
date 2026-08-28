@@ -462,6 +462,62 @@
   .flow-step .d { font-size: 12.5px; color: var(--ink-2); margin-top: 6px; line-height: 1.4; }
   .flow-arrow { align-self: center; color: var(--ink-3); font-size: 15px; flex: none; }
 
+  /* ---------- hero: appfönstret ----------
+     En tabell ensam läses som en rapport — och en rapport har man redan i Ads
+     Manager. Sidomenyn, dagens nettovinst, marknadsraden och den pågående
+     uppladdningen finns för att bilden ska säga HELT SYSTEM på en halv sekund. */
+  .app {
+    display: grid; grid-template-columns: 116px minmax(0, 1fr);
+    background: var(--panel); border: 1px solid var(--line); border-radius: 16px;
+    box-shadow: 0 40px 90px -34px rgba(0,0,0,.9);
+    overflow: hidden; position: relative;
+  }
+  .app-rail { display: flex; flex-direction: column; gap: 2px; padding: 12px 8px; background: var(--ground-2); border-right: 1px solid var(--line); }
+  .app-logo { width: 18px; height: 18px; border-radius: 5px; background: linear-gradient(135deg, var(--brand), var(--brand-deep)); margin: 2px 0 10px 8px; }
+  .app-nav { font-size: 12px; color: var(--ink-3); padding: 6px 9px; border-radius: 7px; white-space: nowrap; }
+  .app-nav.is-on { background: var(--panel-2); color: var(--ink); font-weight: 600; }
+
+  .app-main { min-width: 0; }
+  .app-bar { display: flex; align-items: center; gap: 8px; padding: 10px 14px; font-size: 11.5px; color: var(--ink-3); border-bottom: 1px solid var(--line); }
+  .app-live { margin-left: auto; color: var(--good); font-weight: 600; }
+
+  .app-kpis { display: grid; grid-template-columns: repeat(3, 1fr); border-bottom: 1px solid var(--line); }
+  .app-kpi { padding: 11px 14px; border-right: 1px solid var(--line-soft); min-width: 0; }
+  .app-kpi:last-child { border-right: 0; }
+  .app-kpi .k { display: block; font-size: 10.5px; text-transform: uppercase; letter-spacing: .04em; color: var(--ink-3); }
+  .app-kpi .v { display: block; font-family: var(--display); font-weight: 700; font-size: 17px; margin-top: 3px; letter-spacing: -.02em; }
+  .app-kpi.is-net { background: rgba(86,208,138,.09); }
+  .app-kpi.is-net .v { color: var(--good); }
+
+  .app-markets { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; padding: 11px 14px; border-top: 1px solid var(--line-soft); }
+  .mk-chip { font-size: 11.5px; color: var(--ink-2); background: var(--panel-2); border: 1px solid var(--line); border-radius: 999px; padding: 3px 9px; font-variant-numeric: tabular-nums; }
+  .mk-chip b { color: var(--ink-3); font-weight: 600; margin-right: 3px; }
+  .mk-chip.is-best { border-color: var(--good); color: var(--good); }
+  .mk-chip.is-best b { color: var(--good); }
+  .mk-label { font-size: 11px; color: var(--ink-3); margin-left: auto; }
+
+  /* Den flytande rutan lägger ett andra pågående skeende i samma bild. */
+  .app-float {
+    position: absolute; right: -14px; bottom: -16px; width: 216px;
+    background: var(--ground-2); border: 1px solid var(--brand-deep); border-radius: 12px;
+    padding: 12px 13px; box-shadow: 0 26px 50px -20px rgba(0,0,0,.95);
+  }
+  .af-title { font-size: 11px; font-weight: 700; color: var(--brand); text-transform: uppercase; letter-spacing: .04em; }
+  .af-bar { height: 5px; border-radius: 999px; background: var(--line); margin: 9px 0 7px; overflow: hidden; }
+  .af-bar span { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--brand), var(--brand-lift)); }
+  .af-meta { font-size: 11.5px; color: var(--ink-3); line-height: 1.4; }
+
+  @media (max-width: 1080px) {
+    .app { grid-template-columns: 1fr; }
+    .app-rail { flex-direction: row; overflow-x: auto; gap: 4px; border-right: 0; border-bottom: 1px solid var(--line); padding: 9px 10px; }
+    .app-logo { display: none; }
+    .app-float { position: static; width: auto; margin: 12px 14px 14px; box-shadow: none; }
+  }
+  @media (max-width: 560px) {
+    .app-kpis { grid-template-columns: 1fr 1fr; }
+    .app-kpi.is-net { grid-column: 1 / -1; border-top: 1px solid var(--line-soft); }
+  }
+
   /* ---------- allt på en gång (bandet under hero) ---------- */
   .band { border-top: 1px solid var(--line-soft); padding: 46px 0 52px; background: var(--ground-2); }
   .band-lede { text-align: center; font-size: clamp(19px, 2.4vw, 25px); font-family: var(--display); font-weight: 700; letter-spacing: -.02em; margin-bottom: 26px; }
@@ -826,11 +882,12 @@
     <div class="shell">
       <div class="hero-copy">
         <span class="eyebrow rise-solid">The control room for Meta ads</span>
-        <h1 class="rise-solid d1">You spend <em>hours a week</em> finding the numbers. And you still can't trust them.</h1>
+        <h1 class="rise-solid d1">Ads Manager can't tell you <em>what you earned</em>. Pejlon can — and acts on it.</h1>
         <p class="lede rise-solid d2">
-          Pejlon puts every campaign, ad set and ad from all your ad accounts in one table, with the day by day behind
-          each row. The comparison that takes half an hour in Ads Manager is done by the time the page has loaded, and
-          you can see at a glance whether a 3× ROAS is steady or whether it was 1× yesterday.
+          Meta knows what you sold. It does not know what the goods cost you, what shipping took, or what the payment
+          provider kept — so it cannot tell you whether a campaign made money. Pejlon does, per market and per product.
+          Then it uploads your creative in bulk, clones the winners, and scales whatever clears your target on its own.
+          One tool, from the ad to the euro that lands in your account.
         </p>
         <div class="hero-cta rise-solid d3">
           <a class="btn btn-solid" href="#access">Get early access</a>
@@ -846,68 +903,98 @@
         <p class="hero-foot rise-solid d3">Built by advertisers who scale every day.</p>
       </div>
 
-      <div class="console rise-solid d2" role="img" aria-label="Pejlon showing each campaign with its break-even ROAS and the net profit it actually made, and the autopilot raising the budget on the one that cleared the target three days running.">
-        <div class="console-bar">
-          <span class="pip"></span>
-          <span>Pejlon</span>
-          <span class="right">Yesterday · all accounts</span>
+      <div class="app rise-solid d2" role="img" aria-label="The Pejlon app: a sidebar with Overview, Hangar, Scaling, Products, Profit and Team, a table showing each campaign's break-even ROAS and the net profit it actually made, a bulk upload building thirty ads, and the autopilot raising the budget on the campaign that cleared target three days running.">
+        <!-- Sidomenyn är det som säger 'helt system' på en halv sekund. En
+             tabell ensam läses som en rapport; en app med flikar gör det inte. -->
+        <div class="app-rail">
+          <span class="app-logo"></span>
+          <span class="app-nav is-on">Overview</span>
+          <span class="app-nav">Hangar</span>
+          <span class="app-nav">Clone</span>
+          <span class="app-nav">Scaling</span>
+          <span class="app-nav">Products</span>
+          <span class="app-nav">Profit</span>
+          <span class="app-nav">Team</span>
         </div>
 
-        <!-- Kolumnerna är poängen: break-even och NETTOVINST står inte i Ads
-             Manager, för Meta vet inte vad varan kostar dig. -->
-        <div class="grid-head">
-          <span>On</span>
-          <span>Campaign</span>
-          <span class="num">ROAS</span>
-          <span class="num">Break-even</span>
-          <span class="num sorted">Net profit</span>
-        </div>
-
-        <div class="grid-row">
-          <span class="sw"></span>
-          <span class="name"><span class="dot" style="background:var(--good)"></span> Prospecting broad · CBO</span>
-          <span class="num" style="color:var(--good)">3.14×</span>
-          <span class="num" style="color:var(--ink-3)">1.41×</span>
-          <span class="num" style="color:var(--good); font-weight:700">+€2,180</span>
-        </div>
-
-        <div class="grid-row">
-          <span class="sw"></span>
-          <span class="name"><span class="dot" style="background:var(--good)"></span> Lookalike 2% · ABO</span>
-          <span class="num">2.68×</span>
-          <span class="num" style="color:var(--ink-3)">1.52×</span>
-          <span class="num" style="color:var(--good); font-weight:700">+€1,046</span>
-        </div>
-
-        <!-- Raden som ser lönsam ut i Meta men går back när varukostnaden räknas in. -->
-        <div class="grid-row row-dead">
-          <span class="sw"></span>
-          <span class="name"><span class="dot" style="background:var(--warn)"></span> Retargeting cart · ABO</span>
-          <span class="num">1.62×</span>
-          <span class="num" style="color:var(--ink-3)">1.74×</span>
-          <span class="num" style="color:var(--bad); font-weight:700">−€312</span>
-        </div>
-        <div class="flag">Above 1× in Ads Manager, below break-even here. Your landed cost is what makes the difference.</div>
-
-        <div class="grid-row">
-          <span class="sw off"></span>
-          <span class="name" style="color:var(--ink-3)">Broad interests · ABO</span>
-          <span class="num" style="color:var(--ink-3)">—</span>
-          <span class="num" style="color:var(--ink-3)">1.48×</span>
-          <span class="num" style="color:var(--ink-3)">paused</span>
-        </div>
-
-        <!-- Autopiloten agerar, med skälet utskrivet. -->
-        <div class="guard">
-          <div class="guard-title">Autopilot · 04:12</div>
-          <p>
-            <strong>Prospecting broad</strong> held 3.1× for three days on 41 purchases — above your 2.5× target every
-            day. Raising the budget 20%, to €540. Inside your €800 ceiling.
-          </p>
-          <div class="row">
-            <span class="mini mini-solid">Applied</span>
-            <span class="mini mini-line">Undo</span>
+        <div class="app-main">
+          <div class="app-bar">
+            <span class="pip"></span>
+            <span>4 ad accounts · 5 markets</span>
+            <span class="app-live">Autopilot on</span>
           </div>
+
+          <!-- Dagens utfall först. Meta kan visa omsättning; det här är vad som
+               blev kvar när varan, avgifterna och annonserna är betalda. -->
+          <div class="app-kpis">
+            <div class="app-kpi">
+              <span class="k">Revenue</span>
+              <span class="v">€24,180</span>
+            </div>
+            <div class="app-kpi">
+              <span class="k">Ad spend</span>
+              <span class="v">€9,265</span>
+            </div>
+            <div class="app-kpi is-net">
+              <span class="k">Net profit today</span>
+              <span class="v">+€7,243</span>
+            </div>
+          </div>
+
+          <div class="grid-head">
+            <span>On</span>
+            <span>Campaign</span>
+            <span class="num">ROAS</span>
+            <span class="num">Break-even</span>
+            <span class="num sorted">Net profit</span>
+          </div>
+
+          <div class="grid-row">
+            <span class="sw"></span>
+            <span class="name"><span class="dot" style="background:var(--good)"></span> Prospecting broad · CBO</span>
+            <span class="num" style="color:var(--good)">3.14×</span>
+            <span class="num" style="color:var(--ink-3)">1.41×</span>
+            <span class="num" style="color:var(--good);font-weight:700">+€2,180</span>
+          </div>
+
+          <div class="grid-row row-dead">
+            <span class="sw"></span>
+            <span class="name"><span class="dot" style="background:var(--warn)"></span> Retargeting cart · ABO</span>
+            <span class="num">1.62×</span>
+            <span class="num" style="color:var(--ink-3)">1.74×</span>
+            <span class="num" style="color:var(--bad);font-weight:700">−€312</span>
+          </div>
+          <div class="flag">Profitable in Ads Manager. Losing money here. Your landed cost is the difference.</div>
+
+          <!-- Break-even skiljer sig per land — en siffra Meta aldrig ger dig. -->
+          <div class="app-markets">
+            <span class="mk-chip"><b>SE</b> 1.56×</span>
+            <span class="mk-chip"><b>NO</b> 1.61×</span>
+            <span class="mk-chip"><b>DK</b> 1.52×</span>
+            <span class="mk-chip"><b>DE</b> 1.64×</span>
+            <span class="mk-chip is-best"><b>UK</b> 1.41×</span>
+            <span class="mk-label">Break-even per market</span>
+          </div>
+
+          <div class="guard">
+            <div class="guard-title">Autopilot · 04:12 · while you slept</div>
+            <p>
+              <strong>Prospecting broad</strong> held 3.1× for three days on 41 purchases — above your 2.5× target
+              every day. Budget raised 20% to €540, inside your €800 ceiling.
+            </p>
+            <div class="row">
+              <span class="mini mini-solid">Applied</span>
+              <span class="mini mini-line">Undo</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bulkuppladdningen körs samtidigt. Att två saker pågår i samma bild
+             är det som gör att det läses som ett system, inte en vy. -->
+        <div class="app-float">
+          <div class="af-title">Hangar · building ads</div>
+          <div class="af-bar"><span style="width:93%"></span></div>
+          <div class="af-meta">28 of 30 built · 2 ad sets · paused for review</div>
         </div>
       </div>
     </div>
