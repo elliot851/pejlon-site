@@ -460,6 +460,32 @@
   .flow-step .d { font-size: 12.5px; color: var(--ink-2); margin-top: 6px; line-height: 1.4; }
   .flow-arrow { align-self: center; color: var(--ink-3); font-size: 15px; flex: none; }
 
+  /* ---------- allt på en gång (bandet under hero) ---------- */
+  .band { border-top: 1px solid var(--line-soft); padding: 46px 0 52px; background: var(--ground-2); }
+  .band-lede { text-align: center; font-size: clamp(19px, 2.4vw, 25px); font-family: var(--display); font-weight: 700; letter-spacing: -.02em; margin-bottom: 26px; }
+  .band-lede em { font-family: var(--accent); font-style: italic; font-weight: 400; color: var(--brand-lift); font-size: 1.06em; }
+
+  .band-grid { display: grid; gap: 10px; grid-template-columns: 1fr; }
+  @media (min-width: 600px) { .band-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 960px) { .band-grid { grid-template-columns: repeat(5, 1fr); } }
+
+  .tile {
+    min-width: 0; display: flex; flex-direction: column; gap: 6px;
+    border: 1px solid var(--line); border-radius: 12px; background: var(--panel);
+    padding: 15px 15px 16px; text-decoration: none; color: inherit;
+    transition: transform .2s cubic-bezier(.2,.7,.3,1), border-color .2s ease, background .2s ease;
+  }
+  a.tile:hover { transform: translateY(-3px); border-color: var(--brand); background: var(--panel-2); }
+  .tile-k { font-size: 11px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--brand); }
+  .tile-t { font-size: 13.5px; line-height: 1.45; color: var(--ink-2); }
+  /* De två som är svårast att hitta någon annanstans får en varmare ram. */
+  .tile.is-hot { border-color: var(--brand-deep); background: linear-gradient(170deg, rgba(79,140,255,.09), transparent 60%), var(--panel); }
+  .tile.is-hot .tile-k { color: var(--brand-lift); }
+  /* Kommande funktion: syns men lovar inget datum. */
+  .tile.is-next { border-style: dashed; background: transparent; }
+  .tile.is-next .tile-k { color: var(--ink-3); }
+  .tile.is-next .tile-t { color: var(--ink-3); }
+
   /* ---------- se den skala (ren CSS-loop) ----------
      Hela förloppet är en åttasekunders keyframe. Ingen JavaScript — sidan kör
      script-src 'none' och ska fortsätta göra det. */
@@ -784,6 +810,7 @@
       <a href="#analysis">Analysis</a>
       <a href="#upload">Bulk upload</a>
       <a href="#control">Control</a>
+      <a href="#everything">Everything</a>
       <a href="#capabilities">What you get</a>
       <a href="#pricing">Pricing</a>
       <a class="btn btn-solid" href="#access">Get early access</a>
@@ -865,6 +892,61 @@
             <span class="mini mini-solid">Hold the increase</span>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- allt på en gång ----------
+       Hero-konsolen kan förväxlas med Ads Manager. Den här remsan finns för att
+       på två sekunder visa vad Pejlon gör som Meta INTE gör — innan någon hinner
+       tänka "det här har jag redan". Varje ruta länkar till sitt eget avsnitt. -->
+  <section class="band" id="everything">
+    <div class="shell">
+      <p class="band-lede reveal">
+        Ads Manager visar dig siffrorna. <em>Pejlon gör något åt dem.</em>
+      </p>
+
+      <div class="band-grid stagger">
+        <a class="tile" href="#capabilities">
+          <span class="tile-k">Scale</span>
+          <span class="tile-t">Raise the winner from the row you spotted it in</span>
+        </a>
+        <a class="tile is-hot" href="#live">
+          <span class="tile-k">AI autopilot</span>
+          <span class="tile-t">It scales for you, to your KPIs, around the clock</span>
+        </a>
+        <a class="tile" href="#capabilities">
+          <span class="tile-k">Bulk upload</span>
+          <span class="tile-t">Drop a folder — thirty ads built in one pass</span>
+        </a>
+        <a class="tile" href="#capabilities">
+          <span class="tile-k">Clone winners</span>
+          <span class="tile-t">Put the ad that works into every ad set</span>
+        </a>
+        <a class="tile is-hot" href="#capabilities">
+          <span class="tile-k">Net profit</span>
+          <span class="tile-t">What the day earned — not what it turned over</span>
+        </a>
+        <a class="tile" href="#capabilities">
+          <span class="tile-k">Break-even per country</span>
+          <span class="tile-t">The ROAS you need, market by market</span>
+        </a>
+        <a class="tile" href="#capabilities">
+          <span class="tile-k">Cost per product</span>
+          <span class="tile-t">Landed cost per country, read from the supplier sheet</span>
+        </a>
+        <a class="tile" href="#capabilities">
+          <span class="tile-k">Your team</span>
+          <span class="tile-t">Buyers change budgets without seeing your margins</span>
+        </a>
+        <a class="tile" href="#capabilities">
+          <span class="tile-k">Guardrails</span>
+          <span class="tile-t">Nothing spends money without you saying so</span>
+        </a>
+        <span class="tile is-next">
+          <span class="tile-k">Next up</span>
+          <span class="tile-t">Google and TikTok in the same table, on the same numbers</span>
+        </span>
       </div>
     </div>
   </section>
